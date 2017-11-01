@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<menuitem id="import_details" name="Export"  parent="base.menu_administration" action="action_fettimetable_configuration" sequence="2" />
+</odoo>
