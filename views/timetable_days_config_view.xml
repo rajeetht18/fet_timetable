@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!--TimeTable Days Config-->
+        <record id="view_timetable_days_config" model="ir.ui.view">
+            <field name="name">TimeTable Days Configuration</field>
+            <field name="model">timetable.days.config</field>
+            <field name="arch" type="xml">
+                <form string="TimeTable Days Configuration" version="7.0" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" name="execute" type="object" class="oe_highlight"/>
+                        <button string="Cancel" name="cancel" class="oe_link" special="cancel"/>
+                    </header>
+                    <group>
+                        <group string="TimeTable Days">
+                            
+                            <label for="tt_monday" string="Monday"/>
+                            <div>
+                                <field name="tt_monday" />
+                            </div>
+                            <label for="tt_tuesday" string="Tuesday"/>
+                            <div>
+                                <field name="tt_tuesday" />
+                            </div>
+                            <label for="tt_wednesday" string="Wednesday"/>
+                            <div>
+                                <field name="tt_wednesday" />
+                            </div>
+                            <label for="tt_thursday" string="Thursday"/>
+                            <div>
+                                <field name="tt_thursday" />
+                            </div>
+                            <label for="tt_friday" string="Friday"/>
+                            <div>
+                                <field name="tt_friday" />
+                            </div>
+                            <label for="tt_saturday" string="Saturday"/>
+                            <div>
+                                <field name="tt_saturday" />
+                            </div>
+                            <label for="tt_sunday" string="Sunday"/>
+                            <div>
+                                <field name="tt_sunday" />
+                            </div>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_timetable_days_config">
+            <field name="name">TimeTable Days Config</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">timetable.days.config</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <!--Configuration Menu-->
+        <menuitem id="menu_timetable_config" name="Configuration" parent="openeducat_timetable.menu_op_timetable_root" sequence="50" />
+        <menuitem id="menu_timetable_days_config" name="Timetable Days" parent="menu_timetable_config" action="act_timetable_days_config" sequence="10" />
+
+    </data>
+</odoo>

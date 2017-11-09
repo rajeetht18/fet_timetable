@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Activity Tag Tree view-->
+        <record id="activity_tag_tree_view" model="ir.ui.view">
+            <field name="name">op.activity.tags.tree</field>
+            <field name="model">op.activity.tags</field>
+            <field name="arch" type="xml">
+                <tree string="Activity Tag Tree">
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Actrivity Tag form view-->
+        <record id="activity_tag_form_view" model="ir.ui.view">
+            <field name="name">op.activity.tags.form</field>
+            <field name="model">op.activity.tags</field>
+            <field name="arch" type="xml">
+                <form string="Activity Tag Form">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="description" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Activity Tag Action-->
+        <record model="ir.actions.act_window" id="action_activitytags">
+            <field name="name">Activity Tag</field>
+            <field name="res_model">op.activity.tags</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="activity_tag_tree_view" />
+        </record>
+
+        <!--Activity Tags Menu-->
+        <menuitem id="menu_activity_tags" name="Activity Tags"  parent="openeducat_core.menu_op_school_config_activity"
+        action="action_activitytags" sequence="2" />
+
+
+    </data>
+</odoo>

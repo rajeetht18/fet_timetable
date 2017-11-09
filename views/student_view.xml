@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_op_student_group_inherit" model="ir.ui.view">
+            <field name="name">op.student.form.group.inherit</field>
+            <field name="model">op.student</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_student_form" />
+            <field name="priority" eval="9" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[@name='educational']/group[2]/field/form/group/field[@name='batch_id']" position="after">
+                    <field name="group_id" />
+                    <field name="subgroup_id" />
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page[@name='educational']/group[2]/field/tree/field[@name='roll_number']" position="after">
+                    <field name="group_id" />
+                    <field name="subgroup_id" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

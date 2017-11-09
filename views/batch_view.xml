@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_op_batchgroup_inherit" model="ir.ui.view">
+            <field name="name">op.batchgroup.form.inherit</field>
+            <field name="model">op.batch</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_batch_form" />
+            <field name="priority" eval="9" />
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='main']" position="after">
+                    <seperator name="Groups"/>
+                    <field name="group_ids" string="Group(s)" nolabel="1">
+                        <tree editable="bottom">
+                            <field name= "name" />
+                            <field name= "description" />
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

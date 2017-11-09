@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Faculty Form Inherit -->
+        <record id="view_op_faculty_inherit" model="ir.ui.view">
+            <field name="name">op.subject.form.inherit</field>
+            <field name="model">op.faculty</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_faculty_form" />
+            <field name="priority" eval="9" />
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='subjects']" position="after">
+                    <page name="class" string="Classes">
+                        <field name="class_details" colspan="4" nolabel="1">
+                            <tree string="class deatils">
+                                <field name= "subject_id"/>
+                                <field name= "batch_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_op_faculty_class_list_form" model="ir.ui.view">
+            <field name="name">op.faculty.class.list.form</field>
+            <field name="model">op.faculty.class.list</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string= "Faculty Class">
+                    <sheet>
+                        <group>
+                            <field name= "subject_id"/>
+                            <field name= "batch_id"/>
+                            <field name= "split"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_faculty_class_list_view">
+            <field name="name">Faculty Class list</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">op.faculty.class.list</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+    </data>
+</odoo>

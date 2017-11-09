@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+      <!--Buildings tree view-->
+        <record id="buildings_tree_view" model="ir.ui.view">
+            <field name="name">op.buildings.tree</field>
+            <field name="model">op.buildings</field>
+            <field name="arch" type="xml">
+                <tree string="Buildings Tree" widget="one2many_list">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Buildings form view-->
+        <record id="buildings_form_view" model="ir.ui.view">
+            <field name="name">op.buildings.form</field>
+            <field name="model">op.buildings</field>
+            <field name="arch" type="xml">
+                <form string="Building Form">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Buildings Action-->
+        <record model="ir.actions.act_window" id="action_buildings">
+            <field name="name">Buildings</field>
+            <field name="res_model">op.buildings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="buildings_tree_view" />
+        </record>
+
+        <!--Buildings Menu-->
+        <menuitem id="menu_buildings" name="Buildings"  parent="openeducat_classroom.menu_op_school_config_class_room"
+        action="action_buildings" sequence="2" />
+
+        <!--ClassRoom Form View Inherit-->
+        <record id="view_op_classroom_form_inherit" model="ir.ui.view">
+            <field name="name">op.classroom.form.inherit</field>
+            <field name="model">op.classroom</field>
+            <field name="inherit_id" ref="openeducat_classroom.view_op_classroom_form"/>
+            <field name="arch" type="xml">
+              <xpath expr="//form/sheet/group/field[@name='capacity']" position="before">
+                <field name="building"/>
+              </xpath>
+            </field>
+          </record>
+
+        <!--ClassRoom Form View Inherit-->
+        <record id="view_op_classroom_tree_inheritt" model="ir.ui.view">
+            <field name="name">op.classroom.tree.inherit</field>
+            <field name="model">op.classroom</field>
+            <field name="inherit_id" ref="openeducat_classroom.view_op_classroom_tree"/>
+            <field name="arch" type="xml">
+              <xpath expr="//tree/field[@name='capacity']" position="before">
+                <field name="building"/>
+              </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
