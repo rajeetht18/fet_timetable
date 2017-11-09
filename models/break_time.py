@@ -9,12 +9,20 @@ class BreaksTime(models.Model):
     @api.model
     def default_line(self):
         period_list = []
+        period_dict = {}
         day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
-        print day_config,' day_config.tt_monday'
+        if day_config:
+            period_dict = {
+                        'is_monday': day_config.tt_monday, 
+                        'is_tuesday': day_config.tt_tuesday,
+                        'is_wednesday': day_config.tt_wednesday, 
+                        'is_thursday': day_config.tt_thursday, 
+                        'is_friday': day_config.tt_friday, 
+                        'is_saturday': day_config.tt_saturday, 
+                        'is_sunday': day_config.tt_sunday
+                    }
         for time in self.env['op.timing'].search([]):
-            period_dict = {'name':time.name}
-            if day_config:
-                period_dict.update({'is_monday': day_config.tt_monday, 'is_tuesday': day_config.tt_tuesday,'is_wednesday': day_config.tt_wednesday, 'is_thursday': day_config.tt_thursday, 'is_friday': day_config.tt_friday, 'is_saturday': day_config.tt_saturday, 'is_sunday': day_config.tt_sunday})
+            period_dict['name'] = time.name
             period_list.append((0,0,period_dict))
         return period_list
 
@@ -49,12 +57,6 @@ class BreaksTime(models.Model):
 class BreakTimeLine(models.Model):
     _name = 'op.break.time.line'
     _description = 'Break Time Line'
-
-    @api.model
-    def _default_monday(self):
-        day_config = self.env['timetable.days.config'].search([])
-        print day_config.tt_monday,' day_config.tt_monday'
-        return day_config and day_config.tt_monday
  
     name = fields.Char("Periods")
     monday = fields.Integer("Monday",size=1)
