@@ -21,9 +21,13 @@ class BreaksTime(models.Model):
                         'is_saturday': day_config.tt_saturday, 
                         'is_sunday': day_config.tt_sunday
                     }
+        else:
+            UserError(_("Please configure Timetable Days to create your Break Time Constraint."))
+            return False
         for time in self.env['op.timing'].search([]):
             period_dict['name'] = time.name
             period_list.append((0,0,period_dict))
+        print period_list,' period_list'
         return period_list
 
     _sql_constraints = [('unique_name','unique(name)', 'There must be another constraint of this type. Please edit that one.')]
@@ -67,10 +71,10 @@ class BreakTimeLine(models.Model):
     saturday = fields.Integer("Saturday",size=1)
     sunday = fields.Integer("Sunday",size=1)
     is_monday = fields.Boolean("Monday?")
-    is_tuesday = fields.Boolean("Tuesday?",default="0")
-    is_wednesday = fields.Boolean("Wednesday?",default="0")
-    is_thursday = fields.Boolean("Thursday?",default="0")
-    is_friday = fields.Boolean("Friday?",default="0")
-    is_saturday = fields.Boolean("Saturday?",default="0")
-    is_sunday = fields.Boolean("Sunday?",default="0")
+    is_tuesday = fields.Boolean("Tuesday?")
+    is_wednesday = fields.Boolean("Wednesday?")
+    is_thursday = fields.Boolean("Thursday?")
+    is_friday = fields.Boolean("Friday?")
+    is_saturday = fields.Boolean("Saturday?")
+    is_sunday = fields.Boolean("Sunday?")
     break_id = fields.Many2one('op.break.time',"Break")
