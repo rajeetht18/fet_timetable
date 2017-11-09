@@ -27,6 +27,7 @@ class BreaksTime(models.Model):
         for time in self.env['op.timing'].search([]):
             period_dict['name'] = time.name
             period_list.append((0,0,period_dict))
+            period_dict['name'] = ''
         print period_list,' period_list'
         return period_list
 
