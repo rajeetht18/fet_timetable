@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <!--Break Times tree view-->
+    <record id="facutly_not_available_tree_view" model="ir.ui.view">
+      <field name="name">op.faculty.not.available.tree</field>
+      <field name="model">op.faculty.not.available</field>
+      <field name="arch" type="xml">
+        <tree string="Faculty Tree">
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Break Times form view-->
+    <record id="facutly_not_available_form_view" model="ir.ui.view">
+      <field name="name">op.faculty.not.available.form</field>
+      <field name="model">op.faculty.not.available</field>
+      <field name="priority" eval="20"/>
+      <field name="arch" type="xml">
+        <form string="Facutly Form">
+          <sheet>
+            <group col="6">
+                <field name="name"/>
+                <field name="weight_percent"/>
+            </group>
+            <notebook>
+              <page string="Not Available">
+                <field name="faculty_not_line_ids">
+                  <tree string="facutly_not_available_tree" editable="bottom">
+                    <field name="name" required = "1"/>
+                      <field name="is_monday" invisible="1"/>
+                      <field name="is_tuesday" invisible="1"/>
+                      <field name="is_wednesday" invisible="1"/>
+                      <field name="is_thursday" invisible="1"/>
+                      <field name="is_friday" invisible="1"/>
+                      <field name="is_saturday" invisible="1"/>
+                      <field name="is_sunday" invisible="1"/>
+                      <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
+                      <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
+                      <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
+                      <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
+                      <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
+                      <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
+                      <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Break Times Action-->
+    <record model="ir.actions.act_window" id="action_faculty_not_available_time">
+      <field name="name">Faculty Not Available</field>
+      <field name="res_model">op.faculty.not.available</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="facutly_not_available_tree_view"/>
+    </record>
+
+    <!--Break Times Menu-->
+    <menuitem id="menu_facutly_not_available_time" name="Faculty Not Available" parent="openeducat_timetable.menu_op_timetable_root" action="action_faculty_not_available_time" sequence="41"/>
+
+  </data>
+</odoo>

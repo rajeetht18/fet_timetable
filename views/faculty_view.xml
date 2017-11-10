@@ -15,9 +15,30 @@
                             <tree string="class deatils">
                                 <field name= "subject_id"/>
                                 <field name= "batch_id"/>
+                                <field name="activity_tag"/>
+                                <field name="weight_percent"/>
                             </tree>
                         </field>
                     </page>
+
+                    <page name="time_constraints" string="Timetable Constraints">
+                      <separator string="Time Constraints"/>
+                      <group col="4">
+                        <field name="max_days"/>
+                        <field name="min_days"/>
+                        <field name="max_gaps"/>
+                        <field name="min_gaps"/>
+                        <field name="weight_percent"/>
+                      </group>
+                      <group col="4">
+                        <field name="max_hrs"/>
+                        <field name="max_hrs_act"/>
+                        <field name="min_hrs"/>
+                        <field name="max_hrs_cont"/>
+                        <field name="max_hr_cont_act"/>
+                      </group>
+                    </page>
+
                 </xpath>
             </field>
         </record>
@@ -33,6 +54,8 @@
                             <field name= "subject_id"/>
                             <field name= "batch_id"/>
                             <field name= "split"/>
+                            <field name="weight_percent"/>
+                            <field name="activity_tag" widget="many2many_tags"/>
                         </group>
                     </sheet>
                 </form>

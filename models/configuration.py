@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from odoo import api,fields,models
+from odoo import api, fields, models
+
 
 class Buildings(models.Model):
     _name = 'op.buildings'
@@ -12,7 +13,7 @@ class Buildings(models.Model):
 class Classroom(models.Model):
     _inherit = 'op.classroom'
 
-    building = fields.Many2one('op.buildings',"Building")
+    building = fields.Many2one('op.buildings', "Building")
 
 
 class ActivityTags(models.Model):
@@ -26,7 +27,7 @@ class Batch(models.Model):
     _inherit = 'op.batch'
 
     group_ids = fields.Many2many('op.batch.group', string="Group")
-    
+
 
 class BatchGroup(models.Model):
     _name = 'op.batch.group'
@@ -41,4 +42,3 @@ class BatchSubgroup(models.Model):
 
     name = fields.Char('Name', required=True)
     description = fields.Text()
-
