@@ -1,25 +1,31 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models, _
+from odoo import api,fields,models,_
 from odoo.exceptions import UserError
 
-
-class BreaksTime(models.Model):
-    _name = 'op.break.time'
-    _description = 'Break Times'
+class BatchConstraints(models.Model):
+    _name = 'op.batch.constraints'
+    _description = 'A Students set not available times'
+    _rec_name = 'student_id'
 
     @api.model
     def create(self, values):
-        if len(values['break_line_ids']) == 0 :
-            raise UserError(_("Please configure Timetable Days to create your Break Time Constraint."))
-        res = super(BreaksTime, self).create(values)
+        if len(values['batch_constraints_line_ids']) == 0 :
+            raise UserError(_("Please configure Timetable Days to create your Batch Time Constraint."))
+        res = super(BatchConstraints, self).create(values)
         return res
+
+    @api.multi
+    @api.constrains('weight')
+    def check_weight_percentage(self):
+        for rec in self:
+            if rec.weight != 100:
+                raise UserError(_("Please set the weight percentage to 100."))
 
     @api.model
     def default_line(self):
         period_list = []
         period_dict = {}
         day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
-
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -35,17 +41,12 @@ class BreaksTime(models.Model):
                 period_list.append((0,0,period_dict))
         return period_list
 
-    _sql_constraints = [('unique_name', 'unique(name)', 'There must be another constraint of this type. Please edit that one.')]
-
-    name = fields.Char("Name", default="Break Time Constraints", readonly="1")
-    break_line_ids = fields.One2many('op.break.time.line', 'break_id', "Breaks", default=default_line)
-
     @api.multi
-    @api.constrains('break_line_ids')
-    def _check_break_line_ids(self):
+    @api.constrains('batch_constraints_line_ids')
+    def _check_batch_constraints_line(self):
         for record in self:
             flag = False
-            for line in record.break_line_ids:
+            for line in record.batch_constraints_line_ids:
                 if line.monday != 0 and line.monday != 1:
                     flag = True
                 if line.tuesday != 0 and line.tuesday != 1:
@@ -63,21 +64,18 @@ class BreaksTime(models.Model):
             if flag:
                 raise UserError(_("Break value should be 1 or 0."))
 
+    _sql_constraints = [
+        ('unique_batch',
+         'unique(student_id)', 'You cannot create a Batch Constraint again with the same batch!')]
 
-class BreakTimeLine(models.Model):
-    _name = 'op.break.time.line'
-    _description = 'Break Time Line'
+    student_id = fields.Many2one('op.batch',"Batch",required=1)
+    weight = fields.Integer("Weight Percentage",default=100)
+    batch_constraints_line_ids = fields.One2many('op.breaks.constraints.line','batch_constraint_id',"Batch Constraints",default=default_line)
 
-<<<<<<< HEAD
-    name = fields.Char("Periods")
-    monday = fields.Integer("Monday", size=1)
-    tuesday = fields.Integer("Tuesday", size=1)
-    wednesday = fields.Integer("Wednesday", size=1)
-    thursday = fields.Integer("Thursday", size=1)
-    friday = fields.Integer("Friday", size=1)
-    saturday = fields.Integer("Saturday", size=1)
-    sunday = fields.Integer("Sunday", size=1)
-=======
+class BatchConstraintsLine(models.Model):
+    _name = 'op.breaks.constraints.line'
+    _description = 'Batch constraints Line'
+
     name = fields.Char("Periods",required=1)
     monday = fields.Integer("Monday",size=1)
     tuesday = fields.Integer("Tuesday",size=1)
@@ -86,7 +84,6 @@ class BreakTimeLine(models.Model):
     friday = fields.Integer("Friday",size=1)
     saturday = fields.Integer("Saturday",size=1)
     sunday = fields.Integer("Sunday",size=1)
->>>>>>> bd65826d99c75a3194dfc3d3ecdc9ae556b1b98a
     is_monday = fields.Boolean("Monday?")
     is_tuesday = fields.Boolean("Tuesday?")
     is_wednesday = fields.Boolean("Wednesday?")
@@ -94,4 +91,4 @@ class BreakTimeLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    break_id = fields.Many2one('op.break.time', "Break")
+    batch_constraint_id = fields.Many2one('op.batch.constraints',"Batch Constraints")
