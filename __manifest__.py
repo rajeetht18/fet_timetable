@@ -18,6 +18,7 @@ Export master data to generate Timetable in FET tool.
         'views/subgroup_view.xml',
         'views/timetable_days_config_view.xml',
 	    'views/break_time_view.xml',
+        'views/student_constraints_view.xml',
     ],
     'auto_install': False,
 }

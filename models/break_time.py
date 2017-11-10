@@ -13,12 +13,12 @@ class BreaksTime(models.Model):
         day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
         if day_config:
             period_dict = {
-                        'is_monday': day_config.tt_monday, 
+                        'is_monday': day_config.tt_monday,
                         'is_tuesday': day_config.tt_tuesday,
-                        'is_wednesday': day_config.tt_wednesday, 
-                        'is_thursday': day_config.tt_thursday, 
-                        'is_friday': day_config.tt_friday, 
-                        'is_saturday': day_config.tt_saturday, 
+                        'is_wednesday': day_config.tt_wednesday,
+                        'is_thursday': day_config.tt_thursday,
+                        'is_friday': day_config.tt_friday,
+                        'is_saturday': day_config.tt_saturday,
                         'is_sunday': day_config.tt_sunday
                     }
         for time in self.env['op.timing'].search([]):
@@ -57,7 +57,7 @@ class BreaksTime(models.Model):
 class BreakTimeLine(models.Model):
     _name = 'op.break.time.line'
     _description = 'Break Time Line'
- 
+
     name = fields.Char("Periods")
     monday = fields.Integer("Monday",size=1)
     tuesday = fields.Integer("Tuesday",size=1)

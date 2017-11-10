@@ -21,7 +21,7 @@ class TimetableDaysConfig(models.TransientModel):
         self.env['ir.values'].sudo().set_default('timetable.days.config', 'tt_saturday', self.tt_saturday)
         self.env['ir.values'].sudo().set_default('timetable.days.config', 'tt_sunday', self.tt_sunday)
         return True
-        
+
     tt_monday = fields.Boolean("Monday")
     tt_tuesday = fields.Boolean("Tuesday")
     tt_wednesday = fields.Boolean("Wednesday")
