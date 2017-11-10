@@ -65,7 +65,7 @@ class BreakTimeLine(models.Model):
     _name = 'op.break.time.line'
     _description = 'Break Time Line'
 
-    name = fields.Char("Periods")
+    name = fields.Char("Periods",required=1)
     monday = fields.Integer("Monday",size=1)
     tuesday = fields.Integer("Tuesday",size=1)
     wednesday = fields.Integer("Wednesday",size=1)
