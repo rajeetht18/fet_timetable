@@ -38,7 +38,7 @@ class FacultyTime(models.Model):
                 period_list.append((0, 0, period_dict))
         return period_list
 
-    _sql_constraints = [('unique_name', 'unique(name)', 'There must be another constraint of this type. Please edit that one.')]
+    _sql_constraints = [('unique_faculty', 'unique(name)', 'There must be another constraint of this type. Please edit that one.')]
 
     name = fields.Many2one('op.faculty', 'Faculty Name', required=True)
     weight_percent = fields.Float('Weight Percent', default=100)

@@ -68,8 +68,7 @@ class BreakTimeLine(models.Model):
     _name = 'op.break.time.line'
     _description = 'Break Time Line'
 
-<<<<<<< HEAD
-    name = fields.Char("Periods")
+    name = fields.Char("Periods" ,required=1)
     monday = fields.Integer("Monday", size=1)
     tuesday = fields.Integer("Tuesday", size=1)
     wednesday = fields.Integer("Wednesday", size=1)
@@ -77,16 +76,7 @@ class BreakTimeLine(models.Model):
     friday = fields.Integer("Friday", size=1)
     saturday = fields.Integer("Saturday", size=1)
     sunday = fields.Integer("Sunday", size=1)
-=======
-    name = fields.Char("Periods",required=1)
-    monday = fields.Integer("Monday",size=1)
-    tuesday = fields.Integer("Tuesday",size=1)
-    wednesday = fields.Integer("Wednesday",size=1)
-    thursday = fields.Integer("Thursday",size=1)
-    friday = fields.Integer("Friday",size=1)
-    saturday = fields.Integer("Saturday",size=1)
-    sunday = fields.Integer("Sunday",size=1)
->>>>>>> bd65826d99c75a3194dfc3d3ecdc9ae556b1b98a
+
     is_monday = fields.Boolean("Monday?")
     is_tuesday = fields.Boolean("Tuesday?")
     is_wednesday = fields.Boolean("Wednesday?")
