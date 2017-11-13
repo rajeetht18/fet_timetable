@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Teacher Activity Tag Tree view-->
+        <record id="faculty_activity_maxhrs_tree_view" model="ir.ui.view">
+            <field name="name">op.faculty.activity.maxhrs.tree</field>
+            <field name="model">op.faculty.activity.maxhrs</field>
+            <field name="arch" type="xml">
+                <tree string="Faculty Activity Maxhr Tree">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Actrivity Tag form view-->
+        <record id="faculty_activity_maxhrs_form_view" model="ir.ui.view">
+            <field name="name">op.faculty.activity.maxhrs.form</field>
+            <field name="model">op.faculty.activity.maxhrs</field>
+            <field name="arch" type="xml">
+                <form string="Faculty Activity Maxhr Form">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="act_tag_name" required ="1"/>
+                            <field name="weight_percent" required ="1"/>
+                            <field name="max_hrs_cont_tr_act" required ="1"/>
+                            <div>
+                              <span>(*) Only use,if all Faculties have an activity (*)</span>
+                            </div>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Activity Tag Action-->
+        <record model="ir.actions.act_window" id="action_faculty_activity_maxhr">
+            <field name="name">Faculty Activity Maxhrs</field>
+            <field name="res_model">op.faculty.activity.maxhrs</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="faculty_activity_maxhrs_tree_view" />
+        </record>
+
+        <!--Activity Tags Menu-->
+        <menuitem id="menu_faculty_activity_maxhrs" name="All Faculty Activity"  parent="menu_constraints"
+        action="action_faculty_activity_maxhr" sequence="40" />
+
+
+    </data>
+</odoo>
