@@ -2,7 +2,7 @@
 from odoo import api, fields, models
 
 
-class TimetableDaysConfig(models.TransientModel):
+class TimetableDaysConfig(models.Model):
     _name = "timetable.days.config"
     _inherit = 'res.config.settings'
 
