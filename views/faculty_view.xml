@@ -24,22 +24,32 @@
 
                     <page name="time_constraints" string="Timetable Constraints">
                       <separator string="Time Constraints"/>
-                      <group col="4">
+                      <group>
                         <field name="max_days"/>
                         <field name="min_days"/>
                         <field name="max_gaps"/>
                         <field name="min_gaps"/>
                         <field name="weight_percent"/>
-                      </group>
-                      <group col="4">
                         <field name="max_hrs"/>
                         <field name="max_hrs_act"/>
                         <field name="min_hrs"/>
                         <field name="max_hrs_cont"/>
+                        <div>
+                          <span>
+                            (*) Constraint For Adding Teachers Time (*)
+                          </span>
+                        </div>
+                      </group>
+                      <group>
                         <field name="max_hr_cont_act"/>
+                        <field name="activity_name"/>
+                        <div>
+                          <span>
+                            (*) Constraint For Adding Teachers Activity (*)
+                          </span>
+                        </div>
                       </group>
                     </page>
-
                 </xpath>
             </field>
         </record>

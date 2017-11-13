@@ -24,6 +24,10 @@
                 <field name="name"/>
                 <field name="weight_percent"/>
             </group>
+            <group>
+            <button string="Set All Available" type="object" name="generate_value_one"  class="oe_highlight" />
+            <button string="Set All Not Available" type="object" name="generate_value_two" class="oe_highlight"/>
+            </group>
             <notebook>
               <page string="Not Available">
                 <field name="faculty_not_line_ids">

@@ -5,3 +5,5 @@ import timetable_days_config
 import faculty_not_available
 import break_time
 import time_constraints
+import faculty_activity_maxhr
+import all_faculty_constraints

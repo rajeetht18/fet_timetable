@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models
 
+
 class StudentCourse(models.Model):
     _inherit = 'op.student.course'
 
@@ -22,6 +23,7 @@ class Faculty(models.Model):
     min_hrs = fields.Float('Min Hours Daily', size=18)
     max_hrs_cont = fields.Float('Max Hours Continuously', size=18)
     max_hr_cont_act = fields.Float('Max Hours Continuous with Activity', size=20)
+    activity_name = fields.Many2one('op.activity.tags', 'Activity')
 
 class FacultyClassList(models.Model):
     _name = 'op.faculty.class.list'
