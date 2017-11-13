@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from odoo import api,fields,models,_
+from odoo import api, fields, models
 from odoo.exceptions import UserError
+
 
 class BatchConstraints(models.Model):
     _name = 'op.batch.constraints'
@@ -9,7 +10,7 @@ class BatchConstraints(models.Model):
 
     @api.model
     def create(self, values):
-        if len(values['batch_constraints_line_ids']) == 0 :
+        if len(values['batch_constraints_line_ids']) == 0:
             raise UserError(_("Please configure Timetable Days to create your Batch Time Constraint."))
         res = super(BatchConstraints, self).create(values)
         return res
@@ -38,7 +39,7 @@ class BatchConstraints(models.Model):
                     'is_saturday': day_config.tt_saturday,
                     'is_sunday': day_config.tt_sunday
                 }
-                period_list.append((0,0,period_dict))
+                period_list.append((0, 0, period_dict))
         return period_list
 
     @api.multi
@@ -68,22 +69,23 @@ class BatchConstraints(models.Model):
         ('unique_batch',
          'unique(student_id)', 'You cannot create a Batch Constraint again with the same batch!')]
 
-    student_id = fields.Many2one('op.batch',"Batch",required=1)
-    weight = fields.Integer("Weight Percentage",default=100)
-    batch_constraints_line_ids = fields.One2many('op.breaks.constraints.line','batch_constraint_id',"Batch Constraints",default=default_line)
+    student_id = fields.Many2one('op.batch', "Batch", required=1)
+    weight = fields.Integer("Weight Percentage", default=100)
+    batch_constraints_line_ids = fields.One2many('op.breaks.constraints.line', 'batch_constraint_id', "Batch Constraints", default=default_line)
+
 
 class BatchConstraintsLine(models.Model):
     _name = 'op.breaks.constraints.line'
     _description = 'Batch constraints Line'
 
-    name = fields.Char("Periods",required=1)
-    monday = fields.Integer("Monday",size=1)
-    tuesday = fields.Integer("Tuesday",size=1)
-    wednesday = fields.Integer("Wednesday",size=1)
-    thursday = fields.Integer("Thursday",size=1)
-    friday = fields.Integer("Friday",size=1)
-    saturday = fields.Integer("Saturday",size=1)
-    sunday = fields.Integer("Sunday",size=1)
+    name = fields.Char("Periods", required=1)
+    monday = fields.Integer("Monday", size=1)
+    tuesday = fields.Integer("Tuesday", size=1)
+    wednesday = fields.Integer("Wednesday", size=1)
+    thursday = fields.Integer("Thursday", size=1)
+    friday = fields.Integer("Friday", size=1)
+    saturday = fields.Integer("Saturday", size=1)
+    sunday = fields.Integer("Sunday", size=1)
     is_monday = fields.Boolean("Monday?")
     is_tuesday = fields.Boolean("Tuesday?")
     is_wednesday = fields.Boolean("Wednesday?")
@@ -91,4 +93,4 @@ class BatchConstraintsLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    batch_constraint_id = fields.Many2one('op.batch.constraints',"Batch Constraints")
+    batch_constraint_id = fields.Many2one('op.batch.constraints', "Batch Constraints")

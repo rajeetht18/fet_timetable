@@ -9,6 +9,14 @@ class FacultyTime(models.Model):
     _description = 'Faculty Times'
 
     @api.model
+    def generate_value_one(self):
+        self.write({'name':  set(value='1')})
+
+    def generate_value_two(self):
+        self.write({'name': set(value='0')})
+
+
+    @api.model
     def create(self, values):
         if len(values['faculty_not_line_ids']) == 0:
             raise UserError(_("Please configure Timetable Days to create your Faculty Time Constraint."))
@@ -38,7 +46,7 @@ class FacultyTime(models.Model):
                 period_list.append((0, 0, period_dict))
         return period_list
 
-    _sql_constraints = [('unique_faculty', 'unique(name)', 'There must be another constraint of this type. Please edit that one.')]
+    _sql_constraints = [('unique_faculty', 'unique(name)', 'There must be another constraint of this Faculty. Please edit that one.')]
 
     name = fields.Many2one('op.faculty', 'Faculty Name', required=True)
     weight_percent = fields.Float('Weight Percent', default=100)
