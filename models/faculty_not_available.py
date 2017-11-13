@@ -30,7 +30,6 @@ class FacultyTime(models.Model):
         period_dict = {}
         day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
 
-
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
