@@ -3,8 +3,8 @@
   <data>
 
     <record id="faculty_constraints_tree_view" model="ir.ui.view">
-      <field name="name">op.faculty.constraints.tree</field>
-      <field name="model">op.faculty.constraints</field>
+      <field name="name">op.all.faculty.constraints.tree</field>
+      <field name="model">op.all.faculty.constraints</field>
       <field name="arch" type="xml">
         <tree>
         <field name="name" />
@@ -14,8 +14,8 @@
 
     <!--Teacher Constraints Form View-->
     <record id="faculty_constraints_form_view" model="ir.ui.view">
-      <field name="name">op.faculty.constraints.form.view</field>
-      <field name="model">op.faculty.constraints</field>
+      <field name="name">op.all.faculty.constraints.form.view</field>
+      <field name="model">op.all.faculty.constraints</field>
       <field name="arch" type="xml">
         <form string="Faculty Constraints Form">
           <sheet>
@@ -42,8 +42,8 @@
 
     <!--Batch Constraints Action-->
     <record model="ir.actions.act_window" id="action_faculty_constraints">
-        <field name="name">Faculty Constraints</field>
-        <field name="res_model">op.faculty.constraints</field>
+        <field name="name">Allfacultyconstraints</field>
+        <field name="res_model">op.all.faculty.constraints</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="faculty_constraints_tree_view" />

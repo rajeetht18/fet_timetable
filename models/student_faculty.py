@@ -25,7 +25,6 @@ class Faculty(models.Model):
     max_hr_cont_act = fields.Float('Max Hours Continuous with Activity', size=20)
     activity_name = fields.Many2one('op.activity.tags', 'Activity')
 
-
 class FacultyClassList(models.Model):
     _name = 'op.faculty.class.list'
 

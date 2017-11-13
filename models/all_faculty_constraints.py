@@ -2,8 +2,8 @@
 from odoo import models, fields
 
 
-class Facultyconstraints(models.Model):
-    _name = 'op.faculty.constraints'
+class Allfacultyconstraints(models.Model):
+    _name = 'op.all.faculty.constraints'
 
     # Time Constraint II (All Teachers)
     name = fields.Char('Name', default="Faculty Constraint")
