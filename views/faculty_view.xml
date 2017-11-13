@@ -17,6 +17,7 @@
                                 <field name="batch_id"/>
                                 <field name="activity_tag"/>
                                 <field name="weight_percent"/>
+                                <field name="duration"/>
                             </tree>
                         </field>
                     </page>
@@ -51,10 +52,12 @@
                 <form string= "Faculty Class">
                     <sheet>
                         <group>
+                            <field name="name"/>
                             <field name="subject_id"/>
                             <field name="batch_id"/>
                             <field name="split"/>
                             <field name="weight_percent"/>
+                            <field name="duration"/>
                             <field name="activity_tag" widget="many2many_tags"/>
                         </group>
                     </sheet>

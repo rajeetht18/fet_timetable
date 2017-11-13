@@ -26,9 +26,17 @@ class Faculty(models.Model):
 class FacultyClassList(models.Model):
     _name = 'op.faculty.class.list'
 
+    @api.model
+    def create(self, values):
+        res = super(FacultyClassList, self).create(values)
+        res.name = str(res.id)+" - "+str(res.duration)+" - "+str(res.list_id.name)+" - "+str(res.subject_id.name)+" - "+str(res.activity_tag.name)+" - "+str(res.batch_id.name)
+        return res
+
+    name = fields.Char("Name",readonly=1)
     list_id = fields.Many2one('op.faculty', 'Faculty Class')
     subject_id = fields.Many2one('op.subject', 'Subject', required=True)
     batch_id = fields.Many2one('op.batch', 'Batch Name', required=True)
     split = fields.Integer('Number of Classes Per Week', size=35)
     weight_percent = fields.Float('Weight %', default=100, size=100)
+    duration = fields.Integer("Duration",default=1)
     activity_tag = fields.Many2many('op.activity.tags', string="Activity Tag")

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+
+    <!--Batch Constraints tree view-->
+    <record id="batch_constraints_tree_view" model="ir.ui.view">
+      <field name="name">op.batch.constraints.tree</field>
+      <field name="model">op.batch.constraints</field>
+      <field name="arch" type="xml">
+        <tree string="Batch Constraints Tree" widget="one2many_list">
+          <field name="student_id"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Batch Constraints Form View-->
+    <record id="batch_constraints_form_view" model="ir.ui.view">
+      <field name="name">op.batch.constraints.form.view</field>
+      <field name="model">op.batch.constraints</field>
+      <field name="arch" type="xml">
+        <form string="Batch Constraints Form">
+          <sheet>
+            <group>
+              <group>
+                <field name="student_id"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Periods">
+                <field name="batch_constraints_line_ids">
+                  <tree string="Batch Constraints" editable="bottom" create="false" delete="false">
+                    <field name="name" />
+                    <field name="is_monday" invisible="1"/>
+                    <field name="is_tuesday" invisible="1"/>
+                    <field name="is_wednesday" invisible="1"/>
+                    <field name="is_thursday" invisible="1"/>
+                    <field name="is_friday" invisible="1"/>
+                    <field name="is_saturday" invisible="1"/>
+                    <field name="is_sunday" invisible="1"/>
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
+                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
+                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
+                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
+                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
+                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
+                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Batch Constraints Action-->
+    <record model="ir.actions.act_window" id="action_batch_constraints">
+        <field name="name">Batch Constraints</field>
+        <field name="res_model">op.batch.constraints</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="batch_constraints_tree_view" />
+    </record>
+
+    <!--Constraints Menu-->
+    <menuitem id="menu_constraints" name="Constraints"  parent="openeducat_timetable.menu_op_timetable_root"
+    sequence="41" />
+
+    <!--Time Constraints Menu-->
+    <menuitem id="menu_time_constraints" name="Time Constraints"  parent="menu_constraints"
+    sequence="1" />
+
+    <menuitem id="menu_student_constraints" name="Students Constraints"  parent="menu_time_constraints"
+    sequence="1" />
+
+    <!--Batch Constraints Menu-->
+    <menuitem id="menu_batch_constraints" name="A students set's not available times"  parent="menu_student_constraints"
+    action="action_batch_constraints" sequence="1" />
+
+
+    <!--Activity starting time Constraints tree view-->
+    <record id="activity_starting_time_constraint_tree_view" model="ir.ui.view">
+      <field name="name">op.activity.starting.time.tree</field>
+      <field name="model">op.activity.starting.time</field>
+      <field name="arch" type="xml">
+        <tree string="Activity Starting Time Tree">
+          <field name="activity_id"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activity starting time Constraints Form View-->
+    <record id="activity_starting_time_constraint_form_view" model="ir.ui.view">
+      <field name="name">op.activity.starting.time.form.view</field>
+      <field name="model">op.activity.starting.time</field>
+      <field name="arch" type="xml">
+        <form string="Activity Starting Time Form">
+          <sheet>
+            <group>
+              <group>
+                <field name="activity_id" options="{'no_create_edit': True}"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Periods">
+                <field name="activity_starting_time_ids">
+                  <tree string="Activity Starting Time Constraints" editable="bottom">
+                    <field name="name" />
+                    <field name="is_monday" invisible="1"/>
+                    <field name="is_tuesday" invisible="1"/>
+                    <field name="is_wednesday" invisible="1"/>
+                    <field name="is_thursday" invisible="1"/>
+                    <field name="is_friday" invisible="1"/>
+                    <field name="is_saturday" invisible="1"/>
+                    <field name="is_sunday" invisible="1"/>
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
+                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
+                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
+                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
+                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
+                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
+                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activity Starting Time Constraints Action-->
+    <record model="ir.actions.act_window" id="action_activity_starting_time">
+        <field name="name">Activity Starting Time Constraints</field>
+        <field name="res_model">op.activity.starting.time</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activity_starting_time_constraint_tree_view" />
+    </record>
+
+    <!--Activity Constraints Menu-->
+    <menuitem id="menu_activity_constraints" name="Activity Constraints"  parent="menu_time_constraints"
+    sequence="2" />
+
+    <!--Activity Starting Time Constraints Menu-->
+    <menuitem id="menu_activity_starting_time" name="An activiy has a set of preferred starting times"  parent="menu_activity_constraints"
+    action="action_activity_starting_time" sequence="1" />
+
+
+
+    <!--Activity Time Slots Constraints tree view-->
+    <record id="activity_timeslots_constraint_tree_view" model="ir.ui.view">
+      <field name="name">op.activity.timeslots.tree</field>
+      <field name="model">op.activity.timeslots</field>
+      <field name="arch" type="xml">
+        <tree string="Activity Time Slots Tree">
+          <field name="activity_id"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activity Time Slots Constraints tree Form View-->
+    <record id="activity_timeslots_constraint_form_view" model="ir.ui.view">
+      <field name="name">op.activity.timeslots.time.form.view</field>
+      <field name="model">op.activity.timeslots</field>
+      <field name="arch" type="xml">
+        <form string="Activity Time Slots Form">
+          <sheet>
+            <group>
+              <group>
+                <field name="activity_id" options="{'no_create_edit': True}"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Periods">
+                <field name="activity_timeslots_ids">
+                  <tree string="Activity Time Slots Constraints" editable="bottom">
+                    <field name="name" />
+                    <field name="is_monday" invisible="1"/>
+                    <field name="is_tuesday" invisible="1"/>
+                    <field name="is_wednesday" invisible="1"/>
+                    <field name="is_thursday" invisible="1"/>
+                    <field name="is_friday" invisible="1"/>
+                    <field name="is_saturday" invisible="1"/>
+                    <field name="is_sunday" invisible="1"/>
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
+                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
+                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
+                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
+                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
+                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
+                    <field name="sunday" aactivity_ttrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activity Time Slots Constraints Action-->
+    <record model="ir.actions.act_window" id="action_activity_timeslots">
+        <field name="name">Activity Time Slots Constraints</field>
+        <field name="res_model">op.activity.timeslots</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activity_timeslots_constraint_tree_view" />
+    </record>
+
+    <!--Activity Time Slots Constraints Menu-->
+    <menuitem id="menu_activity_timeslots" name="An activiy has a set of preferred Time Slots"  parent="menu_activity_constraints"
+    action="action_activity_timeslots" sequence="2" />
+
+  </data>
+</odoo>
