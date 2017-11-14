@@ -2,7 +2,7 @@
 from odoo import api, fields, models
 
 
-class TimetableDaysConfig(models.Model):
+class TimetableDaysConfig(models.TransientModel):
     _name = "timetable.days.config"
     _inherit = 'res.config.settings'
 
@@ -23,10 +23,11 @@ class TimetableDaysConfig(models.Model):
         self.env['ir.values'].sudo().set_default('timetable.days.config', 'tt_sunday', self.tt_sunday)
         return True
 
-    tt_monday = fields.Boolean("Monday")
-    tt_tuesday = fields.Boolean("Tuesday")
-    tt_wednesday = fields.Boolean("Wednesday")
-    tt_thursday = fields.Boolean("Thursday")
-    tt_friday = fields.Boolean("Friday")
-    tt_saturday = fields.Boolean("Saturday")
-    tt_sunday = fields.Boolean("Sunday")
+    company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.user.company_id)
+    tt_monday = fields.Boolean(related='company_id.tt_monday', string="Monday")
+    tt_tuesday = fields.Boolean(related='company_id.tt_tuesday', string="Tuesday")
+    tt_wednesday = fields.Boolean(related='company_id.tt_wednesday', string="Wednesday")
+    tt_thursday = fields.Boolean(related='company_id.tt_thursday', string="Thursday")
+    tt_friday = fields.Boolean(related='company_id.tt_friday', string="Friday")
+    tt_saturday = fields.Boolean(related='company_id.tt_saturday', string="Saturday")
+    tt_sunday = fields.Boolean(related='company_id.tt_sunday', string="Sunday")
