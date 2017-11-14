@@ -25,7 +25,8 @@ class Allfacultyconstraints(models.Model):
 
     @api.model
     def set_default_week(self):
-        default_week = self.env['timetable.days.config'].search[()]
+        default_week = self.env['res.company'].search[('id', '=', self)]
+        count = 0
         for max_days_per_week in default_week:
             if max_days_per_week == default_week.tt_monday:
                 max_days_per_week.monday = 1

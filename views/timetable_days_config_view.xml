@@ -14,7 +14,10 @@
                     </header>
                     <group>
                         <group string="TimeTable Days">
-                            
+                            <label for="company_id" string="Company" groups="base.group_multi_company"/>
+                            <div>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </div>
                             <label for="tt_monday" string="Monday"/>
                             <div>
                                 <field name="tt_monday" />
