@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <!--Activity Starting Time tree view-->
+    <record id="subactivity_starting_time_tree_view" model="ir.ui.view">
+      <field name="name">op.subactivity.starting.time.tree</field>
+      <field name="model">op.subactivity.starting.time</field>
+      <field name="arch" type="xml">
+        <tree string="Subactivity Time Starting Time Tree">
+          <field name="faculty_id"/>
+          <field name="student_id"/>
+          <field name="subject_id"/>
+          <field name="activity_tag_id"/>
+          <field name="component_count"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Subactivity Starting Time Form View-->
+    <record id="subactivity_starting_time_form_view" model="ir.ui.view">
+      <field name="name">op.subactivity.starting.time.form.view</field>
+      <field name="model">op.subactivity.starting.time</field>
+      <field name="arch" type="xml">
+        <form string="Subactivity starting Time Form">
+          <sheet>
+            <group>
+              <group>
+                <field name="faculty_id"/>
+                <field name="student_id"/>
+                <field name="component_count"/>
+              </group>
+              <group>
+                <field name="subject_id"/>
+                <field name="activity_tag_id"/>
+                <field name="weight"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Starting Time">
+                <field name="subactivity_starting_line_ids">
+                  <tree string="Subactivity Starting Time" editable="bottom" create="false" delete="false">
+                    <field name="name" />
+                    <field name="is_monday" invisible="1"/>
+                    <field name="is_tuesday" invisible="1"/>
+                    <field name="is_wednesday" invisible="1"/>
+                    <field name="is_thursday" invisible="1"/>
+                    <field name="is_friday" invisible="1"/>
+                    <field name="is_saturday" invisible="1"/>
+                    <field name="is_sunday" invisible="1"/>
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
+                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
+                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
+                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
+                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
+                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
+                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Subctivity Starting Time Constraints Action-->
+    <record model="ir.actions.act_window" id="action_subactivity_starting_time">
+        <field name="name">Subctivity Starting Time</field>
+        <field name="res_model">op.subactivity.starting.time</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="subactivity_starting_time_tree_view" />
+    </record>
+
+
+    <!--Activity Starting Time Menu-->
+    <menuitem id="menu_subactivity_starting_time_constraints" name="A set of subactivity has a set of preferred starting Time"  parent="menu_activity_constraints"
+    action="action_subactivity_starting_time" sequence="5" />
+
+
+  </data>
+</odoo>
