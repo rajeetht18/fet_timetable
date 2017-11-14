@@ -34,6 +34,8 @@
                         <field name="max_hrs_act"/>
                         <field name="min_hrs"/>
                         <field name="max_hrs_cont"/>
+                        <field name="interval_start"/>
+                        <field name="interval_end"/>
                         <div>
                           <span>
                             (*) Constraint For Adding Teachers Time (*)

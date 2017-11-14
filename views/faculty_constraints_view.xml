@@ -31,6 +31,8 @@
                 <field name="min_hrs_daily"/>
                 <field name="max_hrs_cont_tr" />
                 <field name="max_hrs_cont_tr_act"/>
+                <field name="interval_start"/>
+                <field name="interval_end"/>
                 <div name= "Message">
                   <span>(*) This constraint is related to all the Faculties (*)</span>
                </div>
@@ -42,7 +44,7 @@
 
     <!--Batch Constraints Action-->
     <record model="ir.actions.act_window" id="action_faculty_constraints">
-        <field name="name">Allfacultyconstraints</field>
+        <field name="name">All Faculty Constraints</field>
         <field name="res_model">op.all.faculty.constraints</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
