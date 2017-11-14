@@ -10,7 +10,7 @@ class FacultyTime(models.Model):
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id','=',self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.faculty_not_line_ids:
                 if day_config.tt_monday:
@@ -30,7 +30,7 @@ class FacultyTime(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id','=',self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.faculty_not_line_ids:
                 if day_config.tt_monday:
