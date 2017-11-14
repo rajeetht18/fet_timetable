@@ -28,13 +28,14 @@ class Faculty(models.Model):
 class FacultyClassList(models.Model):
     _name = 'op.faculty.class.list'
 
-    @api.model
-    def create(self, values):
-        res = super(FacultyClassList, self).create(values)
-        res.name = str(res.id)+" - "+str(res.duration)+" - "+str(res.list_id.name)+" - "+str(res.subject_id.name)+" - "+str(res.activity_tag.name)+" - "+str(res.batch_id.name)
-        return res
+    @api.multi
+    @api.depends('subject_id','batch_id','activity_tag')
+    def compute_name(self):
+        for rec in self:
+            if rec.id:
+                rec.name = str(rec.id)+" - "+str(rec.duration)+" - "+str(rec.list_id.name)+" - "+str(rec.subject_id.name)+" - "+str(rec.activity_tag.name)+" - "+str(rec.batch_id.name)
 
-    name = fields.Char("Name",readonly=1)
+    name = fields.Char("Name",readonly=1,compute='compute_name')
     list_id = fields.Many2one('op.faculty', 'Faculty Class')
     subject_id = fields.Many2one('op.subject', 'Subject', required=True)
     batch_id = fields.Many2one('op.batch', 'Batch Name', required=True)
