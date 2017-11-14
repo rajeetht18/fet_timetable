@@ -35,7 +35,7 @@
 
         <!--Activity Tag Action-->
         <record model="ir.actions.act_window" id="action_faculty_activity_maxhr">
-            <field name="name">Faculty Activity Maxhrs</field>
+            <field name="name">Faculty Activity For Maximum Hours</field>
             <field name="res_model">op.faculty.activity.maxhrs</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
