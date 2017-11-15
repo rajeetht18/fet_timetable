@@ -27,6 +27,7 @@
             <group>
             <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
             <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
+
             </group>
             <notebook>
               <page string="Not Available">
@@ -49,6 +50,12 @@
                       <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
                   </tree>
                 </field>
+                <footer>
+                  <span> 0 -> Allowed,</span>
+                  <span> 1 -> Not Allowed.</span>
+                </footer>
+              <br/>
+              <span>(*) This constraint does not induce gaps for teachers. If a teacher has lessons before and after a not available period, gaps will not be counted.</span>
               </page>
             </notebook>
           </sheet>

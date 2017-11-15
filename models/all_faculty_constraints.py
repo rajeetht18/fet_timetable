@@ -7,6 +7,13 @@ class Allfacultyconstraints(models.Model):
     _name = 'op.all.faculty.constraints'
 
     # Time Constraint II (All Teachers)
+    @api.multi
+    @api.constrains('interval_end', 'interval_start')
+    def check_interval_time(self):
+        for t in self:
+            if t.interval_end and t.interval_start and (t.interval_end.sequence < t.interval_start.sequence):
+                raise UserError(_("Start hour cannot be greater or equal than end hour"))
+
     @api.model
     def _get_default_maxdays(self):
         res_days = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
@@ -41,7 +48,11 @@ class Allfacultyconstraints(models.Model):
     max_hrs_cont_tr_act = fields.Float('Max Hours Continuously with an activity For All Faculty')
     interval_start = fields.Many2one('op.timing', 'Interval Start Hour')
     interval_end = fields.Many2one('op.timing', 'Interval End Hour')
+    max_bulding_change = fields.Integer('Max Building Changes Per Day', size=10)
+    max_building_week = fields.Integer('Max Building Changes Per Week', size=10)
+    min_gap_buliding = fields.Integer('Min Gaps Between Building Changes', size=10)
 
+    
     _sql_constraints = [('unique_Faculty', 'unique(name)', 'Only one Constraint required.')]
 
 

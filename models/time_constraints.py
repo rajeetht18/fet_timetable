@@ -96,7 +96,6 @@ class BatchConstraintsLine(models.Model):
     batch_constraint_id = fields.Many2one('op.batch.constraints', "Batch Constraints")
 
 
-
 class ActivityStartingTime(models.Model):
     _name = 'op.activity.starting.time'
     _description = 'An activity has a set of preferred starting time.'
