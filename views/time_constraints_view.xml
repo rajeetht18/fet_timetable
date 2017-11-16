@@ -109,6 +109,10 @@
               <group>
                 <field name="weight"/>
               </group>
+              <group>
+              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+              <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
+              </group>
             </group>
             <notebook>
               <page string="Starting Time">
@@ -183,6 +187,10 @@
               <group>
                 <field name="weight"/>
               </group>
+              <group>
+              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+              <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
+              </group>
             </group>
             <notebook>
               <page string="Time Slots">
@@ -196,7 +204,7 @@
                     <field name="is_friday" invisible="1"/>
                     <field name="is_saturday" invisible="1"/>
                     <field name="is_sunday" invisible="1"/>
-                    <field name="monday" attrs="{'readonly': [('is_mondactivity_timeslots_iday', '!=', True)]}" />
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
                     <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
                     <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
                     <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
@@ -261,10 +269,14 @@
                 <field name="activity_tag_id"/>
                 <field name="weight"/>
               </group>
+              <group>
+              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+              <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
+              </group>
             </group>
             <notebook>
               <page string="Starting Time">
-                <field name="Activities_starting_time_line_ids">
+                <field name="activities_starting_time_line_ids">
                   <tree string="Activities Starting Time" editable="bottom" create="false" delete="false">
                     <field name="name" />
                     <field name="is_monday" invisible="1"/>
@@ -337,6 +349,10 @@
                 <field name="subject_id"/>
                 <field name="activity_tag_id"/>
                 <field name="weight"/>
+              </group>
+              <group>
+              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+              <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
               </group>
             </group>
             <notebook>

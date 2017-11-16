@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+
+    <!--Batch Constraints tree view-->
+    <record id="batch_constraints_tree_view" model="ir.ui.view">
+      <field name="name">op.batch.constraints.tree</field>
+      <field name="model">op.batch.constraints</field>
+      <field name="arch" type="xml">
+        <tree string="Batch Constraints Tree" widget="one2many_list">
+          <field name="student_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Batch Constraints Form View-->
+    <record id="batch_constraints_form_view" model="ir.ui.view">
+      <field name="name">op.batch.constraints.form.view</field>
+      <field name="model">op.batch.constraints</field>
+      <field name="arch" type="xml">
+        <form string="Batch Constraints Form">
+          <sheet>
+            <group>
+                <field name="student_id"/>
+            </group>
+            <notebook>
+              <page string="Periods">
+                <field name="batch_constraints_line_ids">
+                  <tree string="Batch Constraints" editable="bottom">
+                    <field name="name"/>
+                      <field name="sunday"/>
+                      <field name="monday" />
+                      <field name="tuesday" />
+                      <field name="wednesday" />
+                      <field name="thursday" />
+                      <field name="friday" />
+                      <field name="saturday" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Batch Constraints Action-->
+    <record model="ir.actions.act_window" id="action_batch_constraints">
+        <field name="name">Batch Constraints</field>
+        <field name="res_model">op.batch.constraints</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="batch_constraints_tree_view" />
+    </record>
+
+    <!--Constraints Menu-->
+    <menuitem id="menu_constraints" name="Constraints"  parent="openeducat_timetable.menu_op_timetable_root"
+    sequence="41" />
+
+    <!--Time Constraints Menu-->
+    <menuitem id="menu_time_constraints" name="Time Constraints"  parent="menu_constraints"
+    sequence="1" />
+
+    <!--Batch Constraints Menu-->
+    <menuitem id="menu_batch_constraints" name="Batch Constraints"  parent="menu_time_constraints"
+    action="action_batch_constraints" sequence="1" />
+
+  </data>
+</odoo>

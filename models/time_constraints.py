@@ -102,6 +102,46 @@ class ActivityStartingTime(models.Model):
     _description = 'An activity has a set of preferred starting time.'
     _rec_name = 'activity_id'
 
+    @api.multi
+    def set_not_available(self):
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        if day_config:
+            for l in self.activity_starting_line_ids:
+                if day_config.tt_monday:
+                    l.monday = 1
+                if day_config.tt_tuesday:
+                    l.tuesday = 1
+                if day_config.tt_wednesday:
+                    l.wednesday = 1
+                if day_config.tt_thursday:
+                    l.thursday = 1
+                if day_config.tt_friday:
+                    l.friday = 1
+                if day_config.tt_saturday:
+                    l.saturday = 1
+                if day_config.tt_sunday:
+                    l.sunday = 1
+
+    @api.multi
+    def set_available(self):
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        if day_config:
+            for l in self.activity_starting_line_ids:
+                if day_config.tt_monday:
+                    l.monday = 0
+                if day_config.tt_tuesday:
+                    l.tuesday = 0
+                if day_config.tt_wednesday:
+                    l.wednesday = 0
+                if day_config.tt_thursday:
+                    l.thursday = 0
+                if day_config.tt_friday:
+                    l.friday = 0
+                if day_config.tt_saturday:
+                    l.saturday = 0
+                if day_config.tt_sunday:
+                    l.sunday = 0
+
     @api.model
     def create(self, values):
         if len(values['activity_starting_line_ids']) == 0:
@@ -187,6 +227,46 @@ class ActivityTimeSlots(models.Model):
     _name = 'op.activity.timeslots'
     _description = 'An activity has a set of preferred time slots.'
     _rec_name = 'activity_id'
+
+    @api.multi
+    def set_not_available(self):
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        if day_config:
+            for l in self.activity_timeslots_line_ids:
+                if day_config.tt_monday:
+                    l.monday = 1
+                if day_config.tt_tuesday:
+                    l.tuesday = 1
+                if day_config.tt_wednesday:
+                    l.wednesday = 1
+                if day_config.tt_thursday:
+                    l.thursday = 1
+                if day_config.tt_friday:
+                    l.friday = 1
+                if day_config.tt_saturday:
+                    l.saturday = 1
+                if day_config.tt_sunday:
+                    l.sunday = 1
+
+    @api.multi
+    def set_available(self):
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        if day_config:
+            for l in self.activity_timeslots_line_ids:
+                if day_config.tt_monday:
+                    l.monday = 0
+                if day_config.tt_tuesday:
+                    l.tuesday = 0
+                if day_config.tt_wednesday:
+                    l.wednesday = 0
+                if day_config.tt_thursday:
+                    l.thursday = 0
+                if day_config.tt_friday:
+                    l.friday = 0
+                if day_config.tt_saturday:
+                    l.saturday = 0
+                if day_config.tt_sunday:
+                    l.sunday = 0
 
     @api.model
     def create(self, values):
@@ -275,9 +355,49 @@ class ActivitiesStartingTime(models.Model):
     _description = 'A set of activities has a set of preferred starting times.'
     _rec_name = 'faculty_id'
 
+    @api.multi
+    def set_not_available(self):
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        if day_config:
+            for l in self.activities_starting_time_line_ids:
+                if day_config.tt_monday:
+                    l.monday = 1
+                if day_config.tt_tuesday:
+                    l.tuesday = 1
+                if day_config.tt_wednesday:
+                    l.wednesday = 1
+                if day_config.tt_thursday:
+                    l.thursday = 1
+                if day_config.tt_friday:
+                    l.friday = 1
+                if day_config.tt_saturday:
+                    l.saturday = 1
+                if day_config.tt_sunday:
+                    l.sunday = 1
+
+    @api.multi
+    def set_available(self):
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        if day_config:
+            for l in self.activities_starting_time_line_ids:
+                if day_config.tt_monday:
+                    l.monday = 0
+                if day_config.tt_tuesday:
+                    l.tuesday = 0
+                if day_config.tt_wednesday:
+                    l.wednesday = 0
+                if day_config.tt_thursday:
+                    l.thursday = 0
+                if day_config.tt_friday:
+                    l.friday = 0
+                if day_config.tt_saturday:
+                    l.saturday = 0
+                if day_config.tt_sunday:
+                    l.sunday = 0
+
     @api.model
     def create(self, values):
-        if len(values['Activities_starting_time_line_ids']) == 0:
+        if len(values['activities_starting_time_line_ids']) == 0:
             raise UserError(_("Please configure Timetable Days to create your Activities Time Constraint."))
         res = super(ActivitiesStartingTime, self).create(values)
         return res
@@ -303,11 +423,11 @@ class ActivitiesStartingTime(models.Model):
         return period_list
 
     @api.multi
-    @api.constrains('Activities_starting_time_line_ids')
+    @api.constrains('activities_starting_time_line_ids')
     def _check_Activities_starting_time_line(self):
         for record in self:
             flag = False
-            for line in record.Activities_starting_time_line_ids:
+            for line in record.activities_starting_time_line_ids:
                 if line.monday != 0 and line.monday != 1:
                     flag = True
                 if line.tuesday != 0 and line.tuesday != 1:
@@ -325,13 +445,13 @@ class ActivitiesStartingTime(models.Model):
             if flag:
                 raise UserError(_("The value should be 1 or 0."))
 
-    faculty_id = fields.Many2one('op.faculty',"Faculty")
-    student_id = fields.Many2one('op.batch',"Students")
-    subject_id = fields.Many2one('op.subject',"Subject")
-    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag")
+    faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
+    student_id = fields.Many2one('op.batch',"Students",required=1)
+    subject_id = fields.Many2one('op.subject',"Subject",required=1)
+    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
     duration = fields.Integer("Duration",default=1)
     weight = fields.Integer("Weight Percentage",default=100)
-    Activities_starting_time_line_ids = fields.One2many('op.activities.starting.time.line', 'activities_starting_time_id', "Activities Starting Time", default=default_line)
+    activities_starting_time_line_ids = fields.One2many('op.activities.starting.time.line', 'activities_starting_time_id', "Activities Starting Time", default=default_line)
 
 
 class ActivitiesStartingTimeLine(models.Model):
@@ -360,6 +480,46 @@ class ActivitiesTimeSlots(models.Model):
     _name = 'op.activities.timeslots'
     _description = 'An activity has a set of preferred time slots.'
     _rec_name = 'faculty_id'
+
+    @api.multi
+    def set_not_available(self):
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        if day_config:
+            for l in self.activities_timeslots_line_ids:
+                if day_config.tt_monday:
+                    l.monday = 1
+                if day_config.tt_tuesday:
+                    l.tuesday = 1
+                if day_config.tt_wednesday:
+                    l.wednesday = 1
+                if day_config.tt_thursday:
+                    l.thursday = 1
+                if day_config.tt_friday:
+                    l.friday = 1
+                if day_config.tt_saturday:
+                    l.saturday = 1
+                if day_config.tt_sunday:
+                    l.sunday = 1
+
+    @api.multi
+    def set_available(self):
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        if day_config:
+            for l in self.activities_timeslots_line_ids:
+                if day_config.tt_monday:
+                    l.monday = 0
+                if day_config.tt_tuesday:
+                    l.tuesday = 0
+                if day_config.tt_wednesday:
+                    l.wednesday = 0
+                if day_config.tt_thursday:
+                    l.thursday = 0
+                if day_config.tt_friday:
+                    l.friday = 0
+                if day_config.tt_saturday:
+                    l.saturday = 0
+                if day_config.tt_sunday:
+                    l.sunday = 0
 
     @api.model
     def create(self, values):
@@ -411,10 +571,10 @@ class ActivitiesTimeSlots(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
-    faculty_id = fields.Many2one('op.faculty',"Faculty")
-    student_id = fields.Many2one('op.batch',"Students")
-    subject_id = fields.Many2one('op.subject',"Subject")
-    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag")
+    faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
+    student_id = fields.Many2one('op.batch',"Students",required=1)
+    subject_id = fields.Many2one('op.subject',"Subject",required=1)
+    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
     duration = fields.Integer("Duration",default=1)
     weight = fields.Integer("Weight Percentage",default=100)
     activities_timeslots_line_ids = fields.One2many('op.activities.timeslots.line', 'activities_timeslots_id', "Activities Time Slots Line", default=default_line)

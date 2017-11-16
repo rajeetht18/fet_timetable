@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <!--Activity Ends Student Day tree view-->
+    <record id="activity_ends_day_tree_view" model="ir.ui.view">
+      <field name="name">activity.ends.day.tree</field>
+      <field name="model">op.activity.ends.day</field>
+      <field name="arch" type="xml">
+        <tree string="Activity Ends Student Day">
+          <field name="activity_id"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activity Ends Student Day Form View-->
+    <record id="activity_ends_day_form_view" model="ir.ui.view">
+      <field name="name">activity.ends.day.form.view</field>
+      <field name="model">op.activity.ends.day</field>
+      <field name="arch" type="xml">
+        <form string="Activity Ends Student Day Form">
+          <sheet>
+            <group>
+              <group>
+                <field name="activity_id"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activity Ends Student Day Action-->
+    <record model="ir.actions.act_window" id="action_activity_ends_students_day">
+        <field name="name">Activity Ends Student Day</field>
+        <field name="res_model">op.activity.ends.day</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activity_ends_day_tree_view" />
+    </record>
+
+    <!--Activity Ends Student Day Menu-->
+    <menuitem id="menu_activity_ends_day" name="An activity ends students day"  parent="menu_activity_constraints"
+    action="action_activity_ends_students_day" sequence="9" />
+
+
+
+    <!--Activities Ends Student Day tree view-->
+    <record id="activities_ends_day_tree_view" model="ir.ui.view">
+      <field name="name">activities.ends.day.tree</field>
+      <field name="model">op.activities.ends.day</field>
+      <field name="arch" type="xml">
+        <tree string="Activities Ends Student Day">
+          <field name="faculty_id"/>
+          <field name="subject_id"/>
+          <field name="student_id"/>
+          <field name="activity_tag_id"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activities Ends Student Day Form View-->
+    <record id="activities_ends_day_form_view" model="ir.ui.view">
+      <field name="name">activities.ends.day.form.view</field>
+      <field name="model">op.activities.ends.day</field>
+      <field name="arch" type="xml">
+        <form string="Activities Ends Student Day Form">
+          <sheet>
+            <group>
+              <group>
+                <field name="faculty_id"/>
+                <field name="subject_id"/>
+                <field name="weight"/>
+              </group>
+              <group>
+                <field name="student_id"/>
+                <field name="activity_tag_id"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activities Ends Student Day Action-->
+    <record model="ir.actions.act_window" id="action_activities_ends_students_day">
+        <field name="name">Activities Ends Student Day</field>
+        <field name="res_model">op.activities.ends.day</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activities_ends_day_tree_view" />
+    </record>
+
+    <!--Activity Ends Student Day Menu-->
+    <menuitem id="menu_activities_ends_day" name="A set of activities ends students day"  parent="menu_activity_constraints"
+    action="action_activities_ends_students_day" sequence="10" />
+
+
+    <!--Activities same starting time tree view-->
+    <record id="activities_same_starting_time_tree_view" model="ir.ui.view">
+      <field name="name">activities.same.starting.time.tree.view</field>
+      <field name="model">op.activities.same.starting.time</field>
+      <field name="arch" type="xml">
+        <tree string="Activities has same starting time">
+          <field name="activities_ids"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activities same starting time Form View-->
+    <record id="activities_same_starting_time_form_view" model="ir.ui.view">
+      <field name="name">activities.same.starting.time.form.view</field>
+      <field name="model">op.activities.same.starting.time</field>
+      <field name="arch" type="xml">
+        <form string="Activities has same starting time">
+          <sheet>
+            <group>
+              <group>
+                <field name="activities_ids" widget="many2many_tags"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activities same starting time Action-->
+    <record model="ir.actions.act_window" id="action_activities_same_starting_time">
+        <field name="name">Activities Same Starting Time</field>
+        <field name="res_model">op.activities.same.starting.time</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activities_same_starting_time_tree_view" />
+    </record>
+
+    <!--Activities same starting time Menu-->
+    <menuitem id="menu_activities_same_starting_time" name="A set of activities has same starting time"  parent="menu_activity_constraints"
+    action="action_activities_same_starting_time" sequence="11" />
+
+
+    <!--Activities same starting day tree view-->
+    <record id="activities_same_starting_day_tree_view" model="ir.ui.view">
+      <field name="name">activities.same.starting.day.tree.view</field>
+      <field name="model">op.activities.same.starting.day</field>
+      <field name="arch" type="xml">
+        <tree string="Activities has same starting day">
+          <field name="activities_ids"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activities same starting day Form View-->
+    <record id="activities_same_starting_day_form_view" model="ir.ui.view">
+      <field name="name">activities.same.starting.day.form.view</field>
+      <field name="model">op.activities.same.starting.day</field>
+      <field name="arch" type="xml">
+        <form string="Activities has same starting day">
+          <sheet>
+            <group>
+              <group>
+                <field name="activities_ids" widget="many2many_tags"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activities same starting time Action-->
+    <record model="ir.actions.act_window" id="action_activities_same_starting_day">
+        <field name="name">Activities Same Starting Day</field>
+        <field name="res_model">op.activities.same.starting.day</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activities_same_starting_day_tree_view" />
+    </record>
+
+    <!--Activities same starting time Menu-->
+    <menuitem id="menu_activities_same_starting_day" name="A set of activities has same starting day"  parent="menu_activity_constraints"
+    action="action_activities_same_starting_day" sequence="12" />
+
+
+    <!--Activities same starting hour tree view-->
+    <record id="activities_same_starting_hour_tree_view" model="ir.ui.view">
+      <field name="name">activities.same.starting.hour.tree.view</field>
+      <field name="model">op.activities.same.starting.hour</field>
+      <field name="arch" type="xml">
+        <tree string="Activities has same starting hour">
+          <field name="activities_ids"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activities same starting hour Form View-->
+    <record id="activities_same_starting_day_form_view" model="ir.ui.view">
+      <field name="name">activities.same.starting.hour.form.view</field>
+      <field name="model">op.activities.same.starting.hour</field>
+      <field name="arch" type="xml">
+        <form string="Activities has same starting hour">
+          <sheet>
+            <group>
+              <group>
+                <field name="activities_ids" widget="many2many_tags"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activities same starting hour Action-->
+    <record model="ir.actions.act_window" id="action_activities_same_starting_hour">
+        <field name="name">Activities Same Starting Hour</field>
+        <field name="res_model">op.activities.same.starting.hour</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activities_same_starting_hour_tree_view" />
+    </record>
+
+    <!--Activities same starting time Menu-->
+    <menuitem id="menu_activities_same_starting_hour" name="A set of activities has same starting hour"  parent="menu_activity_constraints"
+    action="action_activities_same_starting_hour" sequence="13" />
+
+
+
+    <!--Activities Max Time slots tree view-->
+    <record id="activities_max_timeslots_tree_view" model="ir.ui.view">
+      <field name="name">activities.max.time.slots.tree</field>
+      <field name="model">op.activities.max.time.slots</field>
+      <field name="arch" type="xml">
+        <tree string="Activities Max Time Slots Tree">
+          <field name="activities_ids"/>
+          <field name="max_occupied"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activities Max Time slots Form View-->
+    <record id="activities_max_timeslots_form_view" model="ir.ui.view">
+      <field name="name">activities.max.time.slots.form </field>
+      <field name="model">op.activities.max.time.slots</field>
+      <field name="arch" type="xml">
+        <form string="Activities Max Time Slots Form">
+          <sheet>
+            <group>
+              <group>
+                <field name="activities_ids" widget='many2many_tags'/>
+                <field name="max_occupied"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+              <group>
+              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+              <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Time Slots">
+                <field name="activities_max_timeslots_line_ids">
+                  <tree string="Activities Max Time Slots" editable="bottom" create="false" delete="false">
+                    <field name="name" />
+                    <field name="is_monday" invisible="1"/>
+                    <field name="is_tuesday" invisible="1"/>
+                    <field name="is_wednesday" invisible="1"/>
+                    <field name="is_thursday" invisible="1"/>
+                    <field name="is_friday" invisible="1"/>
+                    <field name="is_saturday" invisible="1"/>
+                    <field name="is_sunday" invisible="1"/>
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
+                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
+                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
+                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
+                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
+                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
+                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activities Max Time slots Action-->
+    <record model="ir.actions.act_window" id="action_activities_max_timeslots">
+        <field name="name">Activity Starting Time</field>
+        <field name="res_model">op.activities.max.time.slots</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activities_max_timeslots_tree_view" />
+    </record>
+
+    <!--Activities Max Time slots Menu-->
+    <menuitem id="menu_activities_max_timeslots" name="A set of activities occupies max timeslots from selection"  parent="menu_activity_constraints"
+    action="action_activities_max_timeslots" sequence="14" />
+
+    <!--Two Activities Ordered tree view-->
+    <record id="two_activities_ordered_tree_view" model="ir.ui.view">
+      <field name="name">two_activities.ordered.tree.view</field>
+      <field name="model">op.two_activities.ordered</field>
+      <field name="arch" type="xml">
+        <tree string="Two Activities Ordered">
+          <field name="activities_ids"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Two Activities Ordered Form View-->
+    <record id="two_activities_ordered_form_view" model="ir.ui.view">
+      <field name="name">two_activities.ordered.form.view</field>
+      <field name="model">op.two_activities.ordered</field>
+      <field name="arch" type="xml">
+        <form string="Two Activities Ordered">
+          <sheet>
+            <group>
+              <group>
+                <field name="activities_ids" widget="many2many_tags"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Two Activities Ordered Action-->
+    <record model="ir.actions.act_window" id="action_two_activities_ordered">
+        <field name="name">Two Activities Ordered</field>
+        <field name="res_model">op.two_activities.ordered</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="two_activities_ordered_tree_view" />
+    </record>
+
+    <!--Two Activities Ordered Menu-->
+    <menuitem id="menu_two_activities_ordered" name="Two Activities are Ordered"  parent="menu_activity_constraints"
+    action="action_two_activities_ordered" sequence="15" />
+
+
+    <!--Two Activities Consecutive tree view-->
+    <record id="two_activities_consecutive_tree_view" model="ir.ui.view">
+      <field name="name">two_activities.consecutive.tree.view</field>
+      <field name="model">op.two_activities.consecutive</field>
+      <field name="arch" type="xml">
+        <tree string="Two Activities Consecutive">
+          <field name="activities_ids"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Two Activities Consecutive Form View-->
+    <record id="two_activities_consecutive_form_view" model="ir.ui.view">
+      <field name="name">two_activities.ordered.form.view</field>
+      <field name="model">op.two_activities.consecutive</field>
+      <field name="arch" type="xml">
+        <form string="Two Activities Consecutive">
+          <sheet>
+            <group>
+              <group>
+                <field name="activities_ids" widget="many2many_tags"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Two Activities Consecutive Action-->
+    <record model="ir.actions.act_window" id="action_two_activities_consecutive">
+        <field name="name">Two Activities Ordered</field>
+        <field name="res_model">op.two_activities.consecutive</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="two_activities_consecutive_tree_view" />
+    </record>
+
+    <!--Two Activities Consecutive Menu-->
+    <menuitem id="menu_two_activities_consecutive" name="Two Activities are consecutive"  parent="menu_activity_constraints"
+    action="action_two_activities_consecutive" sequence="16" />
+
+
+
+    <!--Two Activities Grouped tree view-->
+    <record id="two_activities_grouped_tree_view" model="ir.ui.view">
+      <field name="name">two_activities.grouped.tree.view</field>
+      <field name="model">op.two_activities.grouped</field>
+      <field name="arch" type="xml">
+        <tree string="Two Activities Grouped">
+          <field name="activities_ids"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Two Activities Grouped Form View-->
+    <record id="two_activities_grouped_form_view" model="ir.ui.view">
+      <field name="name">two_activities.grouped.form.view</field>
+      <field name="model">op.two_activities.grouped</field>
+      <field name="arch" type="xml">
+        <form string="Two Activities Grouped">
+          <sheet>
+            <group>
+              <group>
+                <field name="activities_ids" widget="many2many_tags"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Two Activities Grouped Action-->
+    <record model="ir.actions.act_window" id="action_two_activities_grouped">
+        <field name="name">Two Activities Grouped</field>
+        <field name="res_model">op.two_activities.grouped</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="two_activities_grouped_tree_view" />
+    </record>
+
+    <!--Two Activities Grouped Menu-->
+    <menuitem id="menu_two_activities_grouped" name="Two Activities are Grouped"  parent="menu_activity_constraints"
+    action="action_two_activities_grouped" sequence="17" />
+
+
+
+    <!--Three Activities Grouped tree view-->
+    <record id="three_activities_grouped_tree_view" model="ir.ui.view">
+      <field name="name">three_activities.grouped.tree.view</field>
+      <field name="model">op.three_activities.grouped</field>
+      <field name="arch" type="xml">
+        <tree string="Three Activities Grouped">
+          <field name="activities_ids"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Three Activities Grouped Form View-->
+    <record id="three_activities_grouped_form_view" model="ir.ui.view">
+      <field name="name">three_activities.grouped.form.view</field>
+      <field name="model">op.three_activities.grouped</field>
+      <field name="arch" type="xml">
+        <form string="Three Activities Grouped">
+          <sheet>
+            <group>
+              <group>
+                <field name="activities_ids" widget="many2many_tags"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Three Activities Grouped Action-->
+    <record model="ir.actions.act_window" id="action_three_activities_grouped">
+        <field name="name">Three Activities Grouped</field>
+        <field name="res_model">op.three_activities.grouped</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="three_activities_grouped_tree_view" />
+    </record>
+
+    <!--Three Activities Grouped Menu-->
+    <menuitem id="menu_three_activities_grouped" name="Three Activities are Grouped"  parent="menu_activity_constraints"
+    action="action_three_activities_grouped" sequence="18" />
+
+
+    <!--Activities not overlap tree view-->
+    <record id="activities_not_overlap_tree_view" model="ir.ui.view">
+      <field name="name">activities.not_overlap.tree.view</field>
+      <field name="model">op.activities.not_overlap</field>
+      <field name="arch" type="xml">
+        <tree string="Three Activities Grouped">
+          <field name="activities_ids"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activities not overlapping Form View-->
+    <record id="activities_not_overlap_form_view" model="ir.ui.view">
+      <field name="name">activities.not_overlap.form.view</field>
+      <field name="model">op.activities.not_overlap</field>
+      <field name="arch" type="xml">
+        <form string="Three Activities Grouped">
+          <sheet>
+            <group>
+              <group>
+                <field name="activities_ids" widget="many2many_tags"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activities not overlap Action-->
+    <record model="ir.actions.act_window" id="action_activities_not_overlap">
+        <field name="name">Activities Not Overlap</field>
+        <field name="res_model">op.activities.not_overlap</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activities_not_overlap_tree_view" />
+    </record>
+
+    <!--Activities not overlapping Menu-->
+    <menuitem id="menu_activities_not_overlap" name="A set of activities not overlapped"  parent="menu_activity_constraints"
+    action="action_activities_not_overlap" sequence="19" />
+
+
+
+    <!--Activities Max Simultaneous Time slots tree view-->
+    <record id="activities_max_simultaneous_tree_view" model="ir.ui.view">
+      <field name="name">activities.max.simultaneous.tree</field>
+      <field name="model">op.activities.max.simultaneous</field>
+      <field name="arch" type="xml">
+        <tree string="Activities Max Time Slots Tree">
+          <field name="activities_ids"/>
+          <field name="max_occupied"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activities Max Simultaneous Time slots Form View-->
+    <record id="activities_max_simultaneous_form_view" model="ir.ui.view">
+      <field name="name">activities.max.simultaneous.form </field>
+      <field name="model">op.activities.max.simultaneous</field>
+      <field name="arch" type="xml">
+        <form string="Activities Max Time Slots Form">
+          <sheet>
+            <group>
+              <group>
+                <field name="activities_ids" widget='many2many_tags'/>
+                <field name="max_occupied"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+              <group>
+              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+              <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Time Slots">
+                <field name="activities_max_simultaneous_line_ids">
+                  <tree string="Activities Max Simulatneous Time Slots" editable="bottom" create="false" delete="false">
+                    <field name="name" />
+                    <field name="is_monday" invisible="1"/>
+                    <field name="is_tuesday" invisible="1"/>
+                    <field name="is_wednesday" invisible="1"/>
+                    <field name="is_thursday" invisible="1"/>
+                    <field name="is_friday" invisible="1"/>
+                    <field name="is_saturday" invisible="1"/>
+                    <field name="is_sunday" invisible="1"/>
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
+                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
+                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
+                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
+                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
+                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
+                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activities Max Simultaneous Time slots Action-->
+    <record model="ir.actions.act_window" id="action_activities_max_simultaneous">
+        <field name="name">Activities Max Simultaneous</field>
+        <field name="res_model">op.activities.max.simultaneous</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activities_max_simultaneous_tree_view" />
+    </record>
+
+    <!--Activities Max Simultaneous Time slots Menu-->
+    <menuitem id="menu_activities_max_simultaneous" name="Maximum simultaneous activities from a set in selected time slots"  parent="menu_activity_constraints"
+    action="action_activities_max_simultaneous" sequence="20" />
+
+
+
+    <!--Activities MinGap tree view-->
+    <record id="activities_mingap_tree_view" model="ir.ui.view">
+      <field name="name">activities.min_gap.tree.view</field>
+      <field name="model">op.activities.min_gap</field>
+      <field name="arch" type="xml">
+        <tree string="Activities Minimum Gap">
+          <field name="activities_ids"/>
+          <field name="min_gap"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activities MinGap Form View-->
+    <record id="activities_mingap_form_view" model="ir.ui.view">
+      <field name="name">activities.min_gap.form.view</field>
+      <field name="model">op.activities.min_gap</field>
+      <field name="arch" type="xml">
+        <form string="Activities Minimum Gap">
+          <sheet>
+            <group>
+              <group>
+                <field name="activities_ids" widget="many2many_tags"/>
+                <field name="min_gap"/>
+              </group>
+              <group>
+                <field name="weight"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activities MinGap Action-->
+    <record model="ir.actions.act_window" id="action_activities_mingap">
+        <field name="name">Activities Min Gap</field>
+        <field name="res_model">op.activities.min_gap</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activities_mingap_tree_view" />
+    </record>
+
+    <!--Activities MinGap Menu-->
+    <menuitem id="menu_activities_mingap" name="Minimum Gaps between a set of activities"  parent="menu_activity_constraints"
+    action="action_activities_mingap" sequence="20" />
+
+
+
+  </data>
+</odoo>
