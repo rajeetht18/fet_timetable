@@ -34,6 +34,8 @@ class Faculty(models.Model):
                 count += 1
         return count
 
+
+
     class_details = fields.One2many('op.faculty.class.list', 'list_id', string="Splits")
     weight_percent = fields.Float('Weight %', default=100, size=100)
     max_days = fields.Integer('Max days Per Week', default=_get_default_maxdays, size=10)
@@ -47,7 +49,14 @@ class Faculty(models.Model):
     interval_end = fields.Many2one('op.timing', 'Interval End Hour', size=25)
     max_hrs_cont = fields.Float('Max Hours Continuously', size=18)
     max_hr_cont_act = fields.Float('Max Hours Continuous with Activity', size=20)
+    max_buliding = fields.Integer('Max Building Changes Per Day', size=10)
+    max_bulid_week = fields.Integer('Max Buliding Changes Per Week', size=10)
+    max_gap_build = fields.Integer('Max Gap Between Building Changes', size=10)
     activity_name = fields.Many2one('op.activity.tags', 'Activity')
+    room = fields.Many2one('op.classroom', 'Home Room')
+    room_weight = fields.Float('Home Room Weight Percent', default=100, size=100)
+    set_of_room = fields.Many2many('op.classroom', string="Set of Home Rooms")
+    set_of_room_weight = fields.Float('Set of Room Weight Percent', default=100, size=100)
 
     @api.multi
     @api.constrains('interval_end', 'interval_start')
@@ -62,6 +71,13 @@ class Faculty(models.Model):
         for rec in self:
             if rec.weight_percent != 100:
                 raise UserError(_("Please set the weight percentage to 100."))
+
+    @api.multi
+    @api.constrains('room_weight', 'set_of_room_weight')
+    def check_room_weight(self):
+        for w in self:
+            if w.room_weight or w.set_of_room_weight > 100:
+                raise UserError(_("Please set the weight percentage to 100 or below."))
 
 
 class FacultyClassList(models.Model):

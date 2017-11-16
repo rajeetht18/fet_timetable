@@ -22,7 +22,7 @@
                         </field>
                     </page>
 
-                    <page name="time_constraints" string="Timetable Constraints">
+                    <page name="time_constraints" string="Time Constraints">
                       <separator string="Time Constraints"/>
                       <group>
                         <field name="max_days"/>
@@ -50,6 +50,23 @@
                             (*) Constraint For Adding Teachers Activity (*)
                           </span>
                         </div>
+                      </group>
+                    </page>
+                    <page name="space_constraints" string="Space Constraints">
+                      <separator string="Space Constraints"/>
+                      <group>
+                      <field name="max_buliding"/>
+                      <field name="max_bulid_week"/>
+                      <field name="max_gap_build"/>
+                      <field name="room"/>
+                      <field name="room_weight"/>
+                      <field name="set_of_room" widget="many2many_tags"/>
+                      <field name="set_of_room_weight"/>
+                      <div>
+                        <span>
+                          (*) This constraint is related to the room available for faculty
+                        </span>
+                      </div>
                       </group>
                     </page>
                 </xpath>
