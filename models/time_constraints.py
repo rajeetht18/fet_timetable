@@ -8,6 +8,46 @@ class BatchConstraints(models.Model):
     _description = 'A Students set not available times'
     _rec_name = 'student_id'
 
+    @api.multi
+    def set_not_available(self):
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        if day_config:
+            for l in self.batch_constraints_line_ids:
+                if day_config.tt_monday:
+                    l.monday = 1
+                if day_config.tt_tuesday:
+                    l.tuesday = 1
+                if day_config.tt_wednesday:
+                    l.wednesday = 1
+                if day_config.tt_thursday:
+                    l.thursday = 1
+                if day_config.tt_friday:
+                    l.friday = 1
+                if day_config.tt_saturday:
+                    l.saturday = 1
+                if day_config.tt_sunday:
+                    l.sunday = 1
+
+    @api.multi
+    def set_available(self):
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        if day_config:
+            for l in self.batch_constraints_line_ids:
+                if day_config.tt_monday:
+                    l.monday = 0
+                if day_config.tt_tuesday:
+                    l.tuesday = 0
+                if day_config.tt_wednesday:
+                    l.wednesday = 0
+                if day_config.tt_thursday:
+                    l.thursday = 0
+                if day_config.tt_friday:
+                    l.friday = 0
+                if day_config.tt_saturday:
+                    l.saturday = 0
+                if day_config.tt_sunday:
+                    l.sunday = 0
+
     @api.model
     def create(self, values):
         if len(values['batch_constraints_line_ids']) == 0:
@@ -65,12 +105,14 @@ class BatchConstraints(models.Model):
             if flag:
                 raise UserError(_("Break value should be 1 or 0."))
 
-    _sql_constraints = [
-        ('unique_batch',
-         'unique(student_id)', 'You cannot create a Batch Constraint again with the same batch!')]
+    # _sql_constraints = [
+    #     ('unique_batch',
+    #      'unique(student_id)', 'You cannot create a Batch Constraint again with the same batch!')]
 
     student_id = fields.Many2one('op.batch', "Batch", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
+    division = fields.Many2one('op.batch.group', "Group", required=1)
+    subdivision = fields.Many2one('op.batch.subgroup', "Subgroup", required=1)
     batch_constraints_line_ids = fields.One2many('op.breaks.constraints.line', 'batch_constraint_id', "Batch Constraints", default=default_line)
 
 

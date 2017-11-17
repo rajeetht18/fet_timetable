@@ -31,7 +31,7 @@
                 <field name="max_hrs_act"/>
                 <field name="min_hrs_daily"/>
                 <field name="max_hrs_cont_tr" />
-                <field name="max_hrs_cont_tr_act"/>
+                <!-- <field name="max_hrs_cont_tr_act"/> -->
                 <field name="interval_start"/>
                 <field name="interval_end"/>
                 <div name= "Message">
@@ -62,7 +62,8 @@
     </record>
 
     <!--Teachers Constraints Menu-->
-    <menuitem id="faculty_constraints_menu" name="All Faculty Constraints"  parent="menu_constraints" action="action_faculty_constraints"
+    <menuitem id="menu_faculty_view" name="Faculty" parent="menu_time_constraints" sequence="20"/>
+    <menuitem id="faculty_constraints_menu" name="All Faculty Constraints"  parent="menu_faculty_view" action="action_faculty_constraints"
     sequence="20" />
 
   </data>
