@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Students Set Tree view-->
+        <record id="Student_constraint_tree_view" model="ir.ui.view">
+            <field name="name">student.time.constraints.tree</field>
+            <field name="model">student.time.constraints</field>
+            <field name="arch" type="xml">
+                <tree string=" Students Set">
+                    <field name="batch_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Students Set form view-->
+        <record id="Students_constraint_form_view" model="ir.ui.view">
+            <field name="name">student.time.constraints.form</field>
+            <field name="model">student.time.constraints</field>
+            <field name="arch" type="xml">
+                <form string="Students Set">
+                    <sheet>
+                      <separator string="Time Constraints"/>
+                        <group>
+                            <field name="batch_name" />
+                            <field name="group_name" />
+                            <field name="subgroup_name" />
+                            <field name="weight_percent"/>
+                            <field name="max_days_week"/>
+                            <field name="max_gaps_day"/>
+                            <field name="max_gaps_week"/>
+                            <field name="max_begin_second"/>
+                            <field name="max_hrs_daily"/>
+                            <field name="max_hrs_daily_act"/>
+                            <field name="min_hrs_daily"/>
+                            <field name="max_hr_cont"/>
+                            <field name="max_hr_cont_act"/>
+                            <field name="interval_start"/>
+                            <field name="interval_end"/>
+                            <div>
+                              <span>(*) Only use if all students require this constraints (*)</span>
+                            </div>
+                        </group>
+                      <separator string="Space Constraints"/>
+                      <group>
+                          <field name="room"/>
+                          <field name="set_of_rooms"/>
+                          <field name="max_building_changes"/>
+                          <field name="max_build_week"/>
+                          <field name="min_gaps_building"/>
+                          <div>
+                            <span>(*) Only use if all students require specific building(*)</span>
+                          </div>
+                      </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Students Set Action-->
+        <record model="ir.actions.act_window" id="action_student_available">
+            <field name="name">Students Set</field>
+            <field name="res_model">student.time.constraints</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="Student_constraint_tree_view" />
+        </record>
+
+        <!--Students Set Menu-->
+        <menuitem id="menu_student_set_constraint" name="Student Set"  parent="menu_student_constraints"
+        action="action_student_available" sequence="1" />
+
+    </data>
+</odoo>
