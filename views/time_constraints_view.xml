@@ -28,12 +28,8 @@
                 <field name="subdivision"/>
               </group>
               <group>
-<<<<<<< HEAD
-                <field name="weight"/>
-=======
               <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
               <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
->>>>>>> e8cb5edefd87b19cad4e00fe96574b87aaaaec8b
               </group>
             <notebook>
               <page string="Periods">
