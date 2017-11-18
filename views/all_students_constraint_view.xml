@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Students Availabiltiy Tree view-->
+        <record id="All_Students_available_tree_view" model="ir.ui.view">
+            <field name="name">all.student.constraints.tree</field>
+            <field name="model">all.student.constraints</field>
+            <field name="arch" type="xml">
+                <tree string="All Students Available">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Students Availabiltiy form view-->
+        <record id="All_Students_available_form_view" model="ir.ui.view">
+            <field name="name">all.student.constraints.form</field>
+            <field name="model">all.student.constraints</field>
+            <field name="arch" type="xml">
+                <form string="All Students Availabile">
+                    <sheet>
+                      <separator string="Time Constraints"/>
+                        <group>
+                            <field name="name" />
+                            <field name="weight_percent" />
+                            <field name="max_days_week" />
+                            <field name="max_gaps_per_week"/>
+                            <field name="max_gaps_per_day"/>
+                            <field name="max_beginnings"/>
+                            <field name="max_hr_daily"/>
+                            <field name="min_hr_daily"/>
+                            <field name="max_hr_cont"/>
+                            <field name="max_hr_cont_act"/>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                            <div>
+                              <span>(*) Only use if all students require this constraints (*)</span>
+                            </div>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Students Availabiltiy Action-->
+        <record model="ir.actions.act_window" id="action_all_student_available">
+            <field name="name">All Students Available</field>
+            <field name="res_model">all.student.constraints</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="All_Students_available_tree_view" />
+        </record>
+
+        <!--Students Availabiltiy Menu-->
+        <menuitem id="menu_all_student_available" name="All Students Available"  parent="menu_student_constraints"
+        action="action_all_student_available" sequence="1" />
+
+    </data>
+</odoo>

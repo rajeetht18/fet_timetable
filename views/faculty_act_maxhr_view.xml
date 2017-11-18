@@ -43,7 +43,7 @@
         </record>
 
         <!--Activity Tags Menu-->
-        <menuitem id="menu_faculty_activity_maxhrs" name="All Faculty Activity"  parent="menu_constraints"
+        <menuitem id="menu_faculty_activity_maxhrs" name="All Faculty Activity"  parent="menu_faculty_view"
         action="action_faculty_activity_maxhr" sequence="40" />
 
 

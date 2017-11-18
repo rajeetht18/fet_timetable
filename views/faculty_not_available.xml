@@ -27,7 +27,6 @@
             <group>
             <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
             <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
-
             </group>
             <notebook>
               <page string="Not Available">

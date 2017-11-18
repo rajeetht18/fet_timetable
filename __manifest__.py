@@ -24,6 +24,7 @@ Export master data to generate Timetable in FET tool.
         'views/faculty_act_maxhr_view.xml',
         'views/time_activity_view.xml',
         'views/time_activities_view.xml',
+
     ],
     'auto_install': False,
 }

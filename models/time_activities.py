@@ -178,6 +178,14 @@ class TwoActivitiesOrdered(models.Model):
     _description = 'Two activities are ordered'
     _rec_name = 'weight'
 
+
+    @api.multi
+    @api.constrains('activities_ids')
+    def _check_min_gap(self):
+        for rec in self:
+            if len(rec.activities_ids) != 2:
+                raise UserError(_("Please make sure you've added 2 activities."))
+
     activities_ids = fields.Many2many('op.faculty.class.list','activity_ordered_rel','activity_id','ordered_id',"Activities")
     weight = fields.Integer("Weight Percentage",default=100)
 
@@ -186,6 +194,14 @@ class TwoActivitiesConsecutive(models.Model):
     _name = 'op.two_activities.consecutive'
     _description = 'Two activities are consecutive'
     _rec_name = 'weight'
+
+
+    @api.multi
+    @api.constrains('activities_ids')
+    def _check_min_gap(self):
+        for rec in self:
+            if len(rec.activities_ids) != 2:
+                raise UserError(_("Please make sure you've added 2 activities."))
 
     activities_ids = fields.Many2many('op.faculty.class.list','activity_consecutive_rel','activity_id','consecutive_id',"Activities")
     weight = fields.Integer("Weight Percentage",default=100)
@@ -196,6 +212,14 @@ class TwoActivitiesGrouped(models.Model):
     _description = 'Two activities are grouped'
     _rec_name = 'weight'
 
+
+    @api.multi
+    @api.constrains('activities_ids')
+    def _check_min_gap(self):
+        for rec in self:
+            if len(rec.activities_ids) != 2:
+                raise UserError(_("Please make sure you've added 2 activities."))
+
     activities_ids = fields.Many2many('op.faculty.class.list','two_activity_grouped_rel','activity_id','grouped_id',"Activities")
     weight = fields.Integer("Weight Percentage",default=100)
 
@@ -203,6 +227,13 @@ class ThreeActivitiesGrouped(models.Model):
     _name = 'op.three_activities.grouped'
     _description = 'Three activities are grouped'
     _rec_name = 'weight'
+
+    @api.multi
+    @api.constrains('activities_ids')
+    def _check_min_gap(self):
+        for rec in self:
+            if len(rec.activities_ids) != 3:
+                raise UserError(_("Please make sure you've added 3 activities."))
 
     activities_ids = fields.Many2many('op.faculty.class.list','three_activity_grouped_rel','activity_id','grouped_id',"Activities")
     weight = fields.Integer("Weight Percentage",default=100)

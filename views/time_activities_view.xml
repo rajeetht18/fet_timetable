@@ -356,7 +356,7 @@
     </record>
 
     <!--Two Activities Ordered Menu-->
-    <menuitem id="menu_two_activities_ordered" name="Two Activities are Ordered"  parent="menu_activity_constraints"
+    <menuitem id="menu_two_activities_ordered" name="Two Activities are ordered"  parent="menu_activity_constraints"
     action="action_two_activities_ordered" sequence="15" />
 
 
@@ -449,7 +449,7 @@
     </record>
 
     <!--Two Activities Grouped Menu-->
-    <menuitem id="menu_two_activities_grouped" name="Two Activities are Grouped"  parent="menu_activity_constraints"
+    <menuitem id="menu_two_activities_grouped" name="Two Activities are grouped"  parent="menu_activity_constraints"
     action="action_two_activities_grouped" sequence="17" />
 
 
@@ -496,7 +496,7 @@
     </record>
 
     <!--Three Activities Grouped Menu-->
-    <menuitem id="menu_three_activities_grouped" name="Three Activities are Grouped"  parent="menu_activity_constraints"
+    <menuitem id="menu_three_activities_grouped" name="Three Activities are grouped"  parent="menu_activity_constraints"
     action="action_three_activities_grouped" sequence="18" />
 
 
