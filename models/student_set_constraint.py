@@ -1,15 +1,23 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 
 class studentconstraints(models.Model):
     _name = 'student.time.constraints'
 
+    @api.multi
+    @api.constrains('weight_percent', 'weight_room')
+    def check_weight_percentage(self):
+        for rec in self:
+            if rec.weight_percent != 100:
+                raise UserError(_("Please set the weight percentage to 100."))
+
     # Student Time Constraints
     batch_name = fields.Many2one('op.batch', 'Batch', required=True)
     group_name = fields.Many2one('op.batch.group', 'Group')
     subgroup_name = fields.Many2one('op.batch.subgroup', 'Subgroup')
-    weight_percent = fields.Integer('Weight Percent', size=10)
+    weight_percent = fields.Integer('Weight Percent', default=100, size=10)
     max_days_week = fields.Integer('Max Days Per Week For Student', size=10)
     max_gaps_day = fields.Integer('Max Gaps Per Day For Student', size=10)
     max_gaps_week = fields.Integer('Max Gaps Per Week For Student', size=10)
@@ -25,6 +33,22 @@ class studentconstraints(models.Model):
     # Space Constraints
     room = fields.Integer('A Set of students has home room', size=10)
     set_of_rooms = fields.Integer('A set of Students Has a set of rooms', size=10)
+    weight_room = fields.Integer('Weight Percentage For Room', default=100, size=10)
     max_building_changes = fields.Integer('Max Building Changes Per day', size=10)
     max_build_week = fields.Integer('Max Building Changes Per Week')
     min_gaps_building = fields.Integer('Min gaps between building changes', size=10)
+
+    @api.multi
+    @api.constrains('interval_end', 'interval_start')
+    def check_interval_time(self):
+        for t in self:
+
+            if t.interval_end and t.interval_start and t.interval_end.sequence < t.interval_start.sequence:
+                raise UserError(_("Interval End Time Should Be Greater"))
+
+    @api.multi
+    @api.constrains('weight_room')
+    def check_room_weight(self):
+        for w in self:
+            if w.room_weight or w.set_of_room_weight > 100:
+                raise UserError(_("Please set the weight percentage to 100 or below."))

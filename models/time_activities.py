@@ -9,18 +9,19 @@ class ActivityEndsDay(models.Model):
     _rec_name = 'activity_id'
 
     activity_id = fields.Many2one('op.faculty.class.list', "Activity", required=1)
-    weight = fields.Integer("Weight Percentage",default=100)
+    weight = fields.Integer("Weight Percentage", default=100)
+
 
 class ActivitiesEndsDay(models.Model):
     _name = 'op.activities.ends.day'
     _description = 'A set of Activities ends a Students day.'
     _rec_name = 'faculty_id'
 
-    faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
-    student_id = fields.Many2one('op.batch',"Students",required=1)
-    subject_id = fields.Many2one('op.subject',"Subject",required=1)
-    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
-    weight = fields.Integer("Weight Percentage",default=100)
+    faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
+    student_id = fields.Many2one('op.batch', "Students", required=1)
+    subject_id = fields.Many2one('op.subject', "Subject", required=1)
+    activity_tag_id = fields.Many2one('op.activity.tags', "Activity Tag", required=1)
+    weight = fields.Integer("Weight Percentage", default=100)
 
 
 class ActivitiesSameStartingTime(models.Model):
@@ -28,16 +29,17 @@ class ActivitiesSameStartingTime(models.Model):
     _description = 'A set of Activities has same starting time.'
     _rec_name = 'weight'
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_sametime_rel','activity_id','sametime_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list', 'activity_sametime_rel', 'activity_id', 'sametime_id', "Activities")
+    weight = fields.Integer("Weight Percentage", default=100)
+
 
 class ActivitiesSameStartingDay(models.Model):
     _name = 'op.activities.same.starting.day'
     _description = 'A set of Activities has same starting day.'
     _rec_name = 'weight'
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_sameday_rel','activity_id','sameday_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list', 'activity_sameday_rel', 'activity_id', 'sameday_id', "Activities")
+    weight = fields.Integer("Weight Percentage", default=100)
 
 
 class ActivitiesSameStartingHour(models.Model):
@@ -45,8 +47,8 @@ class ActivitiesSameStartingHour(models.Model):
     _description = 'A set of Activities has same starting hour.'
     _rec_name = 'weight'
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_samehour_rel','activity_id','samehour_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list', 'activity_samehour_rel', 'activity_id', 'samehour_id', "Activities")
+    weight = fields.Integer("Weight Percentage", default=100)
 
 
 class ActivitiesMaxOccupyTimeSlots(models.Model):
@@ -145,8 +147,8 @@ class ActivitiesMaxOccupyTimeSlots(models.Model):
                 raise UserError(_("The Value should be 1 or 0."))
 
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_maxtimeslot_rel','activity_id','maxtimeslot_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list', 'activity_maxtimeslot_rel', 'activity_id', 'maxtimeslot_id', "Activities")
+    weight = fields.Integer("Weight Percentage", default=100)
     max_occupied = fields.Integer("maximum Occuppied")
     activities_max_timeslots_line_ids = fields.One2many('op.activities.max.time.slots.line', 'activities_max_timeslots_id', "Activities Max Time Slots Line", default=default_line)
 
