@@ -41,5 +41,6 @@ class Studentnotavailable(models.Model):
     start_time = fields.Many2one('op.timing', 'Interval Start Hour')
     end_time = fields.Many2one('op.timing', 'Interval End Hour')
     max_hr_cont = fields.Float('Max Hour Continously For All Students', size=10)
-
-    # Students Time Constraints
+    max_build = fields.Integer('Max building changes per day', size=10)
+    max_build_week = fields.Integer('Max Building Changes per week', size=10)
+    min_gaps_build = fields.Integer('Min Gaps Between building changes', size=10)

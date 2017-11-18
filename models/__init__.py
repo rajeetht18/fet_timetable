@@ -8,6 +8,7 @@ import time_constraints
 import faculty_activity_maxhr
 import all_faculty_constraints
 import students_constraints
+import student_set_constraint
 import company
 import time_activity
 import time_activities
