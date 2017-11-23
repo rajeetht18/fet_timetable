@@ -44,6 +44,7 @@
                       <group>
                           <field name="room"/>
                           <field name="set_of_rooms"/>
+                          <field name="weight_room"/>
                           <field name="max_building_changes"/>
                           <field name="max_build_week"/>
                           <field name="min_gaps_building"/>

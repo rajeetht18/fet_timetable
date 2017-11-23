@@ -17,7 +17,8 @@ class ActivityEndsDay(models.Model):
     #             raise UserError(_("This activity is already selected. Please select another activity."))
 
     activity_id = fields.Many2one('op.faculty.class.list', "Activity", required=1)
-    weight = fields.Integer("Weight Percentage",default=100)
+    weight = fields.Integer("Weight Percentage", default=100)
+
 
 class ActivitiesEndsDay(models.Model):
     _name = 'op.activities.ends.day'
@@ -39,7 +40,6 @@ class ActivitiesSameStartingTime(models.Model):
 
     activities_ids = fields.Many2many('op.faculty.class.list','activity_sametime_rel','activity_id','sametime_id',"Activities",required=1)
     weight = fields.Integer("Weight Percentage",default=100,required=1)
-
 
 class ActivitiesSameStartingDay(models.Model):
     _name = 'op.activities.same.starting.day'

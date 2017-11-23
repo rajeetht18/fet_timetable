@@ -34,8 +34,6 @@ class Faculty(models.Model):
                 count += 1
         return count
 
-
-
     class_details = fields.One2many('op.faculty.class.list', 'list_id', string="Splits")
     weight_percent = fields.Float('Weight %', default=100, size=100)
     max_days = fields.Integer('Max days Per Week', default=_get_default_maxdays, size=10)
@@ -62,7 +60,7 @@ class Faculty(models.Model):
     @api.constrains('interval_end', 'interval_start')
     def check_interval_time(self):
         for t in self:
-            if t.interval_end and t.interval_start and t.interval_end.sequence > t.interval_start.sequence:
+            if t.interval_end and t.interval_start and t.interval_end.sequence < t.interval_start.sequence:
                 raise UserError(_("Interval End Time Should Be Greater"))
 
     @api.multi
