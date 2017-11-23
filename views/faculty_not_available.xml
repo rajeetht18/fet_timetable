@@ -29,7 +29,7 @@
             <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
             </group>
             <notebook>
-              <page string="Not Available">
+              <page string="Time Slots">
                 <field name="faculty_not_line_ids">
                   <tree string="facutly_not_available_tree" editable="bottom">
                     <field name="name" required = "1"/>

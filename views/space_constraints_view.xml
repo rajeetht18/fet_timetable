@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <!--Room not Available Constraints tree view-->
+    <record id="room_not_available_tree_view" model="ir.ui.view">
+      <field name="name">room.not.available.tree.view</field>
+      <field name="model">op.room.not.available</field>
+      <field name="arch" type="xml">
+        <tree string="Room not available Tree">
+          <field name="room_id"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Room not Available Constraints Form View-->
+    <record id="room_not_available_form_view" model="ir.ui.view">
+      <field name="name">room.not.available.form.view</field>
+      <field name="model">op.room.not.available</field>
+      <field name="arch" type="xml">
+        <form string="Room not available Form">
+          <sheet>
+              <group>
+                <group>
+                  <field name="room_id"/>
+                </group>
+                <group>
+                  <field name="weight"/>
+              </group>
+              </group>
+              <group>
+              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+              <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
+              </group>
+            <notebook>
+              <page string="Time Slots">
+                <field name="room_not_available_line_ids">
+                  <tree string="Space Constraints" editable="bottom">
+                    <field name="name" />
+                    <field name="is_monday" invisible="1"/>
+                    <field name="is_tuesday" invisible="1"/>
+                    <field name="is_wednesday" invisible="1"/>
+                    <field name="is_thursday" invisible="1"/>
+                    <field name="is_friday" invisible="1"/>
+                    <field name="is_saturday" invisible="1"/>
+                    <field name="is_sunday" invisible="1"/>
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
+                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
+                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
+                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
+                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
+                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
+                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                  </tree>
+                </field>
+                <footer>
+                  <span> 0 -> Allowed.</span>
+                  <span> 1 -> Not Allowed.</span>
+                </footer>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Room Not Available Constraints Action-->
+    <record model="ir.actions.act_window" id="action_room_not_available">
+        <field name="name">Room Not Available</field>
+        <field name="res_model">op.room.not.available</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="room_not_available_tree_view" />
+    </record>
+
+    <!--Space Constraints Menu-->
+    <menuitem id="menu_space_constraints" name="Space Constraints"  parent="menu_constraints"
+    sequence="2" />
+
+    <!--Room Menu-->
+    <menuitem id="menu_room_constraints" name="Rooms"  parent="menu_space_constraints"
+    sequence="1" />
+
+    <!--Room Constraints Menu-->
+    <menuitem id="menu_room_not_available" name="A Room's not available times"  parent="menu_room_constraints" action="action_room_not_available"
+    sequence="1" />
+
+
+    <!--Activity preferred Room tree view-->
+    <record id="activity_room_tree_view" model="ir.ui.view">
+      <field name="name">activity.room.tree.view</field>
+      <field name="model">op.activity.room</field>
+      <field name="arch" type="xml">
+        <tree string="Activity preferred room">
+          <field name="activity_id"/>
+          <field name="room_id"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activity has preferred Room Form View-->
+    <record id="activity_room_form_view" model="ir.ui.view">
+      <field name="name">activity.room.form.view</field>
+      <field name="model">op.activity.room</field>
+      <field name="arch" type="xml">
+        <form string="Activity preferred room">
+          <sheet>
+              <group>
+                <group>
+                  <field name="activity_id"/>
+                  <field name="room_id"/>
+                </group>
+                <group>
+                  <field name="weight"/>
+                  <field name="locked"/>
+              </group>
+              </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activity has preferred Room Action-->
+    <record model="ir.actions.act_window" id="action_activity_room">
+        <field name="name">Activity Has Preferred Room</field>
+        <field name="res_model">op.activity.room</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activity_room_tree_view" />
+    </record>
+
+    <!--Activity Constraints Menu-->
+    <menuitem id="menu_space_activity_constraints" name="Activities"  parent="menu_space_constraints"
+    sequence="2" />
+
+    <menuitem id="menu_activity_room" name="An activity has a preferred room"  parent="menu_space_activity_constraints" action="action_activity_room"
+    sequence="1" />
+
+    <!--Activity has preferred Rooms tree view-->
+    <record id="activity_rooms_tree_view" model="ir.ui.view">
+      <field name="name">activity.rooms.tree.view</field>
+      <field name="model">op.activity.rooms</field>
+      <field name="arch" type="xml">
+        <tree string="Activity preferred rooms">
+          <field name="activity_id"/>
+          <field name="room_ids"/>
+          <field name="weight"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activity has preferred Rooms Form View-->
+    <record id="activity_rooms_form_view" model="ir.ui.view">
+      <field name="name">activity.rooms.form.view</field>
+      <field name="model">op.activity.rooms</field>
+      <field name="arch" type="xml">
+        <form string="Activity preferred rooms">
+          <sheet>
+              <group>
+                <group>
+                  <field name="activity_id"/>
+                  <field name="room_ids" widget='many2many_tags'/>
+                </group>
+                <group>
+                  <field name="weight"/>
+              </group>
+              </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activity has preferred Rooms Action-->
+    <record model="ir.actions.act_window" id="action_activity_rooms">
+        <field name="name">Activity Has Preferred Rooms</field>
+        <field name="res_model">op.activity.rooms</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activity_rooms_tree_view" />
+    </record>
+
+    <!--Activity has preferred Rooms Menu-->
+    <menuitem id="menu_activity_rooms" name="An activity has a set of preferred rooms"  parent="menu_space_activity_constraints" action="action_activity_rooms"
+    sequence="2" />
+
+
+      <!--Consecutive activities same room tree view-->
+      <record id="consecutive_activities_same_room_tree_view" model="ir.ui.view">
+        <field name="name">consecutive.activities.same.room.tree.view</field>
+        <field name="model">op.consecutive.activities.same.room</field>
+        <field name="arch" type="xml">
+          <tree string="Consecutive activities has same room">
+            <field name="activities_ids"/>
+            <field name="weight"/>
+          </tree>
+        </field>
+      </record>
+
+      <!--Consecutive activities same room Form View-->
+      <record id="consecutive_activities_same_room_form_view" model="ir.ui.view">
+        <field name="name">activities.same.starting.time.form.view</field>
+        <field name="model">op.consecutive.activities.same.room</field>
+        <field name="arch" type="xml">
+          <form string="Consecutive activities has same room">
+            <sheet>
+              <group>
+                <group>
+                  <field name="activities_ids" widget="many2many_tags"/>
+                </group>
+                <group>
+                  <field name="weight" readonly='1'/>
+                </group>
+              </group>
+            </sheet>
+          </form>
+        </field>
+      </record>
+
+      <!--Consecutive activities same room Action-->
+      <record model="ir.actions.act_window" id="action_consecutive_activities_same_room">
+          <field name="name">Consecutive Activities Has Same Room</field>
+          <field name="res_model">op.consecutive.activities.same.room</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="view_id" ref="consecutive_activities_same_room_tree_view" />
+      </record>
+
+      <!--Consecutive activities same room Menu-->
+      <menuitem id="menu_consecutive_activities_same_room" name="A set of activities are in the same room if they are consecutive"  parent="menu_space_activity_constraints"
+      action="action_consecutive_activities_same_room" sequence="3" />
+
+
+      <!--Activities max different room tree view-->
+      <record id="activities_max_diff_room_tree_view" model="ir.ui.view">
+        <field name="name">consecutive.activities.same.room.tree.view</field>
+        <field name="model">op.activities.max.different.room</field>
+        <field name="arch" type="xml">
+          <tree string="Activities Max Different Room Tree">
+            <field name="activities_ids"/>
+            <field name="max_diff_room"/>
+            <field name="weight"/>
+          </tree>
+        </field>
+      </record>
+
+      <!--Activities max different room Form View-->
+      <record id="activities_max_diff_room_form_view" model="ir.ui.view">
+        <field name="name">activities.same.starting.time.form.view</field>
+        <field name="model">op.activities.max.different.room</field>
+        <field name="arch" type="xml">
+          <form string="Activities Max Different Room Form">
+            <sheet>
+              <group>
+                <group>
+                  <field name="activities_ids" widget="many2many_tags"/>
+                  <field name="max_diff_room"/>
+                </group>
+                <group>
+                  <field name="weight"/>
+                </group>
+              </group>
+            </sheet>
+          </form>
+        </field>
+      </record>
+
+      <!--Activities max different room room Action-->
+      <record model="ir.actions.act_window" id="action_activities_max_diff_room">
+          <field name="name">Activities Max Different Room</field>
+          <field name="res_model">op.activities.max.different.room</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="view_id" ref="activities_max_diff_room_tree_view" />
+      </record>
+
+      <!--Activities max different room Menu-->
+      <menuitem id="menu_activities_max_diff_room" name="A set of activities occupies max different rooms"  parent="menu_space_activity_constraints"
+      action="action_activities_max_diff_room" sequence="4" />
+
+
+      <!--Subject Tag Preferred room tree view-->
+      <record id="subject_tag_preferred_room_tree_view" model="ir.ui.view">
+        <field name="name">subject.tag.preferred.room.tree.view</field>
+        <field name="model">op.subject.tag.preferred.room</field>
+        <field name="arch" type="xml">
+          <tree string="Subject Activity Tag Preferred Room Tree">
+            <field name="subject_id"/>
+            <field name="activity_tag_id"/>
+            <field name="room_id"/>
+            <field name="weight"/>
+          </tree>
+        </field>
+      </record>
+
+      <!--Subject Tag Preferred room Form View-->
+      <record id="subject_tag_preferred_room_form_view" model="ir.ui.view">
+        <field name="name">subject.tag.preferred.room.form.view</field>
+        <field name="model">op.subject.tag.preferred.room</field>
+        <field name="arch" type="xml">
+          <form string="Subject Activity Tag Preferred Room Form">
+            <sheet>
+              <group>
+                <group>
+                  <field name="subject_id"/>
+                  <field name="activity_tag_id"/>
+                </group>
+                <group>
+                  <field name="room_id"/>
+                  <field name="weight"/>
+                </group>
+              </group>
+            </sheet>
+          </form>
+        </field>
+      </record>
+
+      <!--Subject Tag Preferred room Action-->
+      <record model="ir.actions.act_window" id="action_subject_tag_preferred_room">
+          <field name="name">Subject ActivityTag Preferred Room</field>
+          <field name="res_model">op.subject.tag.preferred.room</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="view_id" ref="subject_tag_preferred_room_tree_view" />
+      </record>
+
+      <!--Subject and Activity Menu-->
+      <menuitem id="menu_space_subjecttag_constraints" name="Subjects And Tags"  parent="menu_space_constraints"
+      sequence="3" />
+
+      <!--Subject Tag Preferred room Menu-->
+      <menuitem id="menu_subject_tag_preferred_room" name="A subject and an activity tag has a preferred room"  parent="menu_space_subjecttag_constraints"
+      action="action_subject_tag_preferred_room" sequence="1" />
+
+
+      <!--Subject Tag Preferred rooms tree view-->
+      <record id="subject_tag_preferred_rooms_tree_view" model="ir.ui.view">
+        <field name="name">subject.tag.preferred.rooms.tree.view</field>
+        <field name="model">op.subject.tag.preferred.rooms</field>
+        <field name="arch" type="xml">
+          <tree string="Subject Activity Tag Preferred Rooms Tree">
+            <field name="subject_id"/>
+            <field name="activity_tag_id"/>
+            <field name="room_ids"/>
+            <field name="weight"/>
+          </tree>
+        </field>
+      </record>
+
+      <!--Subject Tag Preferred rooms Form View-->
+      <record id="subject_tag_preferred_rooms_form_view" model="ir.ui.view">
+        <field name="name">subject.tag.preferred.rooms.form.view</field>
+        <field name="model">op.subject.tag.preferred.rooms</field>
+        <field name="arch" type="xml">
+          <form string="Subject Activity Tag Preferred Rooms Form">
+            <sheet>
+              <group>
+                <group>
+                  <field name="subject_id"/>
+                  <field name="activity_tag_id"/>
+                </group>
+                <group>
+                  <field name="room_ids" widget='many2many_tags'/>
+                  <field name="weight"/>
+                </group>
+              </group>
+            </sheet>
+          </form>
+        </field>
+      </record>
+
+      <!--Subject Tag Preferred rooms Action-->
+      <record model="ir.actions.act_window" id="action_subject_tag_preferred_rooms">
+          <field name="name">Subject ActivityTag Preferred Rooms</field>
+          <field name="res_model">op.subject.tag.preferred.rooms</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form</field>
+          <field name="view_id" ref="subject_tag_preferred_rooms_tree_view" />
+      </record>
+
+      <!--Subject Tag Preferred room Menu-->
+      <menuitem id="menu_subject_tag_preferred_rooms" name="A subject and an activity tag has a set of preferred rooms"  parent="menu_space_subjecttag_constraints"
+      action="action_subject_tag_preferred_rooms" sequence="2" />
+
+
+  </data>
+</odoo>

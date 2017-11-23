@@ -26,6 +26,7 @@ Export master data to generate Timetable in FET tool.
         'views/all_students_constraint_view.xml',
         'views/time_activity_view.xml',
         'views/time_activities_view.xml',
+        'views/space_constraints_view.xml',
 
 
     ],

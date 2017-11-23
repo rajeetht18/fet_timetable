@@ -4,10 +4,10 @@
 
     <!--Activity Starting Time tree view-->
     <record id="subactivity_starting_time_tree_view" model="ir.ui.view">
-      <field name="name">op.subactivity.starting.time.tree</field>
+      <field name="name">subactivity.starting.time.tree</field>
       <field name="model">op.subactivity.starting.time</field>
       <field name="arch" type="xml">
-        <tree string="Subactivity Time Starting Time Tree">
+        <tree string="Subactivity Starting Time">
           <field name="faculty_id"/>
           <field name="student_id"/>
           <field name="subject_id"/>
@@ -20,10 +20,10 @@
 
     <!--Subactivity Starting Time Form View-->
     <record id="subactivity_starting_time_form_view" model="ir.ui.view">
-      <field name="name">op.subactivity.starting.time.form.view</field>
+      <field name="name">subactivity.starting.time.form.view</field>
       <field name="model">op.subactivity.starting.time</field>
       <field name="arch" type="xml">
-        <form string="Subactivity starting Time Form">
+        <form string="Subactivity Starting Time">
           <sheet>
             <group>
               <group>
@@ -42,7 +42,7 @@
               </group>
             </group>
             <notebook>
-              <page string="Starting Time">
+              <page string="Time Slots">
                 <field name="subactivity_starting_line_ids">
                   <tree string="Subactivity Starting Time" editable="bottom" create="false" delete="false">
                     <field name="name" />
@@ -62,6 +62,10 @@
                     <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
                   </tree>
                 </field>
+                <footer>
+                  <span> 0 -> Not Allowed,</span>
+                  <span> 1 -> Allowed.</span>
+                </footer>
               </page>
             </notebook>
           </sheet>
@@ -79,16 +83,16 @@
     </record>
 
     <!--Subactivity Starting Time Menu-->
-    <menuitem id="menu_subactivity_starting_time_constraints" name="A set of subactivity has a set of preferred starting Time"  parent="menu_activity_constraints"
+    <menuitem id="menu_subactivity_starting_time_constraints" name="A set of subactivities has a set of preferred starting times"  parent="menu_activity_constraints"
     action="action_subactivity_starting_time" sequence="5" />
 
 
     <!--Subactivities Time Slots tree view-->
     <record id="subactivities_time_slots_tree_view" model="ir.ui.view">
-      <field name="name">op.subactivities.timeslots.tree</field>
+      <field name="name">subactivities.timeslots.tree</field>
       <field name="model">op.subactivities.timeslots</field>
       <field name="arch" type="xml">
-        <tree string="Subactivities Time Slots Tree">
+        <tree string="Subactivities Time Slots">
           <field name="faculty_id"/>
           <field name="student_id"/>
           <field name="subject_id"/>
@@ -101,10 +105,10 @@
 
     <!--Subactivities Time Slots Form View-->
     <record id="subactivities_time_slots_form_view" model="ir.ui.view">
-      <field name="name">op.subactivities.timeslots.form.view</field>
+      <field name="name">subactivities.timeslots.form.view</field>
       <field name="model">op.subactivities.timeslots</field>
       <field name="arch" type="xml">
-        <form string=" Subactivities Time Slots Form">
+        <form string=" Subactivities Time Slots">
           <sheet>
             <group>
               <group>
@@ -143,6 +147,10 @@
                     <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
                   </tree>
                 </field>
+                <footer>
+                  <span> 0 -> Not Allowed,</span>
+                  <span> 1 -> Allowed.</span>
+                </footer>
               </page>
             </notebook>
           </sheet>
@@ -179,10 +187,10 @@
 
     <!--Min Days between activities Form View-->
     <record id="min_days_activities_form_view" model="ir.ui.view">
-      <field name="name">op.mindays.activities.form.view</field>
+      <field name="name">mindays.activities.form.view</field>
       <field name="model">op.mindays.activities</field>
       <field name="arch" type="xml">
-        <form string="Min Days">
+        <form string="Minimum Days">
           <sheet>
             <group>
               <field name="activities_ids" widget='many2many_tags'/>
@@ -190,7 +198,7 @@
               <field name="weight"/>
             </group>
           </sheet>
-        </form>
+         </form>
       </field>
     </record>
 
@@ -204,13 +212,13 @@
     </record>
 
     <!--Min Days between activities Menu-->
-    <menuitem id="menu_min_days_activities" name="Min Days between a set of activities"  parent="menu_activity_constraints"
+    <menuitem id="menu_min_days_activities" name="Minimum days between a set of activities"  parent="menu_activity_constraints"
     action="action_min_days_activities" sequence="7" />
 
 
     <!--Max Days between activities tree view-->
     <record id="max_days_activities_tree_view" model="ir.ui.view">
-      <field name="name">op.maxdays.activities.tree</field>
+      <field name="name">maxdays.activities.tree.view</field>
       <field name="model">op.maxdays.activities</field>
       <field name="arch" type="xml">
         <tree string="Maximum Days Between a set of Activities">
@@ -223,10 +231,10 @@
 
     <!--Max Days between activities Form View-->
     <record id="max_days_activities_form_view" model="ir.ui.view">
-      <field name="name">op.maxdays.activities.form.view</field>
+      <field name="name">maxdays.activities.form.view</field>
       <field name="model">op.maxdays.activities</field>
       <field name="arch" type="xml">
-        <form string="Max Days">
+        <form string="Maximum Days Between a set of Activities">
           <sheet>
             <group>
               <field name="activities_ids" widget='many2many_tags'/>
@@ -248,7 +256,7 @@
     </record>
 
     <!--Min Days between activities Menu-->
-    <menuitem id="menu_max_days_activities" name="Max Days between a set of activities"  parent="menu_activity_constraints"
+    <menuitem id="menu_max_days_activities" name="Maximum days between a set of activities"  parent="menu_activity_constraints"
     action="action_max_days_activities" sequence="8" />
 
 

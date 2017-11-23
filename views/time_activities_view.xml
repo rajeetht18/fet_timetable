@@ -4,7 +4,7 @@
 
     <!--Activity Ends Student Day tree view-->
     <record id="activity_ends_day_tree_view" model="ir.ui.view">
-      <field name="name">activity.ends.day.tree</field>
+      <field name="name">activity.ends.day.tree.view</field>
       <field name="model">op.activity.ends.day</field>
       <field name="arch" type="xml">
         <tree string="Activity Ends Student Day">
@@ -26,7 +26,7 @@
                 <field name="activity_id"/>
               </group>
               <group>
-                <field name="weight"/>
+                <field name="weight" readonly='1'/>
               </group>
             </group>
           </sheet>
@@ -51,7 +51,7 @@
 
     <!--Activities Ends Student Day tree view-->
     <record id="activities_ends_day_tree_view" model="ir.ui.view">
-      <field name="name">activities.ends.day.tree</field>
+      <field name="name">activities.ends.day.tree.view</field>
       <field name="model">op.activities.ends.day</field>
       <field name="arch" type="xml">
         <tree string="Activities Ends Student Day">
@@ -75,7 +75,7 @@
               <group>
                 <field name="faculty_id"/>
                 <field name="subject_id"/>
-                <field name="weight"/>
+                <field name="weight" readonly='1'/>
               </group>
               <group>
                 <field name="student_id"/>
@@ -106,7 +106,7 @@
       <field name="name">activities.same.starting.time.tree.view</field>
       <field name="model">op.activities.same.starting.time</field>
       <field name="arch" type="xml">
-        <tree string="Activities has same starting time">
+        <tree string="Activities has same starting time Tree">
           <field name="activities_ids"/>
           <field name="weight"/>
         </tree>
@@ -118,11 +118,11 @@
       <field name="name">activities.same.starting.time.form.view</field>
       <field name="model">op.activities.same.starting.time</field>
       <field name="arch" type="xml">
-        <form string="Activities has same starting time">
+        <form string="Activities has same starting time Form">
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget="many2many_tags"/>
+                <field name="activities_ids" widget='many2many_tags'/>
               </group>
               <group>
                 <field name="weight"/>
@@ -168,7 +168,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget="many2many_tags"/>
+                <field name="activities_ids" widget='many2many_tags'/>
               </group>
               <group>
                 <field name="weight"/>
@@ -179,7 +179,7 @@
       </field>
     </record>
 
-    <!--Activities same starting time Action-->
+    <!--Activities same starting day Action-->
     <record model="ir.actions.act_window" id="action_activities_same_starting_day">
         <field name="name">Activities Same Starting Day</field>
         <field name="res_model">op.activities.same.starting.day</field>
@@ -206,7 +206,7 @@
     </record>
 
     <!--Activities same starting hour Form View-->
-    <record id="activities_same_starting_day_form_view" model="ir.ui.view">
+    <record id="activities_same_starting_hour_form_view" model="ir.ui.view">
       <field name="name">activities.same.starting.hour.form.view</field>
       <field name="model">op.activities.same.starting.hour</field>
       <field name="arch" type="xml">
@@ -234,7 +234,7 @@
         <field name="view_id" ref="activities_same_starting_hour_tree_view" />
     </record>
 
-    <!--Activities same starting time Menu-->
+    <!--Activities same starting hour Menu-->
     <menuitem id="menu_activities_same_starting_hour" name="A set of activities has same starting hour"  parent="menu_activity_constraints"
     action="action_activities_same_starting_hour" sequence="13" />
 
@@ -242,10 +242,10 @@
 
     <!--Activities Max Time slots tree view-->
     <record id="activities_max_timeslots_tree_view" model="ir.ui.view">
-      <field name="name">activities.max.time.slots.tree</field>
+      <field name="name">activities.max.time.slots.tree.view</field>
       <field name="model">op.activities.max.time.slots</field>
       <field name="arch" type="xml">
-        <tree string="Activities Max Time Slots Tree">
+        <tree string="Activities Max Time Slots">
           <field name="activities_ids"/>
           <field name="max_occupied"/>
           <field name="weight"/>
@@ -255,10 +255,10 @@
 
     <!--Activities Max Time slots Form View-->
     <record id="activities_max_timeslots_form_view" model="ir.ui.view">
-      <field name="name">activities.max.time.slots.form </field>
+      <field name="name">activities.max.time.slots.form.view</field>
       <field name="model">op.activities.max.time.slots</field>
       <field name="arch" type="xml">
-        <form string="Activities Max Time Slots Form">
+        <form string="Activities Max Time Slots">
           <sheet>
             <group>
               <group>
@@ -294,6 +294,10 @@
                     <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
                   </tree>
                 </field>
+                <footer>
+                  <span> 0 -> Not Allowed,</span>
+                  <span> 1 -> Allowed.</span>
+                </footer>
               </page>
             </notebook>
           </sheet>
@@ -356,7 +360,7 @@
     </record>
 
     <!--Two Activities Ordered Menu-->
-    <menuitem id="menu_two_activities_ordered" name="Two Activities are ordered"  parent="menu_activity_constraints"
+    <menuitem id="menu_two_activities_ordered" name="Two activities are ordered"  parent="menu_activity_constraints"
     action="action_two_activities_ordered" sequence="15" />
 
 
@@ -402,7 +406,7 @@
     </record>
 
     <!--Two Activities Consecutive Menu-->
-    <menuitem id="menu_two_activities_consecutive" name="Two Activities are consecutive"  parent="menu_activity_constraints"
+    <menuitem id="menu_two_activities_consecutive" name="Two activities are consecutive"  parent="menu_activity_constraints"
     action="action_two_activities_consecutive" sequence="16" />
 
 
@@ -449,7 +453,7 @@
     </record>
 
     <!--Two Activities Grouped Menu-->
-    <menuitem id="menu_two_activities_grouped" name="Two Activities are grouped"  parent="menu_activity_constraints"
+    <menuitem id="menu_two_activities_grouped" name="Two activities are grouped"  parent="menu_activity_constraints"
     action="action_two_activities_grouped" sequence="17" />
 
 
@@ -496,7 +500,7 @@
     </record>
 
     <!--Three Activities Grouped Menu-->
-    <menuitem id="menu_three_activities_grouped" name="Three Activities are grouped"  parent="menu_activity_constraints"
+    <menuitem id="menu_three_activities_grouped" name="Three activities are grouped"  parent="menu_activity_constraints"
     action="action_three_activities_grouped" sequence="18" />
 
 
@@ -542,19 +546,19 @@
     </record>
 
     <!--Activities not overlapping Menu-->
-    <menuitem id="menu_activities_not_overlap" name="A set of activities not overlapped"  parent="menu_activity_constraints"
+    <menuitem id="menu_activities_not_overlap" name="A set of activities are not overlapping"  parent="menu_activity_constraints"
     action="action_activities_not_overlap" sequence="19" />
 
 
 
     <!--Activities Max Simultaneous Time slots tree view-->
     <record id="activities_max_simultaneous_tree_view" model="ir.ui.view">
-      <field name="name">activities.max.simultaneous.tree</field>
+      <field name="name">activities.max.simultaneous.tree.view</field>
       <field name="model">op.activities.max.simultaneous</field>
       <field name="arch" type="xml">
-        <tree string="Activities Max Time Slots Tree">
+        <tree string="Activities Max Time Slots">
           <field name="activities_ids"/>
-          <field name="max_occupied"/>
+          <field name="max_simultaneous"/>
           <field name="weight"/>
         </tree>
       </field>
@@ -562,15 +566,15 @@
 
     <!--Activities Max Simultaneous Time slots Form View-->
     <record id="activities_max_simultaneous_form_view" model="ir.ui.view">
-      <field name="name">activities.max.simultaneous.form </field>
+      <field name="name">activities.max.simultaneous.form.view</field>
       <field name="model">op.activities.max.simultaneous</field>
       <field name="arch" type="xml">
-        <form string="Activities Max Time Slots Form">
+        <form string="Activities Max Simultaneous Time Slots">
           <sheet>
             <group>
               <group>
                 <field name="activities_ids" widget='many2many_tags'/>
-                <field name="max_occupied"/>
+                <field name="max_simultaneous"/>
               </group>
               <group>
                 <field name="weight"/>
@@ -601,6 +605,10 @@
                     <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
                   </tree>
                 </field>
+                <footer>
+                  <span> 0 -> Not Allowed,</span>
+                  <span> 1 -> Allowed.</span>
+                </footer>
               </page>
             </notebook>
           </sheet>
@@ -620,7 +628,6 @@
     <!--Activities Max Simultaneous Time slots Menu-->
     <menuitem id="menu_activities_max_simultaneous" name="Maximum simultaneous activities from a set in selected time slots"  parent="menu_activity_constraints"
     action="action_activities_max_simultaneous" sequence="20" />
-
 
 
     <!--Activities MinGap tree view-->
@@ -667,9 +674,8 @@
     </record>
 
     <!--Activities MinGap Menu-->
-    <menuitem id="menu_activities_mingap" name="Minimum Gaps between a set of activities"  parent="menu_activity_constraints"
+    <menuitem id="menu_activities_mingap" name="Minimum gaps between a set of activities"  parent="menu_activity_constraints"
     action="action_activities_mingap" sequence="20" />
-
 
 
   </data>
