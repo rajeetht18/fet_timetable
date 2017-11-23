@@ -12,3 +12,4 @@ import student_set_constraint
 import company
 import time_activity
 import time_activities
+import space_constraints

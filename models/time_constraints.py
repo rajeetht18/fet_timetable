@@ -3,6 +3,19 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
+
+class ActivityPreferredStartingTime(models.Model):
+    _name = 'op.activity.preferred.starting.time'
+    _description = "An activity has preferred starting time."
+    _rec_name ='activity_id'
+
+
+    activity_id = fields.Many2one('op.faculty.class.list', "Activity", required=1)
+    weight = fields.Integer("Weight Percentage", default=100,required=1)
+    lock = fields.Boolean("Permenantly Locked")
+    day = fields.Selection([('sunday','sunday'),('monday','Monday'),('tuesday','Tuesday'),('wednesday','Wednesday'),('thursday','Thursday'),('friday','Friday'),('saturday','Saturday')],default='monday',required=1)
+    hours = fields.Many2one('op.timing',"Hours",required=1)
+
 class BatchConstraints(models.Model):
     _name = 'op.batch.constraints'
     _description = 'A Students set not available times'
@@ -140,7 +153,7 @@ class BatchConstraintsLine(models.Model):
 
 class ActivityStartingTime(models.Model):
     _name = 'op.activity.starting.time'
-    _description = 'An activity has a set of preferred starting time.'
+    _description = 'An activity has a set of preferred starting times.'
     _rec_name = 'activity_id'
 
     @api.multi
@@ -233,9 +246,9 @@ class ActivityStartingTime(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
-    _sql_constraints = [
-        ('unique_activity',
-         'unique(activity_id)', 'The constraint for the selected activity already exist. Please select another activity!')]
+    # _sql_constraints = [
+    #     ('unique_activity',
+    #      'unique(activity_id)', 'The constraint for the selected activity already exist. Please select another activity!')]
 
     activity_id = fields.Many2one('op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
@@ -359,9 +372,9 @@ class ActivityTimeSlots(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
-    _sql_constraints = [
-        ('unique_activity',
-         'unique(activity_id)', 'The constraint for the selected activity already exist. Please select another activity!')]
+    # _sql_constraints = [
+    #     ('unique_activity',
+    #      'unique(activity_id)', 'The constraint for the selected activity already exist. Please select another activity!')]
 
     activity_id = fields.Many2one('op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100)

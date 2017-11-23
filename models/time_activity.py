@@ -267,8 +267,7 @@ class MinDaysBetweenActivities(models.Model):
     def check_activity_count(self):
         for rec in self:
             if len(rec.activities_ids) == 1:
-                raise UserError(_("Please add more than 1 activity."))
-
+                raise UserError(_("Please add more than 1 activities."))
 
     @api.multi
     @api.constrains('min_days')
@@ -284,7 +283,7 @@ class MinDaysBetweenActivities(models.Model):
 
     class MaxDaysBetweenActivities(models.Model):
         _name = 'op.maxdays.activities'
-        _description = 'Maximum days between a set of activities.'
+        _description = 'Maximum days between a set of activity.'
         _rec_name = 'max_days'
 
 

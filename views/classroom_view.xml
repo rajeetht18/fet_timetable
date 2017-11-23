@@ -54,6 +54,50 @@
             </field>
           </record>
 
+
+          <!--Subject Tree View Inherit-->
+          <record id="view_op_subject_tree_inherit" model="ir.ui.view">
+              <field name="name">op.subject.tree.inherit</field>
+              <field name="model">op.subject</field>
+              <field name="inherit_id" ref="openeducat_core.view_op_subject_tree"/>
+              <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='type']" position="after">
+                  <field name="tag_id"/>
+                </xpath>
+              </field>
+          </record>
+
+        <!--Subject Form View Inherit-->
+        <record id="view_op_subject_form_inherit" model="ir.ui.view">
+            <field name="name">op.subject.form.inherit</field>
+            <field name="model">op.subject</field>
+            <field name="inherit_id" ref="openeducat_core.view_op_subject_form"/>
+            <field name="arch" type="xml">
+              <xpath expr="//form/sheet/group/field[@name='type']" position="after">
+                <field name="tag_id"/>
+              </xpath>
+              <xpath expr="//form/sheet/group" position="after">
+                <notebook>
+                  <page string="Preferred Room">
+                    <group>
+                          <field name="room_id"/>
+                          <field name="room_weight"/>
+                    </group>
+                  </page>
+                  <page string="Preferred Rooms">
+                    <group>
+                          <field name="rooms_ids" widget='many2many_tags'/>
+                          <field name="rooms_weight"/>
+                    </group>
+                  </page>
+                </notebook>
+              </xpath>
+            </field>
+          </record>
+
+
+
+
         <!--ClassRoom Form View Inherit-->
         <record id="view_op_classroom_tree_inheritt" model="ir.ui.view">
             <field name="name">op.classroom.tree.inherit</field>

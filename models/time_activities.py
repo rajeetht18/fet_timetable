@@ -8,6 +8,14 @@ class ActivityEndsDay(models.Model):
     _description = 'An Activity ends a Students day.'
     _rec_name = 'activity_id'
 
+    # @api.multi
+    # @api.constrains('activity_id')
+    # def check_activity(self):
+    #     for rec in self:
+    #         activity_count = self.env['op.activity.ends.day'].search_count([('activity_id','=',rec.activity_id.id)])
+    #         if activity_count > 1:
+    #             raise UserError(_("This activity is already selected. Please select another activity."))
+
     activity_id = fields.Many2one('op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage",default=100)
 
@@ -16,11 +24,12 @@ class ActivitiesEndsDay(models.Model):
     _description = 'A set of Activities ends a Students day.'
     _rec_name = 'faculty_id'
 
+
     faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
     student_id = fields.Many2one('op.batch',"Students",required=1)
     subject_id = fields.Many2one('op.subject',"Subject",required=1)
     activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
-    weight = fields.Integer("Weight Percentage",default=100)
+    weight = fields.Integer("Weight Percentage",default=100,required=1)
 
 
 class ActivitiesSameStartingTime(models.Model):
@@ -28,16 +37,17 @@ class ActivitiesSameStartingTime(models.Model):
     _description = 'A set of Activities has same starting time.'
     _rec_name = 'weight'
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_sametime_rel','activity_id','sametime_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list','activity_sametime_rel','activity_id','sametime_id',"Activities",required=1)
+    weight = fields.Integer("Weight Percentage",default=100,required=1)
+
 
 class ActivitiesSameStartingDay(models.Model):
     _name = 'op.activities.same.starting.day'
     _description = 'A set of Activities has same starting day.'
     _rec_name = 'weight'
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_sameday_rel','activity_id','sameday_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list','activity_sameday_rel','activity_id','sameday_id',"Activities",required=1)
+    weight = fields.Integer("Weight Percentage",default=100,required=1)
 
 
 class ActivitiesSameStartingHour(models.Model):
@@ -45,8 +55,8 @@ class ActivitiesSameStartingHour(models.Model):
     _description = 'A set of Activities has same starting hour.'
     _rec_name = 'weight'
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_samehour_rel','activity_id','samehour_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list','activity_samehour_rel','activity_id','samehour_id',"Activities",required=1)
+    weight = fields.Integer("Weight Percentage",default=100,required=1)
 
 
 class ActivitiesMaxOccupyTimeSlots(models.Model):
@@ -144,10 +154,16 @@ class ActivitiesMaxOccupyTimeSlots(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
+    @api.multi
+    @api.constrains('max_occupied')
+    def _check_max_occupied(self):
+        for rec in self:
+            if rec.max_occupied < 1:
+                raise UserError(_("The Max occuppied value should be greater than 0."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_maxtimeslot_rel','activity_id','maxtimeslot_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
-    max_occupied = fields.Integer("maximum Occuppied")
+    activities_ids = fields.Many2many('op.faculty.class.list','activity_maxtimeslot_rel','activity_id','maxtimeslot_id',"Activities",required=1)
+    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    max_occupied = fields.Integer("maximum Occuppied",default=1,required=1)
     activities_max_timeslots_line_ids = fields.One2many('op.activities.max.time.slots.line', 'activities_max_timeslots_id', "Activities Max Time Slots Line", default=default_line)
 
 
@@ -178,7 +194,6 @@ class TwoActivitiesOrdered(models.Model):
     _description = 'Two activities are ordered'
     _rec_name = 'weight'
 
-
     @api.multi
     @api.constrains('activities_ids')
     def _check_min_gap(self):
@@ -186,8 +201,8 @@ class TwoActivitiesOrdered(models.Model):
             if len(rec.activities_ids) != 2:
                 raise UserError(_("Please make sure you've added 2 activities."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_ordered_rel','activity_id','ordered_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list','activity_ordered_rel','activity_id','ordered_id',"Activities",required=1)
+    weight = fields.Integer("Weight Percentage",default=100,required=1)
 
 
 class TwoActivitiesConsecutive(models.Model):
@@ -203,8 +218,8 @@ class TwoActivitiesConsecutive(models.Model):
             if len(rec.activities_ids) != 2:
                 raise UserError(_("Please make sure you've added 2 activities."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_consecutive_rel','activity_id','consecutive_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list','activity_consecutive_rel','activity_id','consecutive_id',"Activities",required=1)
+    weight = fields.Integer("Weight Percentage",default=100,required=1)
 
 
 class TwoActivitiesGrouped(models.Model):
@@ -220,8 +235,9 @@ class TwoActivitiesGrouped(models.Model):
             if len(rec.activities_ids) != 2:
                 raise UserError(_("Please make sure you've added 2 activities."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','two_activity_grouped_rel','activity_id','grouped_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list','two_activity_grouped_rel','activity_id','grouped_id',"Activities",required=1)
+    weight = fields.Integer("Weight Percentage",default=100,required=1)
+
 
 class ThreeActivitiesGrouped(models.Model):
     _name = 'op.three_activities.grouped'
@@ -235,17 +251,17 @@ class ThreeActivitiesGrouped(models.Model):
             if len(rec.activities_ids) != 3:
                 raise UserError(_("Please make sure you've added 3 activities."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','three_activity_grouped_rel','activity_id','grouped_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list','three_activity_grouped_rel','activity_id','grouped_id',"Activities",required=1)
+    weight = fields.Integer("Weight Percentage",default=100,required=1)
+
 
 class ActivitiesNotOverlapping(models.Model):
     _name = 'op.activities.not_overlap'
     _description = 'A set of activities not overlap'
     _rec_name = 'weight'
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activities_not_overlap_rel','activity_id','not_overlap_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100)
-
+    activities_ids = fields.Many2many('op.faculty.class.list','activities_not_overlap_rel','activity_id','not_overlap_id',"Activities",required=1)
+    weight = fields.Integer("Weight Percentage",default=100,required=1)
 
 
 class ActivitiesMaxSimultaneous(models.Model):
@@ -343,10 +359,23 @@ class ActivitiesMaxSimultaneous(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
+    @api.multi
+    @api.constrains('activities_ids')
+    def _check_activities(self):
+        for rec in self:
+            if len(rec.activities_ids) == 1:
+                raise UserError(_("Please add atleast two activities."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_maxtimeslot_rel','activity_id','maxtimeslot_id',"Activities")
-    weight = fields.Integer("Weight Percentage",default=100,readonly=1)
-    max_occupied = fields.Integer("maximum Occuppied")
+    @api.multi
+    @api.constrains('max_simultaneous')
+    def _check_max_simultaneous(self):
+        for rec in self:
+            if rec.max_simultaneous < 1:
+                raise UserError(_("Please add value more than zero."))
+
+    activities_ids = fields.Many2many('op.faculty.class.list','activity_maxsimul_rel','activity_id','maxsimul_id',"Activities",required=1)
+    weight = fields.Integer("Weight Percentage",default=100,readonly=1,required=1)
+    max_simultaneous = fields.Integer("Maximum Simultaneous",default=1,required=1)
     activities_max_simultaneous_line_ids = fields.One2many('op.activities.max.simultaneous.line', 'activities_max_simultaneous_id', "Activities Max Simultaneous Line", default=default_line)
 
 
@@ -381,8 +410,8 @@ class ActivitiesMinGap(models.Model):
     @api.constrains('min_gap')
     def _check_min_gap(self):
         for rec in self:
-            if rec.min_gap < 1 or rec.min_gap > 11:
-                raise UserError(_("Please add minimum gap between 1 and 11."))
+            if rec.min_gap < 1 :
+                raise UserError(_("The minimum gap value should be more than zero"))
 
     @api.multi
     @api.constrains('activities_ids')
@@ -391,7 +420,6 @@ class ActivitiesMinGap(models.Model):
             if len(rec.activities_ids) == 1:
                 raise UserError(_("Please add atleast two activities."))
 
-
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_mingap_rel','activity_id','mingap_id',"Activities")
-    min_gap = fields.Integer("Minimum Gap",default=1)
+    activities_ids = fields.Many2many('op.faculty.class.list','activity_mingap_rel','activity_id','mingap_id',"Activities",required=1)
+    min_gap = fields.Integer("Minimum Gap",default=1,required=1)
     weight = fields.Integer("Weight Percentage",default=100)
