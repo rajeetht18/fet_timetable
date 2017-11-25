@@ -4,10 +4,10 @@
 
     <!--Batch Constraints tree view-->
     <record id="batch_constraints_tree_view" model="ir.ui.view">
-      <field name="name">op.batch.constraints.tree</field>
+      <field name="name">batch.constraints.tree.view</field>
       <field name="model">op.batch.constraints</field>
       <field name="arch" type="xml">
-        <tree string="Batch Constraints Tree" widget="one2many_list">
+        <tree string="Batch Constraints">
           <field name="student_id"/>
           <field name="weight"/>
         </tree>
@@ -16,10 +16,10 @@
 
     <!--Batch Constraints Form View-->
     <record id="batch_constraints_form_view" model="ir.ui.view">
-      <field name="name">op.batch.constraints.form.view</field>
+      <field name="name">batch.constraints.form.view</field>
       <field name="model">op.batch.constraints</field>
       <field name="arch" type="xml">
-        <form string="Batch Constraints Form">
+        <form string="Batch Constraints">
           <sheet>
               <group col="4">
                 <field name="student_id"/>
@@ -28,12 +28,11 @@
                 <field name="subdivision"/>
               </group>
               <group>
-              <field name="weight"/>
               <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
               <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
               </group>
             <notebook>
-              <page string="Periods">
+              <page string="Time Slots">
                 <field name="batch_constraints_line_ids">
                   <tree string="Batch Constraints" editable="bottom" create="false" delete="false">
                     <field name="name" />
@@ -87,29 +86,29 @@
     <menuitem id="menu_student_constraints" name="Students"  parent="menu_time_constraints"
     sequence="1" />
 
-    <!--Batch Constraints Menu-->
+    <!--Batch  Menu-->
     <menuitem id="menu_batch_constraints" name="Student set not available"  parent="menu_student_constraints"
     action="action_batch_constraints" sequence="1" />
 
 
-    <!--Activity Starting Time tree view-->
-    <record id="activity_starting_time_tree_view" model="ir.ui.view">
-      <field name="name">op.activity.starting.time.tree</field>
+    <!--Activity Starting Times tree view-->
+    <record id="activity_starting_times_tree_view" model="ir.ui.view">
+      <field name="name">activity.starting.times.tree.view</field>
       <field name="model">op.activity.starting.time</field>
       <field name="arch" type="xml">
-        <tree string="Activity Time Starting Time Tree">
+        <tree string="Activity Starting Times Tree">
           <field name="activity_id"/>
           <field name="weight"/>
         </tree>
       </field>
     </record>
 
-    <!--Activity Starting Time Form View-->
-    <record id="activity_starting_time_form_view" model="ir.ui.view">
-      <field name="name">op.activity.starting.time.form.view</field>
+    <!--Activity Starting Times Form View-->
+    <record id="activity_starting_times_form_view" model="ir.ui.view">
+      <field name="name">activity.starting.times.form.view</field>
       <field name="model">op.activity.starting.time</field>
       <field name="arch" type="xml">
-        <form string="Activity starting Time Form">
+        <form string="Activity starting Times Form">
           <sheet>
             <group>
               <group>
@@ -124,7 +123,7 @@
               </group>
             </group>
             <notebook>
-              <page string="Starting Time">
+              <page string="Time Slots">
                 <field name="activity_starting_line_ids">
                   <tree string="Activity Starting Time" editable="bottom" create="false" delete="false">
                     <field name="name" />
@@ -144,6 +143,10 @@
                     <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
                   </tree>
                 </field>
+                <footer>
+                  <span> 0 -> Not Allowed,</span>
+                  <span> 1 -> Allowed.</span>
+                </footer>
               </page>
             </notebook>
           </sheet>
@@ -151,13 +154,13 @@
       </field>
     </record>
 
-    <!--Activity Starting Time Constraints Action-->
-    <record model="ir.actions.act_window" id="action_activity_starting_time">
-        <field name="name">Activity Starting Time</field>
+    <!--Activity Starting Times Constraints Action-->
+    <record model="ir.actions.act_window" id="action_activity_starting_times">
+        <field name="name">Activity Starting Times</field>
         <field name="res_model">op.activity.starting.time</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="activity_starting_time_tree_view" />
+        <field name="view_id" ref="activity_starting_times_tree_view" />
     </record>
 
     <!--Activity Constraints Menu-->
@@ -165,14 +168,14 @@
     sequence="2" />
 
     <!--Activity Starting Time Menu-->
-    <menuitem id="menu_activity_starting_time_constraints" name="An activity has a set of preferred starting Time"  parent="menu_activity_constraints"
-    action="action_activity_starting_time" sequence="1" />
+    <menuitem id="menu_activity_starting_time_constraints" name="An activity has a set of preferred starting times"  parent="menu_activity_constraints"
+    action="action_activity_starting_times" sequence="1" />
 
 
 
     <!--Activity Time Slots tree view-->
     <record id="activity_time_slots_tree_view" model="ir.ui.view">
-      <field name="name">op.activity.timeslots.tree</field>
+      <field name="name">activity.timeslots.tree.view</field>
       <field name="model">op.activity.timeslots</field>
       <field name="arch" type="xml">
         <tree string="Activity Time Slots Tree">
@@ -184,7 +187,7 @@
 
     <!--Activity Time Slots Form View-->
     <record id="activity_time_slots_form_view" model="ir.ui.view">
-      <field name="name">op.activity.timeslots.form.view</field>
+      <field name="name">activity.timeslots.form.view</field>
       <field name="model">op.activity.timeslots</field>
       <field name="arch" type="xml">
         <form string="Activity Time Slots Form">
@@ -222,6 +225,10 @@
                     <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
                   </tree>
                 </field>
+                <footer>
+                  <span> 0 -> Not Allowed,</span>
+                  <span> 1 -> Allowed.</span>
+                </footer>
               </page>
             </notebook>
           </sheet>
@@ -240,13 +247,13 @@
 
 
     <!--Activity Time Slots Menu-->
-    <menuitem id="menu_activity_time_slots" name="An activity has a set of preferred Time Slots"  parent="menu_activity_constraints"
+    <menuitem id="menu_activity_time_slots" name="An activity has a set of preferred time slots"  parent="menu_activity_constraints"
     action="action_activity_time_slots" sequence="2" />
 
 
     <!--Activities Starting Time tree view-->
     <record id="activities_starting_time_tree_view" model="ir.ui.view">
-      <field name="name">op.activities.starting.time.tree</field>
+      <field name="name">activities.starting.time.tree.view</field>
       <field name="model">op.activities.starting.time</field>
       <field name="arch" type="xml">
         <tree string="Activities Time Starting Time Tree">
@@ -262,7 +269,7 @@
 
     <!--Activities Starting Time Form View-->
     <record id="activities_starting_time_form_view" model="ir.ui.view">
-      <field name="name">op.activities.starting.time.form </field>
+      <field name="name">activities.starting.time.form.view</field>
       <field name="model">op.activities.starting.time</field>
       <field name="arch" type="xml">
         <form string="Activities starting Time Form">
@@ -284,7 +291,7 @@
               </group>
             </group>
             <notebook>
-              <page string="Starting Time">
+              <page string="Time Slots">
                 <field name="activities_starting_time_line_ids">
                   <tree string="Activities Starting Time" editable="bottom" create="false" delete="false">
                     <field name="name" />
@@ -304,6 +311,10 @@
                     <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
                   </tree>
                 </field>
+                <footer>
+                  <span> 0 -> Not Allowed,</span>
+                  <span> 1 -> Allowed.</span>
+                </footer>
               </page>
             </notebook>
           </sheet>
@@ -327,10 +338,10 @@
 
     <!--Activities Time Slots tree view-->
     <record id="activities_time_slots_tree_view" model="ir.ui.view">
-      <field name="name">op.activities.timeslots.tree</field>
+      <field name="name">activities.timeslots.tree.view</field>
       <field name="model">op.activities.timeslots</field>
       <field name="arch" type="xml">
-        <tree string="Activities Time Slots Tree">
+        <tree string="Activities Time Slots">
           <field name="faculty_id"/>
           <field name="student_id"/>
           <field name="subject_id"/>
@@ -343,10 +354,10 @@
 
     <!--Activities Time Slots Form View-->
     <record id="activities_time_slots_form_view" model="ir.ui.view">
-      <field name="name">op.activities.timeslots.form.view</field>
+      <field name="name">activities.timeslots.form.view</field>
       <field name="model">op.activities.timeslots</field>
       <field name="arch" type="xml">
-        <form string="Activities Time Slots Form">
+        <form string="Activities Time Slots">
           <sheet>
             <group>
               <group>
@@ -385,6 +396,10 @@
                     <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
                   </tree>
                 </field>
+                <footer>
+                  <span> 0 -> Not Allowed,</span>
+                  <span> 1 -> Allowed.</span>
+                </footer>
               </page>
             </notebook>
           </sheet>
@@ -401,10 +416,61 @@
         <field name="view_id" ref="activities_time_slots_tree_view" />
     </record>
 
-
     <!--Activity Time Slots Menu-->
     <menuitem id="menu_activities_time_slots" name="A set of activities has a set of preferred time slots"  parent="menu_activity_constraints"
     action="action_activities_time_slots" sequence="4" />
+
+
+
+    <!--Activity starting time tree view-->
+    <record id="activity_starting_time_tree_view" model="ir.ui.view">
+      <field name="name">activity.starting.time.tree.view</field>
+      <field name="model">op.activity.preferred.starting.time</field>
+      <field name="arch" type="xml">
+        <tree string="Activity Preferred Starting Time">
+          <field name="activity_id"/>
+          <field name="weight"/>
+          <field name="day"/>
+          <field name="hours"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--Activity starting time Form View-->
+    <record id="activity_starting_time_form_view" model="ir.ui.view">
+      <field name="name">activity.starting.time.form.view</field>
+      <field name="model">op.activity.preferred.starting.time</field>
+      <field name="arch" type="xml">
+        <form string="Activity Preferred Starting Time">
+          <sheet>
+            <group>
+              <group>
+                <field name="activity_id"/>
+                <field name="weight"/>
+                <field name="lock"/>
+              </group>
+              <group>
+                <field name="day"/>
+                <field name="hours"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Activity starting time Action-->
+    <record model="ir.actions.act_window" id="action_activity_starting_time">
+        <field name="name">Activity Starting Time</field>
+        <field name="res_model">op.activity.preferred.starting.time</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="activity_starting_time_tree_view" />
+    </record>
+
+    <!--Activity starting time Menu-->
+    <menuitem id="menu_activity_starting_time" name="An activity has a preferred starting time"  parent="menu_activity_constraints"
+    action="action_activity_starting_time" sequence="0" />
 
   </data>
 </odoo>

@@ -3,10 +3,10 @@
   <data>
     <!--Break Times tree view-->
     <record id="break_time_tree_view" model="ir.ui.view">
-      <field name="name">op.break.time.tree</field>
+      <field name="name">break.time.tree.view</field>
       <field name="model">op.break.time</field>
       <field name="arch" type="xml">
-        <tree string="Breaks Tree">
+        <tree string="Breaks">
           <field name="name"/>
         </tree>
       </field>
@@ -14,7 +14,7 @@
 
     <!--Break Times form view-->
     <record id="break_time_form_view" model="ir.ui.view">
-      <field name="name">op.break.time.form</field>
+      <field name="name">break.time.form.view</field>
       <field name="model">op.break.time</field>
       <field name="priority" eval="20"/>
       <field name="arch" type="xml">
@@ -26,7 +26,7 @@
               </group>
             </group>
             <notebook>
-              <page string="Breaks">
+              <page string="Time Slots">
                 <field name="break_line_ids" >
                   <tree string="break_line_tree" editable="bottom" create="false" delete="false">
                       <field name="name" />

@@ -21,9 +21,27 @@
                 <form string="Activity Tag Form">
                     <sheet>
                         <group>
+                          <group>
                             <field name="name" />
+                          </group>
+                          <group>
                             <field name="description" />
+                          </group>
                         </group>
+                        <notebook>
+                          <page string="Preferred Room">
+                            <group>
+                                  <field name="room_id"/>
+                                  <field name="room_weight"/>
+                            </group>
+                          </page>
+                          <page string="Preferred Rooms">
+                            <group>
+                                  <field name="rooms_ids" widget='many2many_tags'/>
+                                  <field name="rooms_weight"/>
+                            </group>
+                          </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
