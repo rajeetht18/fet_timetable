@@ -40,9 +40,9 @@
               </group>
             <separator string ="Space Constraints" />
             <group>
-            <field name="max_bulding_change"/>
+            <field name="max_building_change"/>
             <field name="max_building_week"/>
-            <field name="min_gap_buliding"/>
+            <field name="min_gap_building"/>
             <div name ="Message">
               <span>(*) This constarint is related to Buildings and rooms</span>
             </div>

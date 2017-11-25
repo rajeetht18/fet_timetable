@@ -55,12 +55,11 @@ class FacultyTime(models.Model):
             raise UserError(_("Please configure Timetable Days to create your Faculty Time Constraint."))
         return res
 
-
     @api.model
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['res.company'].search([('id','=',self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
 
         if day_config:
             for time in self.env['op.timing'].search([]):

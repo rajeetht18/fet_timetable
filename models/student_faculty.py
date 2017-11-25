@@ -39,7 +39,7 @@ class Faculty(models.Model):
     max_days = fields.Integer('Max days Per Week', default=_get_default_maxdays, size=10)
     min_days = fields.Integer('Min days Per Week', size=10)
     max_gaps = fields.Integer('Max gaps Per Day', size=10)
-    min_gaps = fields.Integer('Min gaps per Day', size=10)
+    max_gaps_week = fields.Integer('Max gaps per Week', size=10)
     max_hrs = fields.Float('Max Hours', size=60)
     max_hrs_act = fields.Float('Max Hours with Activity', size=60)
     min_hrs = fields.Float('Min Hours Daily', size=18)
@@ -47,9 +47,9 @@ class Faculty(models.Model):
     interval_end = fields.Many2one('op.timing', 'Interval End Hour', size=25)
     max_hrs_cont = fields.Float('Max Hours Continuously', size=18)
     max_hr_cont_act = fields.Float('Max Hours Continuous with Activity', size=20)
-    max_buliding = fields.Integer('Max Building Changes Per Day', size=10)
-    max_bulid_week = fields.Integer('Max Buliding Changes Per Week', size=10)
-    max_gap_build = fields.Integer('Max Gap Between Building Changes', size=10)
+    max_building = fields.Integer('Max Building Changes Per Day', size=10)
+    max_build_week = fields.Integer('Max Building Changes Per Week', size=10)
+    min_gap_build = fields.Integer('Min Gaps Between Building Changes', size=10)
     activity_name = fields.Many2one('op.activity.tags', 'Activity')
     room = fields.Many2one('op.classroom', 'Home Room')
     room_weight = fields.Float('Home Room Weight Percent', default=100, size=100)
@@ -74,7 +74,7 @@ class Faculty(models.Model):
     @api.constrains('room_weight', 'set_of_room_weight')
     def check_room_weight(self):
         for w in self:
-            if w.room_weight or w.set_of_room_weight > 100:
+            if w.room_weight > 100 and w.set_of_room_weight > 100:
                 raise UserError(_("Please set the weight percentage to 100 or below."))
 
 

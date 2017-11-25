@@ -9,8 +9,9 @@ class BreaksTime(models.Model):
 
     @api.model
     def create(self, values):
-        if len(values['break_line_ids']) == 0 :
-            raise UserError(_("Please configure Timetable Days to create your Break Time Constraint."))
+        if len(values['break_line_ids']) == 0:
+            raise UserError(
+                _("Please configure Timetable Days to create your Break Time Constraint."))
         res = super(BreaksTime, self).create(values)
         return res
 
@@ -18,7 +19,8 @@ class BreaksTime(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
+        day_config = self.env['timetable.days.config'].search(
+            [], order='id desc', limit=1)
 
         for time in self.env['op.timing'].search([]):
             if day_config:
@@ -32,13 +34,15 @@ class BreaksTime(models.Model):
                     'is_saturday': day_config.tt_saturday,
                     'is_sunday': day_config.tt_sunday
                 }
-                period_list.append((0,0,period_dict))
+                period_list.append((0, 0, period_dict))
         return period_list
 
-    _sql_constraints = [('unique_name', 'unique(name)', 'There must be another constraint of this type. Please edit that one.')]
+    _sql_constraints = [('unique_name', 'unique(name)',
+                         'There must be another constraint of this type. Please edit that one.')]
 
     name = fields.Char("Name", default="Break Time Constraints", readonly="1")
-    break_line_ids = fields.One2many('op.break.time.line', 'break_id', "Breaks", default=default_line)
+    break_line_ids = fields.One2many(
+        'op.break.time.line', 'break_id', "Breaks", default=default_line)
 
     @api.multi
     @api.constrains('break_line_ids')
@@ -68,7 +72,7 @@ class BreakTimeLine(models.Model):
     _name = 'op.break.time.line'
     _description = 'Break Time Line'
 
-    name = fields.Char("Periods" ,required=1)
+    name = fields.Char("Periods", required=1)
     monday = fields.Integer("Monday", size=1)
     tuesday = fields.Integer("Tuesday", size=1)
     wednesday = fields.Integer("Wednesday", size=1)

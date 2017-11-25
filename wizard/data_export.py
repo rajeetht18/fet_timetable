@@ -8,7 +8,8 @@ import datetime
 class fettimetable_data_export(models.TransientModel):
     _name = 'fettimetable.data.export'
 
-    version = fields.Char("FET Version", required=True, help="Fill the FET version in which you are using currently.")
+    version = fields.Char("FET Version", required=True,
+                          help="Fill the FET version in which you are using currently.")
     filedata = fields.Binary('File', readonly=True)
 
     def export_days(self, root):
@@ -29,7 +30,7 @@ class fettimetable_data_export(models.TransientModel):
         Number_of_Hours = etree.SubElement(Hours_List, "Number_of_Hours")
         Number_of_Hours.text = str(total_hours)
         for records in timings:
-            hr_name = records.hour+':'+records.minute
+            hr_name = records.name
             Hours = etree.SubElement(Hours_List, "Hour")
             Name = etree.SubElement(Hours, "Name")
             Name.text = str(hr_name)
@@ -46,9 +47,22 @@ class fettimetable_data_export(models.TransientModel):
                 Year = etree.SubElement(Students_List, "Year")
                 Name = etree.SubElement(Year, "Name")
                 Name.text = rec.name
-                students = self.env['op.student.course'].search_count([('batch_id', '=', rec.id)])
-                Number_of_Students = etree.SubElement(Year, "Number_of_Students")
+                students = self.env['op.student.course'].search_count(
+                    [('batch_id', '=', rec.id)])
+                Number_of_Students = etree.SubElement(
+                    Year, "Number_of_Students")
                 Number_of_Students.text = str(students)
+        # group_list = etree.SubElement(Year, "Group")
+        # Name.text = "A"
+        # Name = etree.SubElement(group_list, "Name")
+        # Name.text = "G-1"
+        # Number_of_stud = etree.SubElement(group_list, "Number_of_Students")
+        # Number_of_stud.text = "10"
+        # subgroup_list = etree.SubElement(group_list, "Subgroup")
+        # Name = etree.SubElement(subgroup_list, "Name")
+        # Name.text = "A-1"
+        # Number_of_stud = etree.SubElement(subgroup_list, "Number_of_Students")
+        # Number_of_stud.text = "15"
 
     def export_faculties(self, root):
         faculties = self.env['op.faculty'].search([])
@@ -104,12 +118,13 @@ class fettimetable_data_export(models.TransientModel):
                 id_count = etree.SubElement(activity, "Id")
                 id_count.text = str(x)
                 x += 1
-                activity_group_id = etree.SubElement(activity, "Activity_Group_Id")
+                activity_group_id = etree.SubElement(
+                    activity, "Activity_Group_Id")
                 activity_group_id.text = "0"
                 active = etree.SubElement(activity, "Active")
                 active.text = "true"
-                comments = etree.SubElement(activity, "Comments")
-                #comments.text = " "
+                # comments = etree.SubElement(activity, "Comments")
+                # comments.text = " "
 
     def rooms(self, root):
         buildings = etree.SubElement(root, "Buildings_List")
@@ -131,11 +146,14 @@ class fettimetable_data_export(models.TransientModel):
         inst_name.text = user.partner_id.company_name
         comment = etree.SubElement(root, "Comments")
         comment.text = "comment"
+
         Days_List = self.export_days(root)
         Hours_List = self.export_hours(root)
         Students_List = self.export_students(root)
         Teachers_List = self.export_faculties(root)
         Subjects_List = self.export_courses(root)
+        time_compulsory = self.constraint_compulsory(root)
+        space_compulsory = self.spaceconstraint_compulsory(root)
         self.activity_tag_list(root)
         self.activities(root)
         self.rooms(root)
@@ -143,9 +161,10 @@ class fettimetable_data_export(models.TransientModel):
         xmlstr = etree.tostring(root, encoding="utf-8", xml_declaration=True)
         file = base64.encodestring(xmlstr)
         self.filedata = file
-        file_url = "http://localhost:8069/web/content?model=fettimetable.data.export&field=filedata&id=%s"%(self.id)
+        file_url = "http://localhost:8069/web/content?model=fettimetable.data.export&field=filedata&id=%s" % (
+            self.id)
         return {
-             'type': 'ir.actions.act_url',
-             'url': file_url,
-             'target': 'new',
-	    }
+            'type': 'ir.actions.act_url',
+            'url': file_url,
+            'target': 'new',
+        }
