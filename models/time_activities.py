@@ -16,7 +16,8 @@ class ActivityEndsDay(models.Model):
     #         if activity_count > 1:
     #             raise UserError(_("This activity is already selected. Please select another activity."))
 
-    activity_id = fields.Many2one('op.faculty.class.list', "Activity", required=1)
+    activity_id = fields.Many2one(
+        'op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
 
 
@@ -25,12 +26,12 @@ class ActivitiesEndsDay(models.Model):
     _description = 'A set of Activities ends a Students day.'
     _rec_name = 'faculty_id'
 
-
-    faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
-    student_id = fields.Many2one('op.batch',"Students",required=1)
-    subject_id = fields.Many2one('op.subject',"Subject",required=1)
-    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
+    student_id = fields.Many2one('op.batch', "Students", required=1)
+    subject_id = fields.Many2one('op.subject', "Subject", required=1)
+    activity_tag_id = fields.Many2one(
+        'op.activity.tags', "Activity Tag", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class ActivitiesSameStartingTime(models.Model):
@@ -38,16 +39,19 @@ class ActivitiesSameStartingTime(models.Model):
     _description = 'A set of Activities has same starting time.'
     _rec_name = 'weight'
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_sametime_rel','activity_id','sametime_id',"Activities",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_sametime_rel', 'activity_id', 'sametime_id', "Activities", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
+
 
 class ActivitiesSameStartingDay(models.Model):
     _name = 'op.activities.same.starting.day'
     _description = 'A set of Activities has same starting day.'
     _rec_name = 'weight'
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_sameday_rel','activity_id','sameday_id',"Activities",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_sameday_rel', 'activity_id', 'sameday_id', "Activities", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class ActivitiesSameStartingHour(models.Model):
@@ -55,8 +59,9 @@ class ActivitiesSameStartingHour(models.Model):
     _description = 'A set of Activities has same starting hour.'
     _rec_name = 'weight'
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_samehour_rel','activity_id','samehour_id',"Activities",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_samehour_rel', 'activity_id', 'samehour_id', "Activities", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class ActivitiesMaxOccupyTimeSlots(models.Model):
@@ -66,7 +71,8 @@ class ActivitiesMaxOccupyTimeSlots(models.Model):
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activities_max_timeslots_line_ids:
                 if day_config.tt_monday:
@@ -86,7 +92,8 @@ class ActivitiesMaxOccupyTimeSlots(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activities_max_timeslots_line_ids:
                 if day_config.tt_monday:
@@ -107,7 +114,8 @@ class ActivitiesMaxOccupyTimeSlots(models.Model):
     @api.model
     def create(self, values):
         if len(values['activities_max_timeslots_line_ids']) == 0:
-            raise UserError(_("Please configure Timetable Days to create your activity time slots."))
+            raise UserError(
+                _("Please configure Timetable Days to create your activity time slots."))
         res = super(ActivitiesMaxOccupyTimeSlots, self).create(values)
         return res
 
@@ -115,7 +123,8 @@ class ActivitiesMaxOccupyTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
+        day_config = self.env['timetable.days.config'].search(
+            [], order='id desc', limit=1)
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -154,17 +163,28 @@ class ActivitiesMaxOccupyTimeSlots(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
+
+<< << << < HEAD
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_maxtimeslot_rel', 'activity_id', 'maxtimeslot_id', "Activities")
+    weight = fields.Integer("Weight Percentage", default=100)
+    max_occupied = fields.Integer("maximum Occuppied")
+== == == =
     @api.multi
     @api.constrains('max_occupied')
     def _check_max_occupied(self):
         for rec in self:
             if rec.max_occupied < 1:
-                raise UserError(_("The Max occuppied value should be greater than 0."))
+                raise UserError(
+                    _("The Max occuppied value should be greater than 0."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_maxtimeslot_rel','activity_id','maxtimeslot_id',"Activities",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
-    max_occupied = fields.Integer("maximum Occuppied",default=1,required=1)
-    activities_max_timeslots_line_ids = fields.One2many('op.activities.max.time.slots.line', 'activities_max_timeslots_id', "Activities Max Time Slots Line", default=default_line)
+    activities_ids = fields.Many2many('op.faculty.class.list', 'activity_maxtimeslot_rel',
+                                      'activity_id', 'maxtimeslot_id', "Activities", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
+    max_occupied = fields.Integer("maximum Occuppied", default=1, required=1)
+>>>>>> > 4d4d80e4a96f57739280abffb6c14de696f09dff
+    activities_max_timeslots_line_ids = fields.One2many(
+        'op.activities.max.time.slots.line', 'activities_max_timeslots_id', "Activities Max Time Slots Line", default=default_line)
 
 
 class ActivitiesMaxOccupyTimeSlotsLine(models.Model):
@@ -186,7 +206,8 @@ class ActivitiesMaxOccupyTimeSlotsLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    activities_max_timeslots_id = fields.Many2one('op.activities.max.time.slots', "Activities Max Time Slots")
+    activities_max_timeslots_id = fields.Many2one(
+        'op.activities.max.time.slots', "Activities Max Time Slots")
 
 
 class TwoActivitiesOrdered(models.Model):
@@ -199,10 +220,12 @@ class TwoActivitiesOrdered(models.Model):
     def _check_min_gap(self):
         for rec in self:
             if len(rec.activities_ids) != 2:
-                raise UserError(_("Please make sure you've added 2 activities."))
+                raise UserError(
+                    _("Please make sure you've added 2 activities."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_ordered_rel','activity_id','ordered_id',"Activities",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_ordered_rel', 'activity_id', 'ordered_id', "Activities", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class TwoActivitiesConsecutive(models.Model):
@@ -210,16 +233,17 @@ class TwoActivitiesConsecutive(models.Model):
     _description = 'Two activities are consecutive'
     _rec_name = 'weight'
 
-
     @api.multi
     @api.constrains('activities_ids')
     def _check_min_gap(self):
         for rec in self:
             if len(rec.activities_ids) != 2:
-                raise UserError(_("Please make sure you've added 2 activities."))
+                raise UserError(
+                    _("Please make sure you've added 2 activities."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_consecutive_rel','activity_id','consecutive_id',"Activities",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activities_ids = fields.Many2many('op.faculty.class.list', 'activity_consecutive_rel',
+                                      'activity_id', 'consecutive_id', "Activities", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class TwoActivitiesGrouped(models.Model):
@@ -227,16 +251,17 @@ class TwoActivitiesGrouped(models.Model):
     _description = 'Two activities are grouped'
     _rec_name = 'weight'
 
-
     @api.multi
     @api.constrains('activities_ids')
     def _check_min_gap(self):
         for rec in self:
             if len(rec.activities_ids) != 2:
-                raise UserError(_("Please make sure you've added 2 activities."))
+                raise UserError(
+                    _("Please make sure you've added 2 activities."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','two_activity_grouped_rel','activity_id','grouped_id',"Activities",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'two_activity_grouped_rel', 'activity_id', 'grouped_id', "Activities", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class ThreeActivitiesGrouped(models.Model):
@@ -249,10 +274,12 @@ class ThreeActivitiesGrouped(models.Model):
     def _check_min_gap(self):
         for rec in self:
             if len(rec.activities_ids) != 3:
-                raise UserError(_("Please make sure you've added 3 activities."))
+                raise UserError(
+                    _("Please make sure you've added 3 activities."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','three_activity_grouped_rel','activity_id','grouped_id',"Activities",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'three_activity_grouped_rel', 'activity_id', 'grouped_id', "Activities", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class ActivitiesNotOverlapping(models.Model):
@@ -260,8 +287,9 @@ class ActivitiesNotOverlapping(models.Model):
     _description = 'A set of activities not overlap'
     _rec_name = 'weight'
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activities_not_overlap_rel','activity_id','not_overlap_id',"Activities",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activities_ids = fields.Many2many('op.faculty.class.list', 'activities_not_overlap_rel',
+                                      'activity_id', 'not_overlap_id', "Activities", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class ActivitiesMaxSimultaneous(models.Model):
@@ -271,7 +299,8 @@ class ActivitiesMaxSimultaneous(models.Model):
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activities_max_simultaneous_line_ids:
                 if day_config.tt_monday:
@@ -291,7 +320,8 @@ class ActivitiesMaxSimultaneous(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activities_max_simultaneous_line_ids:
                 if day_config.tt_monday:
@@ -312,7 +342,8 @@ class ActivitiesMaxSimultaneous(models.Model):
     @api.model
     def create(self, values):
         if len(values['activities_max_simultaneous_line_ids']) == 0:
-            raise UserError(_("Please configure Timetable Days to create your activity time slots."))
+            raise UserError(
+                _("Please configure Timetable Days to create your activity time slots."))
         res = super(ActivitiesMaxSimultaneous, self).create(values)
         return res
 
@@ -320,7 +351,8 @@ class ActivitiesMaxSimultaneous(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
+        day_config = self.env['timetable.days.config'].search(
+            [], order='id desc', limit=1)
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -359,6 +391,13 @@ class ActivitiesMaxSimultaneous(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
+
+<< << << < HEAD
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_maxtimeslot_rel', 'activity_id', 'maxtimeslot_id', "Activities")
+    weight = fields.Integer("Weight Percentage", default=100, readonly=1)
+    max_occupied = fields.Integer("maximum Occuppied")
+== == == =
     @api.multi
     @api.constrains('activities_ids')
     def _check_activities(self):
@@ -373,10 +412,15 @@ class ActivitiesMaxSimultaneous(models.Model):
             if rec.max_simultaneous < 1:
                 raise UserError(_("Please add value more than zero."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_maxsimul_rel','activity_id','maxsimul_id',"Activities",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,readonly=1,required=1)
-    max_simultaneous = fields.Integer("Maximum Simultaneous",default=1,required=1)
-    activities_max_simultaneous_line_ids = fields.One2many('op.activities.max.simultaneous.line', 'activities_max_simultaneous_id', "Activities Max Simultaneous Line", default=default_line)
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_maxsimul_rel', 'activity_id', 'maxsimul_id', "Activities", required=1)
+    weight = fields.Integer("Weight Percentage",
+                            default=100, readonly=1, required=1)
+    max_simultaneous = fields.Integer(
+        "Maximum Simultaneous", default=1, required=1)
+>>>>>> > 4d4d80e4a96f57739280abffb6c14de696f09dff
+    activities_max_simultaneous_line_ids = fields.One2many(
+        'op.activities.max.simultaneous.line', 'activities_max_simultaneous_id', "Activities Max Simultaneous Line", default=default_line)
 
 
 class ActivitiesMaxOccupyTimeSlotsLine(models.Model):
@@ -398,7 +442,8 @@ class ActivitiesMaxOccupyTimeSlotsLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    activities_max_simultaneous_id = fields.Many2one('op.activities.max.simultaneous', "Activities Max Simultaneous Time Slots")
+    activities_max_simultaneous_id = fields.Many2one(
+        'op.activities.max.simultaneous', "Activities Max Simultaneous Time Slots")
 
 
 class ActivitiesMinGap(models.Model):
@@ -410,8 +455,9 @@ class ActivitiesMinGap(models.Model):
     @api.constrains('min_gap')
     def _check_min_gap(self):
         for rec in self:
-            if rec.min_gap < 1 :
-                raise UserError(_("The minimum gap value should be more than zero"))
+            if rec.min_gap < 1:
+                raise UserError(
+                    _("The minimum gap value should be more than zero"))
 
     @api.multi
     @api.constrains('activities_ids')
@@ -420,6 +466,15 @@ class ActivitiesMinGap(models.Model):
             if len(rec.activities_ids) == 1:
                 raise UserError(_("Please add atleast two activities."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_mingap_rel','activity_id','mingap_id',"Activities",required=1)
-    min_gap = fields.Integer("Minimum Gap",default=1,required=1)
-    weight = fields.Integer("Weight Percentage",default=100)
+
+<< << << < HEAD
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_mingap_rel', 'activity_id', 'mingap_id', "Activities")
+    min_gap = fields.Integer("Minimum Gap", default=1)
+    weight = fields.Integer("Weight Percentage", default=100)
+== == == =
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_mingap_rel', 'activity_id', 'mingap_id', "Activities", required=1)
+    min_gap = fields.Integer("Minimum Gap", default=1, required=1)
+    weight = fields.Integer("Weight Percentage", default=100)
+>>>>>> > 4d4d80e4a96f57739280abffb6c14de696f09dff

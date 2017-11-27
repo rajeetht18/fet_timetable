@@ -5,6 +5,7 @@ from odoo import fields, models, api
 TIMETABLE_DAYS = ['tt_monday','tt_tuesday','tt_wednesday','tt_thursday','tt_friday','tt_saturday','tt_sunday']
 WEEK_DAYS = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
 
+
 class ResCompany(models.Model):
     _inherit = "res.company"
 

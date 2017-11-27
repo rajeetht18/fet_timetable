@@ -10,7 +10,8 @@ class SubActivityStartingTime(models.Model):
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.subactivity_starting_line_ids:
                 if day_config.tt_monday:
@@ -30,7 +31,8 @@ class SubActivityStartingTime(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.subactivity_starting_line_ids:
                 if day_config.tt_monday:
@@ -51,7 +53,8 @@ class SubActivityStartingTime(models.Model):
     @api.model
     def create(self, values):
         if len(values['subactivity_starting_line_ids']) == 0:
-            raise UserError(_("Please configure Timetable Days to create your Activity Starting Time."))
+            raise UserError(
+                _("Please configure Timetable Days to create your Activity Starting Time."))
         res = super(SubActivityStartingTime, self).create(values)
         return res
 
@@ -59,7 +62,8 @@ class SubActivityStartingTime(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
+        day_config = self.env['timetable.days.config'].search(
+            [], order='id desc', limit=1)
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -98,14 +102,15 @@ class SubActivityStartingTime(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
-
-    faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
-    student_id = fields.Many2one('op.batch',"Students",required=1)
-    subject_id = fields.Many2one('op.subject',"Subject",required=1)
-    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
-    weight = fields.Integer("Weight Percentage",default=100)
-    split_count = fields.Integer("Split Component",default=1)
-    subactivity_starting_line_ids = fields.One2many('op.subactivity.starting.time.line', 'subactivity_starting_time_id', "Subactivity Startimg Time Line", default=default_line)
+    faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
+    student_id = fields.Many2one('op.batch', "Students", required=1)
+    subject_id = fields.Many2one('op.subject', "Subject", required=1)
+    activity_tag_id = fields.Many2one(
+        'op.activity.tags', "Activity Tag", required=1)
+    weight = fields.Integer("Weight Percentage", default=100)
+    split_count = fields.Integer("Split Component", default=1)
+    subactivity_starting_line_ids = fields.One2many(
+        'op.subactivity.starting.time.line', 'subactivity_starting_time_id', "Subactivity Startimg Time Line", default=default_line)
 
 
 class SubActivityStartingTimeLine(models.Model):
@@ -127,7 +132,8 @@ class SubActivityStartingTimeLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    subactivity_starting_time_id = fields.Many2one('op.subactivity.starting.time', "Subactivity Starting Time")
+    subactivity_starting_time_id = fields.Many2one(
+        'op.subactivity.starting.time', "Subactivity Starting Time")
 
 
 class SubActivitiesTimeSlots(models.Model):
@@ -137,7 +143,8 @@ class SubActivitiesTimeSlots(models.Model):
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.subactivities_timeslots_line_ids:
                 if day_config.tt_monday:
@@ -157,7 +164,8 @@ class SubActivitiesTimeSlots(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.subactivities_timeslots_line_ids:
                 if day_config.tt_monday:
@@ -178,7 +186,8 @@ class SubActivitiesTimeSlots(models.Model):
     @api.model
     def create(self, values):
         if len(values['subactivities_timeslots_line_ids']) == 0:
-            raise UserError(_("Please configure Timetable Days to create your activity time slots."))
+            raise UserError(
+                _("Please configure Timetable Days to create your activity time slots."))
         res = super(SubActivitiesTimeSlots, self).create(values)
         return res
 
@@ -186,7 +195,8 @@ class SubActivitiesTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
+        day_config = self.env['timetable.days.config'].search(
+            [], order='id desc', limit=1)
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -225,13 +235,15 @@ class SubActivitiesTimeSlots(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
-    faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
-    student_id = fields.Many2one('op.batch',"Students",required=1)
-    subject_id = fields.Many2one('op.subject',"Subject",required=1)
-    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
-    weight = fields.Integer("Weight Percentage",default=100)
-    split_count = fields.Integer("Split Component",default=1)
-    subactivities_timeslots_line_ids = fields.One2many('op.subactivities.timeslots.line', 'subactivities_timeslots_id', "Subactivities Time Slots Line", default=default_line)
+    faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
+    student_id = fields.Many2one('op.batch', "Students", required=1)
+    subject_id = fields.Many2one('op.subject', "Subject", required=1)
+    activity_tag_id = fields.Many2one(
+        'op.activity.tags', "Activity Tag", required=1)
+    weight = fields.Integer("Weight Percentage", default=100)
+    split_count = fields.Integer("Split Component", default=1)
+    subactivities_timeslots_line_ids = fields.One2many(
+        'op.subactivities.timeslots.line', 'subactivities_timeslots_id', "Subactivities Time Slots Line", default=default_line)
 
 
 class SubActivitiesTimeSlotsLine(models.Model):
@@ -253,7 +265,8 @@ class SubActivitiesTimeSlotsLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    subactivities_timeslots_id = fields.Many2one('op.subactivities.timeslots', "Subactivities Time Slots")
+    subactivities_timeslots_id = fields.Many2one(
+        'op.subactivities.timeslots', "Subactivities Time Slots")
 
 
 class MinDaysBetweenActivities(models.Model):
@@ -261,13 +274,12 @@ class MinDaysBetweenActivities(models.Model):
     _description = 'Minimum days between a set of activities.'
     _rec_name = 'min_days'
 
-
     @api.multi
     @api.constrains('activities_ids')
     def check_activity_count(self):
         for rec in self:
             if len(rec.activities_ids) == 1:
-                raise UserError(_("Please add more than 1 activities."))
+                raise UserError(_("Please add more than 1 activity."))
 
     @api.multi
     @api.constrains('min_days')
@@ -276,16 +288,15 @@ class MinDaysBetweenActivities(models.Model):
             if rec.min_days < 1:
                 raise UserError(_("The gap should be greater than 0"))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_mindays_rel','activity_id','minday_id',"Activities")
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_mindays_rel', 'activity_id', 'minday_id', "Activities")
     min_days = fields.Integer("Minimum Days")
-    weight = fields.Integer("Weight Percentage",default=100)
-
+    weight = fields.Integer("Weight Percentage", default=100)
 
     class MaxDaysBetweenActivities(models.Model):
         _name = 'op.maxdays.activities'
         _description = 'Maximum days between a set of activity.'
         _rec_name = 'max_days'
-
 
         @api.multi
         @api.constrains('activities_ids')
@@ -301,6 +312,7 @@ class MinDaysBetweenActivities(models.Model):
                 if rec.max_days < 1:
                     raise UserError(_("The gap should be greater than 0"))
 
-        activities_ids = fields.Many2many('op.faculty.class.list','activity_maxdays_rel','activity_id','maxday_id',"Activities")
+        activities_ids = fields.Many2many(
+            'op.faculty.class.list', 'activity_maxdays_rel', 'activity_id', 'maxday_id', "Activities")
         max_days = fields.Integer("Maximum Days")
-        weight = fields.Integer("Weight Percentage",default=100)
+        weight = fields.Integer("Weight Percentage", default=100)

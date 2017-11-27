@@ -27,11 +27,11 @@ class Allfacultyconstraints(models.Model):
     # max_hrs_cont_tr_act = fields.Float('Max Hours Continuously with an activity For All Faculty')
     interval_start = fields.Many2one('op.timing', 'Interval Start Hour')
     interval_end = fields.Many2one('op.timing', 'Interval End Hour')
-    max_bulding_change = fields.Integer('Max Building Changes Per Day', size=10)
+    max_building_change = fields.Integer('Max Building Changes Per Day', size=10)
     max_building_week = fields.Integer('Max Building Changes Per Week', size=10)
-    min_gap_buliding = fields.Integer('Min Gaps Between Building Changes', size=10)
+    min_gap_building = fields.Integer('Min Gaps Between Building Changes', size=10)
 
-    _sql_constraints = [('unique_Faculty', 'unique(name)', 'There must be another constraint of this type.')]
+    _sql_constraints = [('unique_Faculty', 'unique(name)', 'Only one Constraint required.')]
 
     @api.multi
     @api.constrains('weight_percent')
