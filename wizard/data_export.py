@@ -3,7 +3,7 @@ from odoo import api, fields, models
 from lxml import etree
 import base64
 import datetime
-
+import odoo.tools.config as config
 
 class fettimetable_data_export(models.TransientModel):
     _name = 'fettimetable.data.export'
@@ -143,9 +143,11 @@ class fettimetable_data_export(models.TransientModel):
         xmlstr = etree.tostring(root, encoding="utf-8", xml_declaration=True)
         file = base64.encodestring(xmlstr)
         self.filedata = file
-        file_url = "http://localhost:8069/web/content?model=fettimetable.data.export&field=filedata&id=%s"%(self.id)
+        # set up your output file url:
+        base_url = self.env['ir.config_parameter'].get_param('web.base.url')
+        file_url = base_url+"/web/content?model=fettimetable.data.export&field=filedata&id=%s"%(self.id)
         return {
              'type': 'ir.actions.act_url',
              'url': file_url,
-             'target': 'new',
-	    }
+             'target': 'current',
+        }

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models
-
+from company import TIMETABLE_DAYS
 
 class TimetableDaysConfig(models.TransientModel):
     _name = "timetable.days.config"
@@ -8,8 +8,8 @@ class TimetableDaysConfig(models.TransientModel):
 
     def get_default_params(self, fields):
         res = {}
-        for field_name in ['tt_monday', 'tt_tuesday', 'tt_wednesday', 'tt_thursday', 'tt_friday', 'tt_saturday', 'tt_sunday']:
-            res[field_name] = self.env['ir.values'].get_default('timetable.days.config', field_name)
+        for day in TIMETABLE_DAYS:
+            res[day] = self.env['ir.values'].get_default('timetable.days.config', day)
         return res
 
     @api.multi

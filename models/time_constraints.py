@@ -2,19 +2,17 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
-
-
 class ActivityPreferredStartingTime(models.Model):
     _name = 'op.activity.preferred.starting.time'
     _description = "An activity has preferred starting time."
     _rec_name ='activity_id'
-
 
     activity_id = fields.Many2one('op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100,required=1)
     lock = fields.Boolean("Permenantly Locked")
     day = fields.Selection([('sunday','sunday'),('monday','Monday'),('tuesday','Tuesday'),('wednesday','Wednesday'),('thursday','Thursday'),('friday','Friday'),('saturday','Saturday')],default='monday',required=1)
     hours = fields.Many2one('op.timing',"Hours",required=1)
+
 
 class BatchConstraints(models.Model):
     _name = 'op.batch.constraints'
@@ -401,7 +399,6 @@ class ActivityTimeSlotsLine(models.Model):
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
     activity_timeslots_id = fields.Many2one('op.activity.timeslots', "Activity Time Slots")
-
 
 
 class ActivitiesStartingTime(models.Model):

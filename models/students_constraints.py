@@ -5,31 +5,9 @@ from odoo import api, fields, models, _
 class Studentnotavailable(models.Model):
     _name = 'all.student.constraints'
 
-    # All Students Time Constraints
-    @api.model
-    def _get_default_maxdays(self):
-        res_days = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
-        count = 0
-        for l in res_days:
-            if l.tt_monday:
-                count += 1
-            if l.tt_tuesday:
-                count += 1
-            if l.tt_wednesday:
-                count += 1
-            if l.tt_thursday:
-                count += 1
-            if l.tt_friday:
-                count += 1
-            if l.tt_saturday:
-                count += 1
-            if l.tt_sunday:
-                count += 1
-        return count
-
     name = fields.Char('Name', default='Student Constraint')
     weight_percent = fields.Integer('Weight Percentage', default=100)
-    max_days_week = fields.Integer('Max Days Per Week For All Studenst', default=_get_default_maxdays, size=10)
+    max_days_week = fields.Integer('Max Days Per Week For All Studenst', default=lambda self: self.env.user.company_id.tt_max_days, size=10)
     max_gaps_per_week = fields.Integer('Max Gaps Per Week For All Students', size=10)
     max_gaps_per_day = fields.Integer('Max Gaps Per Day For All Students', size=10)
     max_beginnings = fields.Integer('Max Beginnings At second Hour(per week)', size=10)

@@ -18,6 +18,3 @@ class FacultyactivityMaxhrs(models.Model):
             if rec.weight_percent != 100:
                 raise UserError(_("Please set the weight percentage to 100."))
 
-    # _sql_constraints = [
-    #     ('unique_activity',
-    #      'unique(name)', 'You cannot create another Activity Constraint!')]

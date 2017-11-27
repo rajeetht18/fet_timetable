@@ -18,7 +18,7 @@ class studentconstraints(models.Model):
     group_name = fields.Many2one('op.batch.group', 'Group')
     subgroup_name = fields.Many2one('op.batch.subgroup', 'Subgroup')
     weight_percent = fields.Integer('Weight Percent', default=100, size=10)
-    max_days_week = fields.Integer('Max Days Per Week For Student', size=10)
+    max_days_week = fields.Integer('Max Days Per Week For Student', default=lambda self: self.env.user.company_id.tt_max_days, size=10)
     max_gaps_day = fields.Integer('Max Gaps Per Day For Student', size=10)
     max_gaps_week = fields.Integer('Max Gaps Per Week For Student', size=10)
     max_begin_second = fields.Integer('Max Beginnings At Second Hour(Per Week)', size=10)
