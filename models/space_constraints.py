@@ -10,7 +10,8 @@ class RoomNotAvailableTimes(models.Model):
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.room_not_available_line_ids:
                 if day_config.tt_monday:
@@ -30,7 +31,8 @@ class RoomNotAvailableTimes(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.room_not_available_line_ids:
                 if day_config.tt_monday:
@@ -51,7 +53,8 @@ class RoomNotAvailableTimes(models.Model):
     @api.model
     def create(self, values):
         if len(values['room_not_available_line_ids']) == 0:
-            raise UserError(_("Please configure Timetable Days to create your activity time slots."))
+            raise UserError(
+                _("Please configure Timetable Days to create your activity time slots."))
         res = super(RoomNotAvailableTimes, self).create(values)
         return res
 
@@ -59,7 +62,8 @@ class RoomNotAvailableTimes(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
+        day_config = self.env['timetable.days.config'].search(
+            [], order='id desc', limit=1)
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -79,14 +83,17 @@ class RoomNotAvailableTimes(models.Model):
     @api.constrains('room_not_available_line_ids')
     def _check_room_not_available_line(self):
         for record in self:
-            flag = any([True for line in record.room_not_available_line_ids for d in WEEK_DAYS if getattr(line, d)!=0 and getattr(line, d)!=1])
+            flag = any([True for line in record.room_not_available_line_ids for d in WEEK_DAYS if getattr(
+                line, d) != 0 and getattr(line, d) != 1])
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
-    room_id = fields.Many2one('op.classroom',"Room",required=1)
-    activity_id = fields.Many2one('op.faculty.class.list',"Activity",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
-    room_not_available_line_ids = fields.One2many('op.room.not.available.line', 'room_not_available_id', "Room Not Available", default=default_line)
+    room_id = fields.Many2one('op.classroom', "Room", required=1)
+    activity_id = fields.Many2one(
+        'op.faculty.class.list', "Activity", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
+    room_not_available_line_ids = fields.One2many(
+        'op.room.not.available.line', 'room_not_available_id', "Room Not Available", default=default_line)
 
 
 class RoomNotAvailableLine(models.Model):
@@ -108,7 +115,8 @@ class RoomNotAvailableLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    room_not_available_id = fields.Many2one('op.room.not.available', "Room not available line")
+    room_not_available_id = fields.Many2one(
+        'op.room.not.available', "Room not available line")
 
 
 class ActivityRoom(models.Model):
@@ -116,10 +124,10 @@ class ActivityRoom(models.Model):
     _description = 'An activity has a preferred room'
     _rec_name = 'weight'
 
-
-    activity_id = fields.Many2one('op.faculty.class.list',"Activity",required=1)
-    room_id = fields.Many2one('op.classroom',"Preferred Room",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activity_id = fields.Many2one(
+        'op.faculty.class.list', "Activity", required=1)
+    room_id = fields.Many2one('op.classroom', "Preferred Room", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
     locked = fields.Boolean("Permenantly Locked")
 
 
@@ -128,9 +136,11 @@ class ActivityRooms(models.Model):
     _description = 'An activity has a set of preferred room'
     _rec_name = 'weight'
 
-    activity_id = fields.Many2one('op.faculty.class.list',"Activity",required=1)
-    room_ids = fields.Many2many('op.classroom','room_activity_rel','room_id','activity_id',"preferred Rooms",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activity_id = fields.Many2one(
+        'op.faculty.class.list', "Activity", required=1)
+    room_ids = fields.Many2many('op.classroom', 'room_activity_rel',
+                                'room_id', 'activity_id', "preferred Rooms", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class ConsecutiveActivitiesSameRoom(models.Model):
@@ -145,9 +155,9 @@ class ConsecutiveActivitiesSameRoom(models.Model):
             if len(rec.activities_ids) == 1:
                 raise UserError(_("Please add atleast two activities."))
 
-
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_sameroom_rel','activity_id','sameroom_id',"Activities",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_sameroom_rel', 'activity_id', 'sameroom_id', "Activities", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class ActivitiesMaxDifferentRoom(models.Model):
@@ -167,11 +177,14 @@ class ActivitiesMaxDifferentRoom(models.Model):
     def _check_diff_rooms(self):
         for rec in self:
             if rec.max_diff_room < 1:
-                raise UserError(_("Maximum different room value should be more than zero."))
+                raise UserError(
+                    _("Maximum different room value should be more than zero."))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_diffroom_rel','activity_id','diffroom_id',"Activities",required=1)
-    max_diff_room = fields.Integer("Max Different Rooms",required=1,default=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    activities_ids = fields.Many2many(
+        'op.faculty.class.list', 'activity_diffroom_rel', 'activity_id', 'diffroom_id', "Activities", required=1)
+    max_diff_room = fields.Integer(
+        "Max Different Rooms", required=1, default=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class SubjectTagPreferredRoom(models.Model):
@@ -179,10 +192,11 @@ class SubjectTagPreferredRoom(models.Model):
     _description = 'A subject and activity tag has a preferred room.'
     _rec_name = 'weight'
 
-    subject_id = fields.Many2one('op.subject',"Subject",required=1)
-    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
-    room_id = fields.Many2one('op.classroom',"Preferred Room",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    subject_id = fields.Many2one('op.subject', "Subject", required=1)
+    activity_tag_id = fields.Many2one(
+        'op.activity.tags', "Activity Tag", required=1)
+    room_id = fields.Many2one('op.classroom', "Preferred Room", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
 
 class SubjectTagPreferredRooms(models.Model):
@@ -190,7 +204,9 @@ class SubjectTagPreferredRooms(models.Model):
     _description = 'A subject and activity tag has a set of preferred rooms.'
     _rec_name = 'weight'
 
-    subject_id = fields.Many2one('op.subject',"Subject",required=1)
-    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
-    room_ids = fields.Many2many('op.classroom','room_subject_rel','room_id','subjecttag_id',"preferred Rooms",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    subject_id = fields.Many2one('op.subject', "Subject", required=1)
+    activity_tag_id = fields.Many2one(
+        'op.activity.tags', "Activity Tag", required=1)
+    room_ids = fields.Many2many('op.classroom', 'room_subject_rel',
+                                'room_id', 'subjecttag_id', "preferred Rooms", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
