@@ -3,18 +3,19 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-
 class ActivityPreferredStartingTime(models.Model):
     _name = 'op.activity.preferred.starting.time'
     _description = "An activity has preferred starting time."
-    _rec_name ='activity_id'
+    _rec_name = 'activity_id'
 
-
-    activity_id = fields.Many2one('op.faculty.class.list', "Activity", required=1)
-    weight = fields.Integer("Weight Percentage", default=100,required=1)
+    activity_id = fields.Many2one(
+        'op.faculty.class.list', "Activity", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
     lock = fields.Boolean("Permenantly Locked")
-    day = fields.Selection([('sunday','sunday'),('monday','Monday'),('tuesday','Tuesday'),('wednesday','Wednesday'),('thursday','Thursday'),('friday','Friday'),('saturday','Saturday')],default='monday',required=1)
-    hours = fields.Many2one('op.timing',"Hours",required=1)
+    day = fields.Selection([('sunday', 'sunday'), ('monday', 'Monday'), ('tuesday', 'Tuesday'), ('wednesday', 'Wednesday'),
+                            ('thursday', 'Thursday'), ('friday', 'Friday'), ('saturday', 'Saturday')], default='monday', required=1)
+    hours = fields.Many2one('op.timing', "Hours", required=1)
+
 
 class BatchConstraints(models.Model):
     _name = 'op.batch.constraints'
@@ -23,7 +24,8 @@ class BatchConstraints(models.Model):
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.batch_constraints_line_ids:
                 if day_config.tt_monday:
@@ -43,7 +45,8 @@ class BatchConstraints(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.batch_constraints_line_ids:
                 if day_config.tt_monday:
@@ -64,7 +67,8 @@ class BatchConstraints(models.Model):
     @api.model
     def create(self, values):
         if len(values['batch_constraints_line_ids']) == 0:
-            raise UserError(_("Please configure Timetable Days to create your Batch Time Constraint."))
+            raise UserError(
+                _("Please configure Timetable Days to create your Batch Time Constraint."))
         res = super(BatchConstraints, self).create(values)
         return res
 
@@ -79,7 +83,8 @@ class BatchConstraints(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
+        day_config = self.env['timetable.days.config'].search(
+            [], order='id desc', limit=1)
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -126,7 +131,8 @@ class BatchConstraints(models.Model):
     weight = fields.Integer("Weight Percentage", default=100)
     division = fields.Many2one('op.batch.group', "Group", required=1)
     subdivision = fields.Many2one('op.batch.subgroup', "Subgroup", required=1)
-    batch_constraints_line_ids = fields.One2many('op.breaks.constraints.line', 'batch_constraint_id', "Batch Constraints", default=default_line)
+    batch_constraints_line_ids = fields.One2many(
+        'op.breaks.constraints.line', 'batch_constraint_id', "Batch Constraints", default=default_line)
 
 
 class BatchConstraintsLine(models.Model):
@@ -148,7 +154,8 @@ class BatchConstraintsLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    batch_constraint_id = fields.Many2one('op.batch.constraints', "Batch Constraints")
+    batch_constraint_id = fields.Many2one(
+        'op.batch.constraints', "Batch Constraints")
 
 
 class ActivityStartingTime(models.Model):
@@ -158,7 +165,8 @@ class ActivityStartingTime(models.Model):
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activity_starting_line_ids:
                 if day_config.tt_monday:
@@ -178,7 +186,8 @@ class ActivityStartingTime(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activity_starting_line_ids:
                 if day_config.tt_monday:
@@ -199,7 +208,8 @@ class ActivityStartingTime(models.Model):
     @api.model
     def create(self, values):
         if len(values['activity_starting_line_ids']) == 0:
-            raise UserError(_("Please configure Timetable Days to create your Activity Starting Time."))
+            raise UserError(
+                _("Please configure Timetable Days to create your Activity Starting Time."))
         res = super(ActivityStartingTime, self).create(values)
         return res
 
@@ -207,7 +217,8 @@ class ActivityStartingTime(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
+        day_config = self.env['timetable.days.config'].search(
+            [], order='id desc', limit=1)
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -250,9 +261,11 @@ class ActivityStartingTime(models.Model):
     #     ('unique_activity',
     #      'unique(activity_id)', 'The constraint for the selected activity already exist. Please select another activity!')]
 
-    activity_id = fields.Many2one('op.faculty.class.list', "Activity", required=1)
+    activity_id = fields.Many2one(
+        'op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
-    activity_starting_line_ids = fields.One2many('op.activity.starting.time.line', 'activity_starting_time_id', "Activity Startimg Time Line", default=default_line)
+    activity_starting_line_ids = fields.One2many(
+        'op.activity.starting.time.line', 'activity_starting_time_id', "Activity Startimg Time Line", default=default_line)
 
 
 class ActivityStartingTimeLine(models.Model):
@@ -274,7 +287,8 @@ class ActivityStartingTimeLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    activity_starting_time_id = fields.Many2one('op.activity.starting.time', "Activity Starting Time")
+    activity_starting_time_id = fields.Many2one(
+        'op.activity.starting.time', "Activity Starting Time")
 
 
 class ActivityTimeSlots(models.Model):
@@ -284,7 +298,8 @@ class ActivityTimeSlots(models.Model):
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activity_timeslots_line_ids:
                 if day_config.tt_monday:
@@ -304,7 +319,8 @@ class ActivityTimeSlots(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activity_timeslots_line_ids:
                 if day_config.tt_monday:
@@ -325,7 +341,8 @@ class ActivityTimeSlots(models.Model):
     @api.model
     def create(self, values):
         if len(values['activity_timeslots_line_ids']) == 0:
-            raise UserError(_("Please configure Timetable Days to create your activity time slots."))
+            raise UserError(
+                _("Please configure Timetable Days to create your activity time slots."))
         res = super(ActivityTimeSlots, self).create(values)
         return res
 
@@ -333,7 +350,8 @@ class ActivityTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
+        day_config = self.env['timetable.days.config'].search(
+            [], order='id desc', limit=1)
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -376,9 +394,11 @@ class ActivityTimeSlots(models.Model):
     #     ('unique_activity',
     #      'unique(activity_id)', 'The constraint for the selected activity already exist. Please select another activity!')]
 
-    activity_id = fields.Many2one('op.faculty.class.list', "Activity", required=1)
+    activity_id = fields.Many2one(
+        'op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
-    activity_timeslots_line_ids = fields.One2many('op.activity.timeslots.line', 'activity_timeslots_id', "Activity Time Slots Line", default=default_line)
+    activity_timeslots_line_ids = fields.One2many(
+        'op.activity.timeslots.line', 'activity_timeslots_id', "Activity Time Slots Line", default=default_line)
 
 
 class ActivityTimeSlotsLine(models.Model):
@@ -400,8 +420,8 @@ class ActivityTimeSlotsLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    activity_timeslots_id = fields.Many2one('op.activity.timeslots', "Activity Time Slots")
-
+    activity_timeslots_id = fields.Many2one(
+        'op.activity.timeslots', "Activity Time Slots")
 
 
 class ActivitiesStartingTime(models.Model):
@@ -411,7 +431,8 @@ class ActivitiesStartingTime(models.Model):
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activities_starting_time_line_ids:
                 if day_config.tt_monday:
@@ -431,7 +452,8 @@ class ActivitiesStartingTime(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activities_starting_time_line_ids:
                 if day_config.tt_monday:
@@ -452,7 +474,8 @@ class ActivitiesStartingTime(models.Model):
     @api.model
     def create(self, values):
         if len(values['activities_starting_time_line_ids']) == 0:
-            raise UserError(_("Please configure Timetable Days to create your Activities Time Constraint."))
+            raise UserError(
+                _("Please configure Timetable Days to create your Activities Time Constraint."))
         res = super(ActivitiesStartingTime, self).create(values)
         return res
 
@@ -460,7 +483,8 @@ class ActivitiesStartingTime(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
+        day_config = self.env['timetable.days.config'].search(
+            [], order='id desc', limit=1)
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -499,13 +523,15 @@ class ActivitiesStartingTime(models.Model):
             if flag:
                 raise UserError(_("The value should be 1 or 0."))
 
-    faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
-    student_id = fields.Many2one('op.batch',"Students",required=1)
-    subject_id = fields.Many2one('op.subject',"Subject",required=1)
-    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
-    duration = fields.Integer("Duration",default=1)
-    weight = fields.Integer("Weight Percentage",default=100)
-    activities_starting_time_line_ids = fields.One2many('op.activities.starting.time.line', 'activities_starting_time_id', "Activities Starting Time", default=default_line)
+    faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
+    student_id = fields.Many2one('op.batch', "Students", required=1)
+    subject_id = fields.Many2one('op.subject', "Subject", required=1)
+    activity_tag_id = fields.Many2one(
+        'op.activity.tags', "Activity Tag", required=1)
+    duration = fields.Integer("Duration", default=1)
+    weight = fields.Integer("Weight Percentage", default=100)
+    activities_starting_time_line_ids = fields.One2many(
+        'op.activities.starting.time.line', 'activities_starting_time_id', "Activities Starting Time", default=default_line)
 
 
 class ActivitiesStartingTimeLine(models.Model):
@@ -527,7 +553,8 @@ class ActivitiesStartingTimeLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    activities_starting_time_id = fields.Many2one('op.activities.starting.time', "Activity Time Slots")
+    activities_starting_time_id = fields.Many2one(
+        'op.activities.starting.time', "Activity Time Slots")
 
 
 class ActivitiesTimeSlots(models.Model):
@@ -537,7 +564,8 @@ class ActivitiesTimeSlots(models.Model):
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activities_timeslots_line_ids:
                 if day_config.tt_monday:
@@ -557,7 +585,8 @@ class ActivitiesTimeSlots(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.activities_timeslots_line_ids:
                 if day_config.tt_monday:
@@ -578,7 +607,8 @@ class ActivitiesTimeSlots(models.Model):
     @api.model
     def create(self, values):
         if len(values['activities_timeslots_line_ids']) == 0:
-            raise UserError(_("Please configure Timetable Days to create your activity time slots."))
+            raise UserError(
+                _("Please configure Timetable Days to create your activity time slots."))
         res = super(ActivitiesTimeSlots, self).create(values)
         return res
 
@@ -586,7 +616,8 @@ class ActivitiesTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search([], order='id desc', limit=1)
+        day_config = self.env['timetable.days.config'].search(
+            [], order='id desc', limit=1)
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -625,13 +656,15 @@ class ActivitiesTimeSlots(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
-    faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
-    student_id = fields.Many2one('op.batch',"Students",required=1)
-    subject_id = fields.Many2one('op.subject',"Subject",required=1)
-    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
-    duration = fields.Integer("Duration",default=1)
-    weight = fields.Integer("Weight Percentage",default=100)
-    activities_timeslots_line_ids = fields.One2many('op.activities.timeslots.line', 'activities_timeslots_id', "Activities Time Slots Line", default=default_line)
+    faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
+    student_id = fields.Many2one('op.batch', "Students", required=1)
+    subject_id = fields.Many2one('op.subject', "Subject", required=1)
+    activity_tag_id = fields.Many2one(
+        'op.activity.tags', "Activity Tag", required=1)
+    duration = fields.Integer("Duration", default=1)
+    weight = fields.Integer("Weight Percentage", default=100)
+    activities_timeslots_line_ids = fields.One2many(
+        'op.activities.timeslots.line', 'activities_timeslots_id', "Activities Time Slots Line", default=default_line)
 
 
 class ActivitiesTimeSlotsLine(models.Model):
@@ -653,4 +686,5 @@ class ActivitiesTimeSlotsLine(models.Model):
     is_friday = fields.Boolean("Friday?")
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
-    activities_timeslots_id = fields.Many2one('op.activities.timeslots', "Activities Time Slots")
+    activities_timeslots_id = fields.Many2one(
+        'op.activities.timeslots', "Activities Time Slots")
