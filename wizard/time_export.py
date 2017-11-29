@@ -17,48 +17,48 @@ class time_data_import(models.TransientModel):
         active.text = "True"
 
     # Faculty Constraints
-        availability = self.faculty_notavailable(time)
-        max_day = self.faculty_maxday_constraint(time)
-        min_day = self.faculty_minday_constraint(time)
-        max_gaps = self.faculty_maxgap_day(time)
-        max_gaps_week = self.faculty_gapweek_constraint(time)
-        maxhr = self.faculty_maxhr_daily_constraint(time)
-        minhr_daily = self.faculty_minhr_daily_constraint(time)
-        maxhr_cont = self.faculty_maxhr_cont_constraint(time)
-        max_hr_cont_act = self.faculty_maxhr_activity_constraint(time)
-        faculty_interval = self.faculty_interval_maxdays_constraint(time)
-        faculties_maxday = self.faculties_maxday(time)
-        faculties_minday = self.faculties_minday(time)
-        faculties_maxgap = self.faculties_maxgap(time)
-        faculties_maxgap_week = self.faculties_maxgap_week(time)
-        maxhr_daily = self.faculties_maxhrs(time)
-        max_hrs_cont = self.faculties_maxhrs_cont(time)
-        min_hrs = self.faculties_minhrs(time)
-        faculties_maxhr = self.faculties_maxhr_activity(time)
-        faculties_interval = self.faculties_hr_activity(time)
+        # availability = self.faculty_notavailable(time)
+        # max_day = self.faculty_maxday_constraint(time)
+        # min_day = self.faculty_minday_constraint(time)
+        # max_gaps = self.faculty_maxgap_day(time)
+        # max_gaps_week = self.faculty_gapweek_constraint(time)
+        # maxhr = self.faculty_maxhr_daily_constraint(time)
+        # minhr_daily = self.faculty_minhr_daily_constraint(time)
+        # maxhr_cont = self.faculty_maxhr_cont_constraint(time)
+        # max_hr_cont_act = self.faculty_maxhr_activity_constraint(time)
+        # faculty_interval = self.faculty_interval_maxdays_constraint(time)
+        # faculties_maxday = self.faculties_maxday(time)
+        # faculties_minday = self.faculties_minday(time)
+        # faculties_maxgap = self.faculties_maxgap(time)
+        # faculties_maxgap_week = self.faculties_maxgap_week(time)
+        # maxhr_daily = self.faculties_maxhrs(time)
+        # max_hrs_cont = self.faculties_maxhrs_cont(time)
+        # min_hrs = self.faculties_minhrs(time)
+        # faculties_maxhr = self.faculties_maxhr_activity(time)
+        # faculties_interval = self.faculties_hr_activity(time)
 
     # Student Time Constraints
         student_notavailable = self.student_notavailable(time)
         student_maxday = self.student_maxday_constraint(time)
         student_maxgap_day = self.student_maxgap_day(time)
-        student_maxgap_week = self.student_maxgap_week(time)
-        student_secondhr = self.student_maxsecond(time)
-        student_maxhr_daily = self.student_maxhr_daily(time)
-        student_minhr_daily = self.student_minhr_daily(time)
-        student_maxhr_cont = self.student_maxhr_cont(time)
-        student_maxhr_actiivty = self.student_maxhr_activity(time)
-        student_maxhr_act = self.student_maxhr_daily(time)
-        student_interval = self.student_set_interval(time)
-        allstudents_maxday = self.allstudent_maxday_constraint(time)
-        allstudent_maxgap = self.allstudent_maxgap_day(time)
-        allstudent_week_maxgap = self.allstudent_maxgap_week(time)
-        allstudent_maxhr_second = self.allstudent_maxsecond(time)
-        allstudentm_maxhr_daily = self.allstudent_maxhr_daily(time)
-        allstudent_max_hr = self.allstudent_maxhr_cont(time)
-        allstudents_act_cont = self.allstudent_maxhr_activity(time)
-        allstudents_maxhr_act_cont = self.allstudent_maxhr_act_cont(time)
-        allstudent_interval = self.allstudent_set_interval(time)
-        allstudent_minhr_daily = self.allstudent_minhr_daily(time)
+        # student_maxgap_week = self.student_maxgap_week(time)
+        # student_secondhr = self.student_maxsecond(time)
+        # student_maxhr_daily = self.student_maxhr_daily(time)
+        # student_minhr_daily = self.student_minhr_daily(time)
+        # student_maxhr_cont = self.student_maxhr_cont(time)
+        # student_maxhr_actiivty = self.student_maxhr_activity(time)
+        # student_maxhr_act = self.student_maxhr_daily(time)
+        # student_interval = self.student_set_interval(time)
+        # allstudents_maxday = self.allstudent_maxday_constraint(time)
+        # allstudent_maxgap = self.allstudent_maxgap_day(time)
+        # allstudent_week_maxgap = self.allstudent_maxgap_week(time)
+        # allstudent_maxhr_second = self.allstudent_maxsecond(time)
+        # allstudentm_maxhr_daily = self.allstudent_maxhr_daily(time)
+        # allstudent_max_hr = self.allstudent_maxhr_cont(time)
+        # allstudents_act_cont = self.allstudent_maxhr_activity(time)
+        # allstudents_maxhr_act_cont = self.allstudent_maxhr_act_cont(time)
+        # allstudent_interval = self.allstudent_set_interval(time)
+        # allstudent_minhr_daily = self.allstudent_minhr_daily(time)
 
     def faculty_notavailable(self, time):
         faculty = self.env['op.faculty.not.available'].search([])
@@ -559,6 +559,10 @@ class time_data_import(models.TransientModel):
             batch_name = b.student_id.name
             weight.text = str(weight_per)
             Name = etree.SubElement(week_days, "Students")
+            if b.division:
+                batch_name = '%s %s' % (batch_name, b.division.name)
+            if b.subdivision:
+                batch_name = '%s %s' % (batch_name, b.subdivision.name)
             Name.text = batch_name
             time = self.env['op.breaks.constraints.line'].search(
                 [('batch_constraint_id', '=', b.id)])
@@ -635,7 +639,11 @@ class time_data_import(models.TransientModel):
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
-            batch_name = b.batch_name.name
+            batch_name = b.name.name
+            if b.group_name:
+                batch_name = '%s %s' % (batch_name, b.group_name.name)
+            if b.subgroup_name:
+                batch_name = '%s %s' % (batch_name, b.subgroup_name.name)
             Name = etree.SubElement(week_days, "Students")
             Name.text = batch_name
             max_day = etree.SubElement(week_days, "Max_Days_Per_Week")
@@ -657,7 +665,11 @@ class time_data_import(models.TransientModel):
             maxgap_day = etree.SubElement(week_days, "Max_Gaps")
             max_gap_days = b.max_gaps_day
             maxgap_day.text = str(max_gap_days)
-            batch_name = b.batch_name.name
+            batch_name = b.name.name
+            if b.group_name:
+                batch_name = '%s %s' % (batch_name, b.group_name.name)
+            if b.subgroup_name:
+                batch_name = '%s %s' % (batch_name, b.subgroup_name.name)
             Name = etree.SubElement(week_days, "Students")
             Name.text = batch_name
             active = etree.SubElement(week_days, "Active")
@@ -673,7 +685,11 @@ class time_data_import(models.TransientModel):
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
-            batch_name = b.batch_name.name
+            batch_name = b.name.name
+            if b.group_name:
+                batch_name = '%s %s' % (batch_name, b.group_name.name)
+            if b.subgroup_name:
+                batch_name = '%s %s' % (batch_name, b.subgroup_name.name)
             Name = etree.SubElement(week_days, "Students")
             Name.text = batch_name
             maxgap_day = etree.SubElement(week_days, "Max_Gaps")
@@ -696,7 +712,11 @@ class time_data_import(models.TransientModel):
                 week_days, "Max_Beginnings_At_Second_Hour")
             max_gap_days = b.max_gaps_day
             maxgap_day.text = str(max_gap_days)
-            batch_name = b.batch_name.name
+            batch_name = b.name.name
+            if b.group_name:
+                batch_name = '%s %s' % (batch_name, b.group_name.name)
+            if b.subgroup_name:
+                batch_name = '%s %s' % (batch_name, b.subgroup_name.name)
             Name = etree.SubElement(week_days, "Students")
             Name.text = batch_name
             active = etree.SubElement(week_days, "Active")
@@ -715,7 +735,11 @@ class time_data_import(models.TransientModel):
             max_hrs_daily = etree.SubElement(week_days, "Maximum_Hours_Daily")
             max_hr = b.max_hrs_daily
             max_hrs_daily.text = str(max_hr)
-            batch_name = b.batch_name.name
+            batch_name = b.name.name
+            if b.group_name:
+                batch_name = '%s %s' % (batch_name, b.group_name.name)
+            if b.subgroup_name:
+                batch_name = '%s %s' % (batch_name, b.subgroup_name.name)
             Name = etree.SubElement(week_days, "Students")
             Name.text = batch_name
             active = etree.SubElement(week_days, "Active")
@@ -734,7 +758,11 @@ class time_data_import(models.TransientModel):
             max_hrs_daily = etree.SubElement(week_days, "Maximum_Hours_Daily")
             max_hr = b.max_hrs_daily
             max_hrs_daily.text = str(max_hr)
-            batch_name = b.batch_name.name
+            batch_name = b.name.name
+            if b.group_name:
+                batch_name = '%s %s' % (batch_name, b.group_name.name)
+            if b.subgroup_name:
+                batch_name = '%s %s' % (batch_name, b.subgroup_name.name)
             Name = etree.SubElement(week_days, "Students")
             Name.text = batch_name
             activity_name = etree.SubElement(week_days, "Activity_Tag")
@@ -756,7 +784,11 @@ class time_data_import(models.TransientModel):
             min_hrs_daily = etree.SubElement(week_days, "Minimum_Hours_Daily")
             min_hr = b.min_hrs_daily
             min_hrs_daily.text = str(min_hr)
-            batch_name = b.batch_name.name
+            batch_name = b.name.name
+            if b.group_name:
+                batch_name = '%s %s' % (batch_name, b.group_name.name)
+            if b.subgroup_name:
+                batch_name = '%s %s' % (batch_name, b.subgroup_name.name)
             Name = etree.SubElement(week_days, "Students")
             Name.text = batch_name
             empty_days = etree.SubElement(week_days, "Allow_Empty_Days")
@@ -778,7 +810,11 @@ class time_data_import(models.TransientModel):
                 week_days, "Maximum_Hours_Continuously")
             max_hr_conti = b.max_hr_cont
             max_hrs_con.text = str(max_hr_conti)
-            batch_name = b.batch_name.name
+            batch_name = b.name.name
+            if b.group_name:
+                batch_name = '%s %s' % (batch_name, b.group_name.name)
+            if b.subgroup_name:
+                batch_name = '%s %s' % (batch_name, b.subgroup_name.name)
             Name = etree.SubElement(week_days, "Students")
             Name.text = batch_name
             active = etree.SubElement(week_days, "Active")
@@ -798,7 +834,11 @@ class time_data_import(models.TransientModel):
                 week_days, "Maximum_Hours_Continuously")
             max_hr_conti = b.max_hr_cont
             max_hrs_con.text = str(max_hr_conti)
-            batch_name = b.batch_name.name
+            batch_name = b.name.name
+            if b.group_name:
+                batch_name = '%s %s' % (batch_name, b.group_name.name)
+            if b.subgroup_name:
+                batch_name = '%s %s' % (batch_name, b.subgroup_name.name)
             Name = etree.SubElement(week_days, "Students")
             Name.text = batch_name
             activity_name = etree.SubElement(week_days, "Activity_Tag")
@@ -820,7 +860,11 @@ class time_data_import(models.TransientModel):
             max_days_week = etree.SubElement(week_days, "Max_Days_Per_Week")
             max_day = b.max_days_week
             max_days_week.text = str(max_day)
-            batch_name = b.batch_name.name
+            batch_name = b.name.name
+            if b.group_name:
+                batch_name = '%s %s' % (batch_name, b.group_name.name)
+            if b.subgroup_name:
+                batch_name = '%s %s' % (batch_name, b.subgroup_name.name)
             Name = etree.SubElement(week_days, "Students")
             Name.text = batch_name
             interval_st = etree.SubElement(
@@ -1236,6 +1280,10 @@ class time_data_import(models.TransientModel):
             weight.text = str(weight_per)
             Name = etree.SubElement(room, "Students")
             batch_name = s.name.name
+            if s.group_name:
+                batch_name = '%s %s' % (batch_name, s.group_name.name)
+            if s.subgroup_name:
+                batch_name = '%s %s' % (batch_name, s.subgroup_name.name)
             Name.text = batch_name
             room_name = etree.SubElement(room, "Room")
             rooms = s.student_homeroom.name
@@ -1254,6 +1302,10 @@ class time_data_import(models.TransientModel):
             weight.text = str(weight_per)
             Name = etree.SubElement(room, "Students")
             batch_name = r.name.name
+            if r.group_name:
+                batch_name = '%s %s' % (batch_name, r.group_name.name)
+            if r.subgroup_name:
+                batch_name = '%s %s' % (batch_name, r.subgroup_name.name)
             Name.text = batch_name
             c = 0
             if r.student_set_of_homerooms:
@@ -1279,6 +1331,10 @@ class time_data_import(models.TransientModel):
             weight.text = str(weight_per)
             Name = etree.SubElement(room, "Students")
             batch_name = s.name.name
+            if s.group_name:
+                batch_name = '%s %s' % (batch_name, s.group_name.name)
+            if s.subgroup_name:
+                batch_name = '%s %s' % (batch_name, s.subgroup_name.name)
             Name.text = batch_name
             building_change = etree.SubElement(
                 room, "Max_Building_Changes_Per_Day")
@@ -1299,6 +1355,10 @@ class time_data_import(models.TransientModel):
             weight.text = str(weight_per)
             Name = etree.SubElement(room, "Students")
             batch_name = s.name.name
+            if s.group_name:
+                batch_name = '%s %s' % (batch_name, s.group_name.name)
+            if s.subgroup_name:
+                batch_name = '%s %s' % (batch_name, s.subgroup_name.name)
             Name.text = batch_name
             building_change = etree.SubElement(
                 room, "Max_Building_Changes_Per_Week")
@@ -1319,6 +1379,10 @@ class time_data_import(models.TransientModel):
             weight.text = str(weight_per)
             Name = etree.SubElement(room, "Students")
             batch_name = s.name.name
+            if s.group_name:
+                batch_name = '%s %s' % (batch_name, s.group_name.name)
+            if s.subgroup_name:
+                batch_name = '%s %s' % (batch_name, s.subgroup_name.name)
             Name.text = batch_name
             building_change = etree.SubElement(
                 room, "Min_Gaps_Between_Building_Changes")

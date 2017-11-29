@@ -5,6 +5,7 @@ import base64
 import datetime
 import odoo.tools.config as config
 
+
 class fettimetable_data_export(models.TransientModel):
     _name = 'fettimetable.data.export'
 
@@ -52,17 +53,26 @@ class fettimetable_data_export(models.TransientModel):
                 Number_of_Students = etree.SubElement(
                     Year, "Number_of_Students")
                 Number_of_Students.text = str(students)
-        # group_list = etree.SubElement(Year, "Group")
-        # Name.text = "A"
-        # Name = etree.SubElement(group_list, "Name")
-        # Name.text = "G-1"
-        # Number_of_stud = etree.SubElement(group_list, "Number_of_Students")
-        # Number_of_stud.text = "10"
-        # subgroup_list = etree.SubElement(group_list, "Subgroup")
-        # Name = etree.SubElement(subgroup_list, "Name")
-        # Name.text = "A-1"
-        # Number_of_stud = etree.SubElement(subgroup_list, "Number_of_Students")
-        # Number_of_stud.text = "15"
+            for g in rec.group_ids:
+                group = '%s %s' % (rec.name, g.name)
+                group_list = etree.SubElement(Year, "Group")
+                group_name = etree.SubElement(group_list, "Name")
+                group_name.text = group
+                group_of_students = etree.SubElement(
+                    group_list, "Number_of_Students")
+                group_students = self.env['op.student.course'].search_count(
+                    [('batch_id', '=', rec.id), ('group_id', '=', g.id)])
+                group_of_students.text = str(group_students)
+                for s in g.subgroup_ids:
+                    subgroup = '%s %s %s' % (rec.name, g.name, s.name)
+                    subgroup_list = etree.SubElement(group_list, "Subgroup")
+                    subgroup_name = etree.SubElement(subgroup_list, "Name")
+                    subgroup_name.text = subgroup
+                    subgroup_of_students = etree.SubElement(
+                        subgroup_list, "Number_of_Students")
+                    subgroup_students = self.env['op.student.course'].search_count(
+                        [('batch_id', '=', rec.id), ('group_id', '=', g.id), ('subgroup_id', '=', s.id)])
+                    subgroup_of_students.text = str(subgroup_students)
 
     def export_faculties(self, root):
         faculties = self.env['op.faculty'].search([])
@@ -163,9 +173,11 @@ class fettimetable_data_export(models.TransientModel):
         self.filedata = file
         # set up your output file url:
         base_url = self.env['ir.config_parameter'].get_param('web.base.url')
-        file_url = base_url+"/web/content?model=fettimetable.data.export&field=filedata&id=%s"%(self.id)
+        file_url = base_url + \
+            "/web/content?model=fettimetable.data.export&field=filedata&id=%s" % (
+                self.id)
         return {
-             'type': 'ir.actions.act_url',
-             'url': file_url,
-             'target': 'current',
+            'type': 'ir.actions.act_url',
+            'url': file_url,
+            'target': 'current',
         }

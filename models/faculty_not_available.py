@@ -4,13 +4,15 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from company import WEEK_DAYS
 
+
 class FacultyTime(models.Model):
     _name = 'op.faculty.not.available'
     _description = 'Faculty Times'
 
     @api.multi
     def set_not_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.faculty_not_line_ids:
                 if day_config.tt_monday:
@@ -30,7 +32,8 @@ class FacultyTime(models.Model):
 
     @api.multi
     def set_available(self):
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for l in self.faculty_not_line_ids:
                 if day_config.tt_monday:
@@ -52,40 +55,45 @@ class FacultyTime(models.Model):
     def create(self, values):
         res = super(FacultyTime, self).create(values)
         if len(values['faculty_not_line_ids']) == 0:
-            raise UserError(_("Please configure Timetable Days to create your Faculty Time Constraint."))
+            raise UserError(
+                _("Please configure Timetable Days to create your Faculty Time Constraint."))
         return res
 
     @api.model
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['res.company'].search([('id', '=', self.env.user.company_id.id)])
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         if day_config:
             for time in self.env['op.timing'].search([]):
                 period_dict = {
-                            'name': time.name,
-                            'is_monday': day_config.tt_monday,
-                            'is_tuesday': day_config.tt_tuesday,
-                            'is_wednesday': day_config.tt_wednesday,
-                            'is_thursday': day_config.tt_thursday,
-                            'is_friday': day_config.tt_friday,
-                            'is_saturday': day_config.tt_saturday,
-                            'is_sunday': day_config.tt_sunday
-                        }
+                    'name': time.name,
+                    'is_monday': day_config.tt_monday,
+                    'is_tuesday': day_config.tt_tuesday,
+                    'is_wednesday': day_config.tt_wednesday,
+                    'is_thursday': day_config.tt_thursday,
+                    'is_friday': day_config.tt_friday,
+                    'is_saturday': day_config.tt_saturday,
+                    'is_sunday': day_config.tt_sunday
+                }
                 period_list.append((0, 0, period_dict))
         return period_list
 
-    _sql_constraints = [('unique_faculty', 'unique(name)', 'There must be another constraint of this Faculty. Please edit that one.')]
+    _sql_constraints = [('unique_faculty', 'unique(name)',
+                         'There must be another constraint of this Faculty. Please edit that one.')]
 
     name = fields.Many2one('op.faculty', 'Faculty Name', required=True)
     weight_percent = fields.Float('Weight Percent', default=100)
-    faculty_not_line_ids = fields.One2many('op.faculty.not.available.list', 'faculty_id', "Facutly Not Available", default=default_line)
+    faculty_not_line_ids = fields.One2many(
+        'op.faculty.not.available.list', 'faculty_id', "Facutly Not Available", default=default_line)
 
     @api.multi
     @api.constrains('faculty_not_line_ids')
     def _check_faculty_line_ids(self):
         for record in self:
-            flag = any([True for line in record.faculty_not_line_ids for d in WEEK_DAYS if getattr(line, d)!=0 and getattr(line, d)!=1])
+            flag = any([True for line in record.faculty_not_line_ids for d in WEEK_DAYS if getattr(
+                line, d) != 0 and getattr(line, d) != 1])
             if flag:
                 raise UserError(_("Period value should be 1 or 0."))
 
