@@ -38,10 +38,6 @@
             <field name="view_id" ref="buildings_tree_view" />
         </record>
 
-        <!--Buildings Menu-->
-        <menuitem id="menu_buildings" name="Buildings"  parent="openeducat_classroom.menu_op_school_config_class_room"
-        action="action_buildings" sequence="2" />
-
         <!--ClassRoom Form View Inherit-->
         <record id="view_op_classroom_form_inherit" model="ir.ui.view">
             <field name="name">op.classroom.form.inherit</field>

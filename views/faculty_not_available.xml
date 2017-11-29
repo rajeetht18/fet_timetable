@@ -71,8 +71,5 @@
       <field name="view_id" ref="facutly_not_available_tree_view"/>
     </record>
 
-    <!--Break Times Menu-->
-    <menuitem id="menu_facutly_not_available_time" name="Faculty Not Available" parent="openeducat_timetable.menu_op_timetable_root" action="action_faculty_not_available_time" sequence="41"/>
-
   </data>
 </odoo>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!--Configuration-->
+        <menuitem id="group_add" name="Groups"  parent="openeducat_core.menu_op_school_config_course" action="act_add_group_view" sequence="30" />
+        <menuitem id="subgroup_add" name="Subgroups"  parent="openeducat_core.menu_op_school_config_course" action="act_add_subgroup_view" sequence="40" />
+        <menuitem id="menu_buildings" name="Buildings"  parent="openeducat_classroom.menu_op_school_config_class_room"
+        action="action_buildings" sequence="2" />
+        <menuitem id="menu_activity_tags" name="Activity Tags"  parent="openeducat_core.menu_op_school_config_activity"
+        action="action_activitytags" sequence="2" />
+
+        <!--Time Constraints-->
+        <menuitem id="menu_time_constraints" name="Time Constraints"  parent="openeducat_timetable.menu_op_timetable_root" sequence="41" />
+        <menuitem id="menu_break_time" name="Constraints Break Times" parent="menu_time_constraints" action="action_break_time" sequence="1"/>
+        <!--Student Time Constraints-->
+        <menuitem id="menu_student_constraints" name="Students"  parent="menu_time_constraints" sequence="10" />
+        <menuitem id="menu_batch_constraints" name="Student set not available"  parent="menu_student_constraints"
+        action="action_batch_constraints" sequence="10" />
+        <menuitem id="menu_all_student_available" name="All Students Available" parent="menu_student_constraints" action="action_all_student_available" sequence="20"/>
+        <menuitem id="menu_student_set_constraint" name="Student Set" parent="menu_student_constraints" action="action_student_available" sequence="30"/>
+        
+        <!--Activity Time Constraints-->
+        <menuitem id="menu_activity_constraints" name="Activities"  parent="menu_time_constraints"
+        sequence="20" />
+        <menuitem id="menu_activity_starting_time" name="An activity has a preferred starting time"  parent="menu_activity_constraints" action="action_activity_starting_time" sequence="0" />
+        <menuitem id="menu_activity_starting_time_constraints" name="An activity has a set of preferred starting times"  parent="menu_activity_constraints" action="action_activity_starting_times" sequence="1" />
+        <menuitem id="menu_activity_time_slots" name="An activity has a set of preferred time slots"  parent="menu_activity_constraints" action="action_activity_time_slots" sequence="2" />
+        <menuitem id="menu_activities_starting_time" name="A set of activities has a set of preferred starting time"  parent="menu_activity_constraints" action="action_activities_starting_time" sequence="3" />
+        <menuitem id="menu_activities_time_slots" name="A set of activities has a set of preferred time slots"  parent="menu_activity_constraints" action="action_activities_time_slots" sequence="4" />
+        <menuitem id="menu_subactivity_starting_time_constraints" name="A set of subactivities has a set of preferred starting times"  parent="menu_activity_constraints" action="action_subactivity_starting_time" sequence="5" />
+        <menuitem id="menu_subactivities_time_slots" name="A set of subactivities has a set of preferred time slots"  parent="menu_activity_constraints" action="action_subactivities_time_slots" sequence="6" />
+        <menuitem id="menu_min_days_activities" name="Minimum days between a set of activities"  parent="menu_activity_constraints" action="action_min_days_activities" sequence="7" />
+        <menuitem id="menu_max_days_activities" name="Maximum days between a set of activities"  parent="menu_activity_constraints" action="action_max_days_activities" sequence="8" />
+        <menuitem id="menu_activity_ends_day" name="An activity ends students day"  parent="menu_activity_constraints"
+        action="action_activity_ends_students_day" sequence="9" />
+        <menuitem id="menu_activities_ends_day" name="A set of activities ends students day"  parent="menu_activity_constraints" action="action_activities_ends_students_day" sequence="10" />
+        <menuitem id="menu_activities_same_starting_time" name="A set of activities has same starting time"  parent="menu_activity_constraints" action="action_activities_same_starting_time" sequence="11" />
+        <menuitem id="menu_activities_same_starting_day" name="A set of activities has same starting day"  parent="menu_activity_constraints" action="action_activities_same_starting_day" sequence="12" />
+        <menuitem id="menu_activities_same_starting_hour" name="A set of activities has same starting hour"  parent="menu_activity_constraints" action="action_activities_same_starting_hour" sequence="13" />
+        <menuitem id="menu_activities_max_timeslots" name="A set of activities occupies max timeslots from selection"  parent="menu_activity_constraints" action="action_activities_max_timeslots" sequence="14" />
+        <menuitem id="menu_two_activities_ordered" name="Two activities are ordered"  parent="menu_activity_constraints"
+        action="action_two_activities_ordered" sequence="15" />
+        <menuitem id="menu_two_activities_consecutive" name="Two activities are consecutive"  parent="menu_activity_constraints" action="action_two_activities_consecutive" sequence="16" />
+        <menuitem id="menu_two_activities_grouped" name="Two activities are grouped"  parent="menu_activity_constraints"
+        action="action_two_activities_grouped" sequence="17" />
+        <menuitem id="menu_three_activities_grouped" name="Three activities are grouped"  parent="menu_activity_constraints"
+        action="action_three_activities_grouped" sequence="18" />
+        <menuitem id="menu_activities_not_overlap" name="A set of activities are not overlapping"  parent="menu_activity_constraints" action="action_activities_not_overlap" sequence="19" />
+        <menuitem id="menu_activities_max_simultaneous" name="Maximum simultaneous activities from a set in selected time slots"  parent="menu_activity_constraints" action="action_activities_max_simultaneous" sequence="20" />
+        <menuitem id="menu_activities_mingap" name="Minimum gaps between a set of activities"  parent="menu_activity_constraints" action="action_activities_mingap" sequence="20" />
+                
+        <!--Faculty Time Constraints-->
+        <menuitem id="menu_faculty_view" name="Faculty" parent="menu_time_constraints" sequence="30"/>
+        <menuitem id="menu_facutly_not_available_time" name="Faculty Not Available" parent="menu_faculty_view" action="action_faculty_not_available_time" sequence="10"/>
+        <menuitem id="faculty_constraints_menu" name="All Faculty Constraints"  parent="menu_faculty_view" action="action_faculty_constraints" sequence="20" />
+        <menuitem id="menu_faculty_activity_maxhrs" name="All Faculty Activity"  parent="menu_faculty_view"
+        action="action_faculty_activity_maxhr" sequence="40" />
+        
+        <!--Space Constraints-->
+        <menuitem id="menu_space_constraints" name="Space Constraints"  parent="openeducat_timetable.menu_op_timetable_root" sequence="42" />
+
+        <!--Room Space Constraints-->
+        <menuitem id="menu_room_constraints" name="Rooms"  parent="menu_space_constraints" sequence="1" />
+        <menuitem id="menu_room_not_available" name="A Room's not available times"  parent="menu_room_constraints" action="action_room_not_available" sequence="1" />
+        
+        <!--Activities Space Constraints-->
+        <menuitem id="menu_space_activity_constraints" name="Activities"  parent="menu_space_constraints" sequence="20" />
+        
+        <menuitem id="menu_activity_room" name="An activity has a preferred room"  parent="menu_space_activity_constraints" action="action_activity_room" sequence="1" />
+        <menuitem id="menu_activity_rooms" name="An activity has a set of preferred rooms"  parent="menu_space_activity_constraints" action="action_activity_rooms" sequence="2" />
+        <menuitem id="menu_consecutive_activities_same_room" name="A set of activities are in the same room if they are consecutive"  parent="menu_space_activity_constraints" action="action_consecutive_activities_same_room" sequence="3" />
+        <menuitem id="menu_activities_max_diff_room" name="A set of activities occupies max different rooms"  parent="menu_space_activity_constraints" action="action_activities_max_diff_room" sequence="4" />
+        
+        <!--Subject & Tags Space Constraints-->
+        <menuitem id="menu_space_subjecttag_constraints" name="Subjects And Tags"  parent="menu_space_constraints"
+        sequence="3" />
+        <menuitem id="menu_subject_tag_preferred_room" name="A subject and an activity tag has a preferred room"  parent="menu_space_subjecttag_constraints" action="action_subject_tag_preferred_room" sequence="1" />
+        <menuitem id="menu_subject_tag_preferred_rooms" name="A subject and an activity tag has a set of preferred rooms"  parent="menu_space_subjecttag_constraints" action="action_subject_tag_preferred_rooms" sequence="2" />
+        
+        <!--Timetable Reports-->
+        <menuitem id="timetable_reports" name="Reports" parent="openeducat_timetable.menu_op_timetable_root" action="action_fettimetable_configuration" sequence="45"/>
+        <menuitem id="export_timetable" name="Export TimeTable Data" parent="timetable_reports" action="action_fettimetable_configuration" sequence="10"/>
+        
+        <!--Timetable Configuration-->
+        <menuitem id="menu_timetable_config" name="Configuration" parent="openeducat_timetable.menu_op_timetable_root" sequence="50" />
+        <menuitem id="menu_timetable_days_config" name="Timetable Days" parent="menu_timetable_config" action="act_timetable_days_config" sequence="10" />
+        
+        
+            
+    </data>
+</odoo>

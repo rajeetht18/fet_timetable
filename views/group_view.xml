@@ -75,8 +75,6 @@
         <field name="view_mode">tree</field>
         <field name="view_id" ref="view_op_group_tag_tree" />
     </record>
-
-    <menuitem id="group_add" name="Groups"  parent="openeducat_core.menu_op_school_config_course" action="act_add_group_view" sequence="30" />
     
   </data>
 </odoo>

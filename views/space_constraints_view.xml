@@ -74,19 +74,6 @@
         <field name="view_id" ref="room_not_available_tree_view" />
     </record>
 
-    <!--Space Constraints Menu-->
-    <menuitem id="menu_space_constraints" name="Space Constraints"  parent="menu_constraints"
-    sequence="2" />
-
-    <!--Room Menu-->
-    <menuitem id="menu_room_constraints" name="Rooms"  parent="menu_space_constraints"
-    sequence="1" />
-
-    <!--Room Constraints Menu-->
-    <menuitem id="menu_room_not_available" name="A Room's not available times"  parent="menu_room_constraints" action="action_room_not_available"
-    sequence="1" />
-
-
     <!--Activity preferred Room tree view-->
     <record id="activity_room_tree_view" model="ir.ui.view">
       <field name="name">activity.room.tree.view</field>
@@ -131,13 +118,6 @@
         <field name="view_id" ref="activity_room_tree_view" />
     </record>
 
-    <!--Activity Constraints Menu-->
-    <menuitem id="menu_space_activity_constraints" name="Activities"  parent="menu_space_constraints"
-    sequence="2" />
-
-    <menuitem id="menu_activity_room" name="An activity has a preferred room"  parent="menu_space_activity_constraints" action="action_activity_room"
-    sequence="1" />
-
     <!--Activity has preferred Rooms tree view-->
     <record id="activity_rooms_tree_view" model="ir.ui.view">
       <field name="name">activity.rooms.tree.view</field>
@@ -181,11 +161,6 @@
         <field name="view_id" ref="activity_rooms_tree_view" />
     </record>
 
-    <!--Activity has preferred Rooms Menu-->
-    <menuitem id="menu_activity_rooms" name="An activity has a set of preferred rooms"  parent="menu_space_activity_constraints" action="action_activity_rooms"
-    sequence="2" />
-
-
       <!--Consecutive activities same room tree view-->
       <record id="consecutive_activities_same_room_tree_view" model="ir.ui.view">
         <field name="name">consecutive.activities.same.room.tree.view</field>
@@ -226,11 +201,6 @@
           <field name="view_mode">tree,form</field>
           <field name="view_id" ref="consecutive_activities_same_room_tree_view" />
       </record>
-
-      <!--Consecutive activities same room Menu-->
-      <menuitem id="menu_consecutive_activities_same_room" name="A set of activities are in the same room if they are consecutive"  parent="menu_space_activity_constraints"
-      action="action_consecutive_activities_same_room" sequence="3" />
-
 
       <!--Activities max different room tree view-->
       <record id="activities_max_diff_room_tree_view" model="ir.ui.view">
@@ -274,11 +244,6 @@
           <field name="view_mode">tree,form</field>
           <field name="view_id" ref="activities_max_diff_room_tree_view" />
       </record>
-
-      <!--Activities max different room Menu-->
-      <menuitem id="menu_activities_max_diff_room" name="A set of activities occupies max different rooms"  parent="menu_space_activity_constraints"
-      action="action_activities_max_diff_room" sequence="4" />
-
 
       <!--Subject Tag Preferred room tree view-->
       <record id="subject_tag_preferred_room_tree_view" model="ir.ui.view">
@@ -325,15 +290,6 @@
           <field name="view_id" ref="subject_tag_preferred_room_tree_view" />
       </record>
 
-      <!--Subject and Activity Menu-->
-      <menuitem id="menu_space_subjecttag_constraints" name="Subjects And Tags"  parent="menu_space_constraints"
-      sequence="3" />
-
-      <!--Subject Tag Preferred room Menu-->
-      <menuitem id="menu_subject_tag_preferred_room" name="A subject and an activity tag has a preferred room"  parent="menu_space_subjecttag_constraints"
-      action="action_subject_tag_preferred_room" sequence="1" />
-
-
       <!--Subject Tag Preferred rooms tree view-->
       <record id="subject_tag_preferred_rooms_tree_view" model="ir.ui.view">
         <field name="name">subject.tag.preferred.rooms.tree.view</field>
@@ -378,11 +334,6 @@
           <field name="view_mode">tree,form</field>
           <field name="view_id" ref="subject_tag_preferred_rooms_tree_view" />
       </record>
-
-      <!--Subject Tag Preferred room Menu-->
-      <menuitem id="menu_subject_tag_preferred_rooms" name="A subject and an activity tag has a set of preferred rooms"  parent="menu_space_subjecttag_constraints"
-      action="action_subject_tag_preferred_rooms" sequence="2" />
-
 
   </data>
 </odoo>

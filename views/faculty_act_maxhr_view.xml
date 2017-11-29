@@ -42,10 +42,5 @@
             <field name="view_id" ref="faculty_activity_maxhrs_tree_view" />
         </record>
 
-        <!--Activity Tags Menu-->
-        <menuitem id="menu_faculty_activity_maxhrs" name="All Faculty Activity"  parent="menu_faculty_view"
-        action="action_faculty_activity_maxhr" sequence="40" />
-
-
     </data>
 </odoo>

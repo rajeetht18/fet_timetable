@@ -43,12 +43,6 @@
         <field name="view_id" ref="activity_ends_day_tree_view" />
     </record>
 
-    <!--Activity Ends Student Day Menu-->
-    <menuitem id="menu_activity_ends_day" name="An activity ends students day"  parent="menu_activity_constraints"
-    action="action_activity_ends_students_day" sequence="9" />
-
-
-
     <!--Activities Ends Student Day tree view-->
     <record id="activities_ends_day_tree_view" model="ir.ui.view">
       <field name="name">activities.ends.day.tree.view</field>
@@ -96,11 +90,6 @@
         <field name="view_id" ref="activities_ends_day_tree_view" />
     </record>
 
-    <!--Activity Ends Student Day Menu-->
-    <menuitem id="menu_activities_ends_day" name="A set of activities ends students day"  parent="menu_activity_constraints"
-    action="action_activities_ends_students_day" sequence="10" />
-
-
     <!--Activities same starting time tree view-->
     <record id="activities_same_starting_time_tree_view" model="ir.ui.view">
       <field name="name">activities.same.starting.time.tree.view</field>
@@ -141,11 +130,6 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="activities_same_starting_time_tree_view" />
     </record>
-
-    <!--Activities same starting time Menu-->
-    <menuitem id="menu_activities_same_starting_time" name="A set of activities has same starting time"  parent="menu_activity_constraints"
-    action="action_activities_same_starting_time" sequence="11" />
-
 
     <!--Activities same starting day tree view-->
     <record id="activities_same_starting_day_tree_view" model="ir.ui.view">
@@ -188,11 +172,6 @@
         <field name="view_id" ref="activities_same_starting_day_tree_view" />
     </record>
 
-    <!--Activities same starting time Menu-->
-    <menuitem id="menu_activities_same_starting_day" name="A set of activities has same starting day"  parent="menu_activity_constraints"
-    action="action_activities_same_starting_day" sequence="12" />
-
-
     <!--Activities same starting hour tree view-->
     <record id="activities_same_starting_hour_tree_view" model="ir.ui.view">
       <field name="name">activities.same.starting.hour.tree.view</field>
@@ -233,12 +212,6 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="activities_same_starting_hour_tree_view" />
     </record>
-
-    <!--Activities same starting hour Menu-->
-    <menuitem id="menu_activities_same_starting_hour" name="A set of activities has same starting hour"  parent="menu_activity_constraints"
-    action="action_activities_same_starting_hour" sequence="13" />
-
-
 
     <!--Activities Max Time slots tree view-->
     <record id="activities_max_timeslots_tree_view" model="ir.ui.view">
@@ -314,10 +287,6 @@
         <field name="view_id" ref="activities_max_timeslots_tree_view" />
     </record>
 
-    <!--Activities Max Time slots Menu-->
-    <menuitem id="menu_activities_max_timeslots" name="A set of activities occupies max timeslots from selection"  parent="menu_activity_constraints"
-    action="action_activities_max_timeslots" sequence="14" />
-
     <!--Two Activities Ordered tree view-->
     <record id="two_activities_ordered_tree_view" model="ir.ui.view">
       <field name="name">two_activities.ordered.tree.view</field>
@@ -358,11 +327,6 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="two_activities_ordered_tree_view" />
     </record>
-
-    <!--Two Activities Ordered Menu-->
-    <menuitem id="menu_two_activities_ordered" name="Two activities are ordered"  parent="menu_activity_constraints"
-    action="action_two_activities_ordered" sequence="15" />
-
 
     <!--Two Activities Consecutive tree view-->
     <record id="two_activities_consecutive_tree_view" model="ir.ui.view">
@@ -405,12 +369,6 @@
         <field name="view_id" ref="two_activities_consecutive_tree_view" />
     </record>
 
-    <!--Two Activities Consecutive Menu-->
-    <menuitem id="menu_two_activities_consecutive" name="Two activities are consecutive"  parent="menu_activity_constraints"
-    action="action_two_activities_consecutive" sequence="16" />
-
-
-
     <!--Two Activities Grouped tree view-->
     <record id="two_activities_grouped_tree_view" model="ir.ui.view">
       <field name="name">two_activities.grouped.tree.view</field>
@@ -451,12 +409,6 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="two_activities_grouped_tree_view" />
     </record>
-
-    <!--Two Activities Grouped Menu-->
-    <menuitem id="menu_two_activities_grouped" name="Two activities are grouped"  parent="menu_activity_constraints"
-    action="action_two_activities_grouped" sequence="17" />
-
-
 
     <!--Three Activities Grouped tree view-->
     <record id="three_activities_grouped_tree_view" model="ir.ui.view">
@@ -499,11 +451,6 @@
         <field name="view_id" ref="three_activities_grouped_tree_view" />
     </record>
 
-    <!--Three Activities Grouped Menu-->
-    <menuitem id="menu_three_activities_grouped" name="Three activities are grouped"  parent="menu_activity_constraints"
-    action="action_three_activities_grouped" sequence="18" />
-
-
     <!--Activities not overlap tree view-->
     <record id="activities_not_overlap_tree_view" model="ir.ui.view">
       <field name="name">activities.not_overlap.tree.view</field>
@@ -544,12 +491,6 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="activities_not_overlap_tree_view" />
     </record>
-
-    <!--Activities not overlapping Menu-->
-    <menuitem id="menu_activities_not_overlap" name="A set of activities are not overlapping"  parent="menu_activity_constraints"
-    action="action_activities_not_overlap" sequence="19" />
-
-
 
     <!--Activities Max Simultaneous Time slots tree view-->
     <record id="activities_max_simultaneous_tree_view" model="ir.ui.view">
@@ -625,11 +566,6 @@
         <field name="view_id" ref="activities_max_simultaneous_tree_view" />
     </record>
 
-    <!--Activities Max Simultaneous Time slots Menu-->
-    <menuitem id="menu_activities_max_simultaneous" name="Maximum simultaneous activities from a set in selected time slots"  parent="menu_activity_constraints"
-    action="action_activities_max_simultaneous" sequence="20" />
-
-
     <!--Activities MinGap tree view-->
     <record id="activities_mingap_tree_view" model="ir.ui.view">
       <field name="name">activities.min_gap.tree.view</field>
@@ -672,11 +608,6 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="activities_mingap_tree_view" />
     </record>
-
-    <!--Activities MinGap Menu-->
-    <menuitem id="menu_activities_mingap" name="Minimum gaps between a set of activities"  parent="menu_activity_constraints"
-    action="action_activities_mingap" sequence="20" />
-
 
   </data>
 </odoo>

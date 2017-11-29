@@ -67,8 +67,5 @@
       <field name="view_id" ref="Student_constraint_tree_view"/>
     </record>
 
-    <!--Students Set Menu-->
-    <menuitem id="menu_student_set_constraint" name="Student Set" parent="menu_student_constraints" action="action_student_available" sequence="1"/>
-
   </data>
 </odoo>

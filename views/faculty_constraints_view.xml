@@ -61,10 +61,5 @@
         <field name="view_id" ref="faculty_constraints_tree_view" />
     </record>
 
-    <!--Teachers Constraints Menu-->
-    <menuitem id="menu_faculty_view" name="Faculty" parent="menu_time_constraints" sequence="20"/>
-    <menuitem id="faculty_constraints_menu" name="All Faculty Constraints"  parent="menu_faculty_view" action="action_faculty_constraints"
-    sequence="20" />
-
   </data>
 </odoo>
