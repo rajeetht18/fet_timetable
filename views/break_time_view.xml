@@ -62,8 +62,5 @@
       <field name="view_id" ref="break_time_tree_view"/>
     </record>
 
-    <!--Break Times Menu-->
-    <menuitem id="menu_break_time" name="Breaks" parent="openeducat_timetable.menu_op_timetable_root" action="action_break_time" sequence="40"/>
-
   </data>
 </odoo>

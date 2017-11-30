@@ -82,11 +82,6 @@
         <field name="view_id" ref="subactivity_starting_time_tree_view" />
     </record>
 
-    <!--Subactivity Starting Time Menu-->
-    <menuitem id="menu_subactivity_starting_time_constraints" name="A set of subactivities has a set of preferred starting times"  parent="menu_activity_constraints"
-    action="action_subactivity_starting_time" sequence="5" />
-
-
     <!--Subactivities Time Slots tree view-->
     <record id="subactivities_time_slots_tree_view" model="ir.ui.view">
       <field name="name">subactivities.timeslots.tree</field>
@@ -167,11 +162,6 @@
         <field name="view_id" ref="subactivities_time_slots_tree_view" />
     </record>
 
-    <!--Activity Time Slots Menu-->
-    <menuitem id="menu_subactivities_time_slots" name="A set of subactivities has a set of preferred time slots"  parent="menu_activity_constraints"
-    action="action_subactivities_time_slots" sequence="6" />
-
-
     <!--Min Days between activities tree view-->
     <record id="min_days_activities_tree_view" model="ir.ui.view">
       <field name="name">op.mindays.activities.tree</field>
@@ -211,11 +201,6 @@
         <field name="view_id" ref="min_days_activities_tree_view" />
     </record>
 
-    <!--Min Days between activities Menu-->
-    <menuitem id="menu_min_days_activities" name="Minimum days between a set of activities"  parent="menu_activity_constraints"
-    action="action_min_days_activities" sequence="7" />
-
-
     <!--Max Days between activities tree view-->
     <record id="max_days_activities_tree_view" model="ir.ui.view">
       <field name="name">maxdays.activities.tree.view</field>
@@ -254,11 +239,6 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="max_days_activities_tree_view" />
     </record>
-
-    <!--Min Days between activities Menu-->
-    <menuitem id="menu_max_days_activities" name="Maximum days between a set of activities"  parent="menu_activity_constraints"
-    action="action_max_days_activities" sequence="8" />
-
 
   </data>
 </odoo>

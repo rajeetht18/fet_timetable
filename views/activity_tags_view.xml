@@ -56,10 +56,5 @@
             <field name="view_id" ref="activity_tag_tree_view" />
         </record>
 
-        <!--Activity Tags Menu-->
-        <menuitem id="menu_activity_tags" name="Activity Tags"  parent="openeducat_core.menu_op_school_config_activity"
-        action="action_activitytags" sequence="2" />
-
-
     </data>
 </odoo>

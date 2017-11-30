@@ -74,23 +74,6 @@
         <field name="view_id" ref="batch_constraints_tree_view" />
     </record>
 
-    <!--Constraints Menu-->
-    <menuitem id="menu_constraints" name="Constraints"  parent="openeducat_timetable.menu_op_timetable_root"
-    sequence="41" />
-
-    <!--Time Constraints Menu-->
-    <menuitem id="menu_time_constraints" name="Time Constraints"  parent="menu_constraints"
-    sequence="1" />
-
-    <!--Student Constraints Menu-->
-    <menuitem id="menu_student_constraints" name="Students"  parent="menu_time_constraints"
-    sequence="1" />
-
-    <!--Batch  Menu-->
-    <menuitem id="menu_batch_constraints" name="Student set not available"  parent="menu_student_constraints"
-    action="action_batch_constraints" sequence="1" />
-
-
     <!--Activity Starting Times tree view-->
     <record id="activity_starting_times_tree_view" model="ir.ui.view">
       <field name="name">activity.starting.times.tree.view</field>
@@ -163,16 +146,6 @@
         <field name="view_id" ref="activity_starting_times_tree_view" />
     </record>
 
-    <!--Activity Constraints Menu-->
-    <menuitem id="menu_activity_constraints" name="Activities"  parent="menu_time_constraints"
-    sequence="2" />
-
-    <!--Activity Starting Time Menu-->
-    <menuitem id="menu_activity_starting_time_constraints" name="An activity has a set of preferred starting times"  parent="menu_activity_constraints"
-    action="action_activity_starting_times" sequence="1" />
-
-
-
     <!--Activity Time Slots tree view-->
     <record id="activity_time_slots_tree_view" model="ir.ui.view">
       <field name="name">activity.timeslots.tree.view</field>
@@ -244,12 +217,6 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="activity_time_slots_tree_view" />
     </record>
-
-
-    <!--Activity Time Slots Menu-->
-    <menuitem id="menu_activity_time_slots" name="An activity has a set of preferred time slots"  parent="menu_activity_constraints"
-    action="action_activity_time_slots" sequence="2" />
-
 
     <!--Activities Starting Time tree view-->
     <record id="activities_starting_time_tree_view" model="ir.ui.view">
@@ -331,11 +298,6 @@
         <field name="view_id" ref="activities_starting_time_tree_view" />
     </record>
 
-    <!--Activity Time Slots Menu-->
-    <menuitem id="menu_activities_starting_time" name="A set of activities has a set of preferred starting time"  parent="menu_activity_constraints"
-    action="action_activities_starting_time" sequence="3" />
-
-
     <!--Activities Time Slots tree view-->
     <record id="activities_time_slots_tree_view" model="ir.ui.view">
       <field name="name">activities.timeslots.tree.view</field>
@@ -416,12 +378,6 @@
         <field name="view_id" ref="activities_time_slots_tree_view" />
     </record>
 
-    <!--Activity Time Slots Menu-->
-    <menuitem id="menu_activities_time_slots" name="A set of activities has a set of preferred time slots"  parent="menu_activity_constraints"
-    action="action_activities_time_slots" sequence="4" />
-
-
-
     <!--Activity starting time tree view-->
     <record id="activity_starting_time_tree_view" model="ir.ui.view">
       <field name="name">activity.starting.time.tree.view</field>
@@ -467,10 +423,6 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="activity_starting_time_tree_view" />
     </record>
-
-    <!--Activity starting time Menu-->
-    <menuitem id="menu_activity_starting_time" name="An activity has a preferred starting time"  parent="menu_activity_constraints"
-    action="action_activity_starting_time" sequence="0" />
 
   </data>
 </odoo>

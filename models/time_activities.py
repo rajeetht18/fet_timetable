@@ -383,13 +383,11 @@ class ActivitiesMaxSimultaneous(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
-<<<<<<< HEAD
-=======
+
     activities_ids = fields.Many2many(
         'op.faculty.class.list', 'activity_maxtimeslot_rel', 'activity_id', 'maxtimeslot_id', "Activities")
     weight = fields.Integer("Weight Percentage", default=100, readonly=1)
     max_occupied = fields.Integer("maximum Occuppied")
->>>>>>> a144d413c86fe269dd82413478c69bb5facf342b
 
     @api.multi
     @api.constrains('activities_ids')
@@ -458,18 +456,7 @@ class ActivitiesMinGap(models.Model):
             if len(rec.activities_ids) == 1:
                 raise UserError(_("Please add atleast two activities."))
 
-<<<<<<< HEAD
-=======
-    activities_ids = fields.Many2many(
-        'op.faculty.class.list', 'activity_mingap_rel', 'activity_id', 'mingap_id', "Activities")
-    min_gap = fields.Integer("Minimum Gap", default=1)
-    weight = fields.Integer("Weight Percentage", default=100)
->>>>>>> a144d413c86fe269dd82413478c69bb5facf342b
     activities_ids = fields.Many2many(
         'op.faculty.class.list', 'activity_mingap_rel', 'activity_id', 'mingap_id', "Activities", required=1)
     min_gap = fields.Integer("Minimum Gap", default=1, required=1)
     weight = fields.Integer("Weight Percentage", default=100)
-<<<<<<< HEAD
-
-=======
->>>>>>> a144d413c86fe269dd82413478c69bb5facf342b

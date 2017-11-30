@@ -60,9 +60,5 @@
             <field name="target">inline</field>
         </record>
 
-        <!--Configuration Menu-->
-        <menuitem id="menu_timetable_config" name="Configuration" parent="openeducat_timetable.menu_op_timetable_root" sequence="50" />
-        <menuitem id="menu_timetable_days_config" name="Timetable Days" parent="menu_timetable_config" action="act_timetable_days_config" sequence="10" />
-
     </data>
 </odoo>

@@ -61,8 +61,5 @@
       <field name="view_id" ref="All_Students_available_tree_view"/>
     </record>
 
-    <!--Students Availabiltiy Menu-->
-    <menuitem id="menu_all_student_available" name="All Students Available" parent="menu_student_constraints" action="action_all_student_available" sequence="1"/>
-
   </data>
 </odoo>
