@@ -26,12 +26,21 @@ class ActivitiesEndsDay(models.Model):
     _description = 'A set of Activities ends a Students day.'
     _rec_name = 'faculty_id'
 
-    faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
-    student_id = fields.Many2one('op.batch', "Students", required=1)
-    subject_id = fields.Many2one('op.subject', "Subject", required=1)
-    activity_tag_id = fields.Many2one(
-        'op.activity.tags', "Activity Tag", required=1)
-    weight = fields.Integer("Weight Percentage", default=100, required=1)
+
+    faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
+    student_id = fields.Many2one('op.batch',"Batch",required=1)
+    subject_id = fields.Many2one('op.subject',"Subject",required=1)
+    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
+    weight = fields.Integer("Weight Percentage",default=100,required=1)
+
+    @api.model
+    def create(self, values):
+        flag = 0
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        if not starting_obj:
+            raise UserError(_("There is no activity for the given details. Please choose another!."))
+        res = super(ActivitiesEndsDay, self).create(values)
+        return res
 
 
 class ActivitiesSameStartingTime(models.Model):
@@ -382,12 +391,6 @@ class ActivitiesMaxSimultaneous(models.Model):
                     flag = True
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
-
-
-    activities_ids = fields.Many2many(
-        'op.faculty.class.list', 'activity_maxtimeslot_rel', 'activity_id', 'maxtimeslot_id', "Activities")
-    weight = fields.Integer("Weight Percentage", default=100, readonly=1)
-    max_occupied = fields.Integer("maximum Occuppied")
 
     @api.multi
     @api.constrains('activities_ids')

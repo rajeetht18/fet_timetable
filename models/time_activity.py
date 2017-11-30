@@ -52,9 +52,12 @@ class SubActivityStartingTime(models.Model):
 
     @api.model
     def create(self, values):
+        flag = 0
         if len(values['subactivity_starting_line_ids']) == 0:
-            raise UserError(
-                _("Please configure Timetable Days to create your Activity Starting Time."))
+            raise UserError(_("Please configure Timetable Days to create your Activity Starting Time."))
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        if not starting_obj:
+            raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(SubActivityStartingTime, self).create(values)
         return res
 
@@ -103,7 +106,7 @@ class SubActivityStartingTime(models.Model):
                 raise UserError(_("The Value should be 1 or 0."))
 
     faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
-    student_id = fields.Many2one('op.batch', "Students", required=1)
+    student_id = fields.Many2one('op.batch', "Batch", required=1)
     subject_id = fields.Many2one('op.subject', "Subject", required=1)
     activity_tag_id = fields.Many2one(
         'op.activity.tags', "Activity Tag", required=1)
@@ -120,7 +123,7 @@ class SubActivityStartingTimeLine(models.Model):
     name = fields.Char("Periods", required=1)
     monday = fields.Integer("Monday", size=1)
     tuesday = fields.Integer("Tuesday", size=1)
-    wednesday = fields.Integer("Wedndurationesday", size=1)
+    wednesday = fields.Integer("Wednesday", size=1)
     thursday = fields.Integer("Thursday", size=1)
     friday = fields.Integer("Friday", size=1)
     saturday = fields.Integer("Saturday", size=1)
@@ -186,8 +189,10 @@ class SubActivitiesTimeSlots(models.Model):
     @api.model
     def create(self, values):
         if len(values['subactivities_timeslots_line_ids']) == 0:
-            raise UserError(
-                _("Please configure Timetable Days to create your activity time slots."))
+            raise UserError(_("Please configure Timetable Days to create your activity time slots."))
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        if not starting_obj:
+            raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(SubActivitiesTimeSlots, self).create(values)
         return res
 
@@ -236,7 +241,7 @@ class SubActivitiesTimeSlots(models.Model):
                 raise UserError(_("The Value should be 1 or 0."))
 
     faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
-    student_id = fields.Many2one('op.batch', "Students", required=1)
+    student_id = fields.Many2one('op.batch', "Batch", required=1)
     subject_id = fields.Many2one('op.subject', "Subject", required=1)
     activity_tag_id = fields.Many2one(
         'op.activity.tags', "Activity Tag", required=1)
@@ -274,6 +279,7 @@ class MinDaysBetweenActivities(models.Model):
     _description = 'Minimum days between a set of activities.'
     _rec_name = 'min_days'
 
+
     @api.multi
     @api.constrains('activities_ids')
     def check_activity_count(self):
@@ -288,15 +294,17 @@ class MinDaysBetweenActivities(models.Model):
             if rec.min_days < 1:
                 raise UserError(_("The gap should be greater than 0"))
 
-    activities_ids = fields.Many2many(
-        'op.faculty.class.list', 'activity_mindays_rel', 'activity_id', 'minday_id', "Activities")
-    min_days = fields.Integer("Minimum Days")
-    weight = fields.Integer("Weight Percentage", default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list','activity_mindays_rel','activity_id','minday_id',"Activities")
+    min_days = fields.Integer("Minimum Days",default=1)
+    same_day = fields.Boolean("Activities are on the same day")
+    weight = fields.Integer("Weight Percentage",default=100)
+
 
     class MaxDaysBetweenActivities(models.Model):
         _name = 'op.maxdays.activities'
         _description = 'Maximum days between a set of activity.'
         _rec_name = 'max_days'
+
 
         @api.multi
         @api.constrains('activities_ids')

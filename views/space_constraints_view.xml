@@ -21,18 +21,18 @@
       <field name="arch" type="xml">
         <form string="Room not available Form">
           <sheet>
+            <group>
               <group>
-                <group>
-                  <field name="room_id"/>
-                </group>
-                <group>
-                  <field name="weight"/>
-              </group>
+                <field name="room_id"/>
               </group>
               <group>
-              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+                <field name="weight"/>
+              </group>
+            </group>
+            <group>
+              <button string="Set All Available" type="object" name="set_available" class="oe_highlight"/>
               <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
-              </group>
+            </group>
             <notebook>
               <page string="Time Slots">
                 <field name="room_not_available_line_ids">
@@ -94,16 +94,16 @@
       <field name="arch" type="xml">
         <form string="Activity preferred room">
           <sheet>
+            <group>
               <group>
-                <group>
-                  <field name="activity_id"/>
-                  <field name="room_id"/>
-                </group>
-                <group>
-                  <field name="weight"/>
-                  <field name="locked"/>
+                <field name="activity_id"/>
+                <field name="room_id"/>
               </group>
+              <group>
+                <field name="weight"/>
+                <field name="locked"/>
               </group>
+            </group>
           </sheet>
         </form>
       </field>
@@ -138,15 +138,15 @@
       <field name="arch" type="xml">
         <form string="Activity preferred rooms">
           <sheet>
+            <group>
               <group>
-                <group>
-                  <field name="activity_id"/>
-                  <field name="room_ids" widget='many2many_tags'/>
-                </group>
-                <group>
-                  <field name="weight"/>
+                <field name="activity_id"/>
+                <field name="room_ids" widget='many2many_tags'/>
               </group>
+              <group>
+                <field name="weight"/>
               </group>
+            </group>
           </sheet>
         </form>
       </field>

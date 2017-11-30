@@ -236,15 +236,15 @@
             <group>
               <group>
                 <field name="activities_ids" widget='many2many_tags'/>
-                <field name="max_occupied"/>
               </group>
               <group>
+                <field name="max_occupied"/>
                 <field name="weight"/>
               </group>
-              <group>
-              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+            </group>
+            <group>
+              <button string="Set All Available" type="object" name="set_available" class="oe_highlight"/>
               <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
-              </group>
             </group>
             <notebook>
               <page string="Time Slots">
@@ -515,15 +515,15 @@
             <group>
               <group>
                 <field name="activities_ids" widget='many2many_tags'/>
-                <field name="max_simultaneous"/>
               </group>
               <group>
+                <field name="max_simultaneous"/>
                 <field name="weight"/>
               </group>
-              <group>
-              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+            </group>
+            <group>
+              <button string="Set All Available" type="object" name="set_available" class="oe_highlight"/>
               <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
-              </group>
             </group>
             <notebook>
               <page string="Time Slots">
