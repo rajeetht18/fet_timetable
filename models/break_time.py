@@ -3,6 +3,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from company import WEEK_DAYS
 
+
 class BreaksTime(models.Model):
     _name = 'op.break.time'
     _description = 'Break Times'

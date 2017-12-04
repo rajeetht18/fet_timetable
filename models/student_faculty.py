@@ -29,7 +29,7 @@ class Faculty(models.Model):
     interval_end = fields.Many2one('op.timing', 'Interval End Hour', size=25)
     max_hrs_cont = fields.Float('Max Hours Continuously', size=18)
     max_hr_cont_act = fields.Float(
-        'Max Hours Continuous with Activity', size=20)
+        '**Max Hours Continuous with Activity', size=20)
     max_building = fields.Integer('Max Building Changes Per Day', size=10)
     max_build_week = fields.Integer('Max Building Changes Per Week', size=10)
     min_gap_build = fields.Integer(

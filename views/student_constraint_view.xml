@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
   <data>
+
     <!--Students Set Tree view-->
     <record id="Student_constraint_tree_view" model="ir.ui.view">
       <field name="name">student.time.constraints.tree</field>
@@ -38,7 +39,9 @@
               <field name="interval_start"/>
               <field name="interval_end"/>
               <div>
-                <span>(*) Only use if all students require this constraints (*)</span>
+                <p>
+                  <span style="color:red; font-size:20px">**</span>To use this field, Please unlock them in FET(Settings --> Advanced)
+                </p>
               </div>
             </group>
             <separator string="Space Constraints"/>
@@ -50,7 +53,7 @@
               <field name="max_build_week"/>
               <field name="min_gaps_building"/>
               <div>
-                <span>(*) Only use if all students require specific building(*)</span>
+                <span>(*) Only use if all students require these constraints(*)</span>
               </div>
             </group>
           </sheet>

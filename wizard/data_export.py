@@ -37,7 +37,6 @@ class fettimetable_data_export(models.TransientModel):
             Name.text = str(hr_name)
 
     def export_students(self, root):
-        # students = len(students)
         batch = self.env['op.batch'].search([])
         current_date = str(datetime.date.today())
         Students_List = etree.SubElement(root, "Students_List")
