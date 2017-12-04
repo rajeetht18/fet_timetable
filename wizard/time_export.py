@@ -47,13 +47,13 @@ class time_data_import(models.TransientModel):
         student_minhr_daily = self.student_minhr_daily(time)
         student_maxhr_cont = self.student_maxhr_cont(time)
         student_maxhr_actiivty = self.student_maxhr_activity(time)
-        student_maxhr_act = self.student_maxhr_daily(time)
+        student_maxhr_act = self.student_maxhr_cont_daily(time)
         student_interval = self.student_set_interval(time)
         allstudents_maxday = self.allstudent_maxday_constraint(time)
         allstudent_maxgap = self.allstudent_maxgap_day(time)
         allstudent_week_maxgap = self.allstudent_maxgap_week(time)
         allstudent_maxhr_second = self.allstudent_maxsecond(time)
-        allstudentm_maxhr_daily = self.allstudent_maxhr_daily(time)
+        allstudent_maxhr_daily = self.allstudent_maxhr_daily(time)
         allstudent_max_hr = self.allstudent_maxhr_cont(time)
         allstudents_act_cont = self.allstudent_maxhr_activity(time)
         allstudents_maxhr_act_cont = self.allstudent_maxhr_act_cont(time)
@@ -848,7 +848,7 @@ class time_data_import(models.TransientModel):
             # comment = etree.SubElement(week_days, "Comments")
             # comment.text = "0"
 
-    def student_maxhr_daily(self, time):
+    def student_maxhr_cont_daily(self, time):
         batch = self.env['student.time.constraints'].search([])
         for b in batch:
             week_days = etree.SubElement(
@@ -2024,7 +2024,7 @@ class time_data_import(models.TransientModel):
         allstudents_min_gap_build = self.allstudents_min_gap_build(space)
 
     #Room,activity,tag_activity Space Constarints
-    	not_available_rooms = self.not_available_rooms(space)
+        not_available_rooms = self.not_available_rooms(space)
         activity_room = self.activity_room(space)
         activity_rooms = self.activity_rooms(space)
         activities_sameroom = self.activities_sameroom(space)
@@ -2384,7 +2384,7 @@ class time_data_import(models.TransientModel):
     #A rooms not available
     def not_available_rooms(self,space):
         room_obj = self.env['op.room.not.available'].search([])
-        for rec in room_obj :
+        for rec in room_obj:
             not_rooms = etree.SubElement(space, "ConstraintRoomNotAvailableTimes")
             weight = etree.SubElement(not_rooms, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -2635,4 +2635,3 @@ class time_data_import(models.TransientModel):
             active.text = "true"
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
-
