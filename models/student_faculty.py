@@ -70,13 +70,21 @@ class FacultyClassList(models.Model):
 
     @api.multi
     @api.depends('subject_id', 'batch_id', 'activity_tag')
-    def _compute_name(self):
+    def compute_name(self):
+        fac_name = ''
         for rec in self:
+            fac_name = rec.list_id.name
+            if rec.list_id.middle_name:
+                fac_name = '%s %s' % (fac_name, rec.list_id.middle_name)
+            if rec.list_id.middle_name:
+                fac_name = '%s %s' % (fac_name, rec.list_id.last_name)
             if rec.id:
-                rec.name = str(rec.id) + " - " + str(rec.duration) + " - " + str(rec.list_id.name) + " - " + str(
-                    rec.subject_id.name) + " - " + str(rec.activity_tag.name) + " - " + str(rec.batch_id.name)
+                t = ''
+                for tag in rec.activity_tag:
+                    t += str(tag.name)+','
+                rec.name = str(rec.id)+" - "+str(rec.duration)+" - "+str(fac_name)+" - "+str(rec.subject_id.name)+" - "+ str(t)[:-1] +" - "+str(rec.batch_id.name)
 
-    name = fields.Char("Name", readonly=1, compute='_compute_name')
+    name = fields.Char("Name", readonly=1, compute='compute_name')
     list_id = fields.Many2one('op.faculty', 'Faculty Class')
     subject_id = fields.Many2one('op.subject', 'Subject', required=True)
     batch_id = fields.Many2one('op.batch', 'Batch Name', required=True)

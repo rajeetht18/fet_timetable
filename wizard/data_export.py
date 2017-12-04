@@ -9,8 +9,7 @@ import odoo.tools.config as config
 class fettimetable_data_export(models.TransientModel):
     _name = 'fettimetable.data.export'
 
-    version = fields.Char("FET Version", required=True,
-                          help="Fill the FET version in which you are using currently.")
+    version = fields.Char("FET Version", default='5.28.6',required=True, help="Fill the FET version in which you are using currently.")
     filedata = fields.Binary('File', readonly=True)
 
     def export_days(self, root):
@@ -103,9 +102,8 @@ class fettimetable_data_export(models.TransientModel):
     def activities(self, root):
         activities_list = etree.SubElement(root, "Activities_List")
         sessions = self.env['op.faculty'].search([])
-        x = 1
         for s in sessions:
-            for t in s.faculty_subject_ids:
+            for line in s.class_details:
                 activity = etree.SubElement(activities_list, "Activity")
                 teacher = etree.SubElement(activity, "Teacher")
                 fac_name = s.name
@@ -115,25 +113,24 @@ class fettimetable_data_export(models.TransientModel):
                     fac_name = '%s %s' % (fac_name, s.last_name)
                 teacher.text = fac_name
                 subject = etree.SubElement(activity, "Subject")
-                subject.text = t.name
+                subject.text = line.subject_id.name
                 activity_tag = etree.SubElement(activity, "Activity_Tag")
                 activity_tag.text = "Teaching"
-                # students = etree.SubElement(activity,"Students")
-                # students.text = t.batch_id.name
+                students = etree.SubElement(activity,"Students")
+                students.text = line.batch_id.name
                 duration = etree.SubElement(activity, "Duration")
                 duration.text = "1"
                 total_duration = etree.SubElement(activity, "Total_Duration")
                 total_duration.text = "1"
                 id_count = etree.SubElement(activity, "Id")
-                id_count.text = str(x)
-                x += 1
-                activity_group_id = etree.SubElement(
-                    activity, "Activity_Group_Id")
+                id_count.text = str(line.id)
+                activity_group_id = etree.SubElement(activity, "Activity_Group_Id")
                 activity_group_id.text = "0"
                 active = etree.SubElement(activity, "Active")
                 active.text = "true"
-                # comments = etree.SubElement(activity, "Comments")
-                # comments.text = " "
+                comments = etree.SubElement(activity, "Comments")
+                #comments.text = " "
+
 
     def rooms(self, root):
         buildings = etree.SubElement(root, "Buildings_List")

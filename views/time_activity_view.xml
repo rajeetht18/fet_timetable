@@ -36,10 +36,10 @@
                 <field name="activity_tag_id"/>
                 <field name="weight"/>
               </group>
-              <group>
-              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+            </group>
+            <group>
+              <button string="Set All Available" type="object" name="set_available" class="oe_highlight"/>
               <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
-              </group>
             </group>
             <notebook>
               <page string="Time Slots">
@@ -116,10 +116,10 @@
                 <field name="activity_tag_id"/>
                 <field name="weight"/>
               </group>
-              <group>
-              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+            </group>
+            <group>
+              <button string="Set All Available" type="object" name="set_available" class="oe_highlight"/>
               <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
-              </group>
             </group>
             <notebook>
               <page string="Time Slots">
@@ -183,9 +183,14 @@
         <form string="Minimum Days">
           <sheet>
             <group>
-              <field name="activities_ids" widget='many2many_tags'/>
-              <field name="min_days"/>
-              <field name="weight"/>
+              <group>
+                <field name="activities_ids" widget='many2many_tags'/>
+                <field name="min_days"/>
+              </group>
+              <group>
+                <field name="same_day"/>
+                <field name="weight"/>
+              </group>
             </group>
           </sheet>
          </form>

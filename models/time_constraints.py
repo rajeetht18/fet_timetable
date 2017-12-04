@@ -12,10 +12,8 @@ class ActivityPreferredStartingTime(models.Model):
         'op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100, required=1)
     lock = fields.Boolean("Permenantly Locked")
-    day = fields.Selection([('sunday', 'sunday'), ('monday', 'Monday'), ('tuesday', 'Tuesday'), ('wednesday', 'Wednesday'),
-                            ('thursday', 'Thursday'), ('friday', 'Friday'), ('saturday', 'Saturday')], default='monday', required=1)
-    hours = fields.Many2one('op.timing', "Hours", required=1)
-
+    day = fields.Selection([('Sunday','Sunday'),('Monday','Monday'),('Tuesday','Tuesday'),('Wednesday','Wednesday'),('Thursday','Thursday'),('Friday','Friday'),('Saturday','Saturday')],default='Monday',required=1)
+    hours = fields.Many2one('op.timing',"Hours",required=1)
 
 class BatchConstraints(models.Model):
     _name = 'op.batch.constraints'
@@ -257,10 +255,6 @@ class ActivityStartingTime(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
-    # _sql_constraints = [
-    #     ('unique_activity',
-    #      'unique(activity_id)', 'The constraint for the selected activity already exist. Please select another activity!')]
-
     activity_id = fields.Many2one(
         'op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
@@ -473,9 +467,12 @@ class ActivitiesStartingTime(models.Model):
 
     @api.model
     def create(self, values):
+        flag = 0
         if len(values['activities_starting_time_line_ids']) == 0:
-            raise UserError(
-                _("Please configure Timetable Days to create your Activities Time Constraint."))
+            raise UserError(_("Please configure Timetable Days to create your Activities Time Constraint."))
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        if not starting_obj:
+            raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(ActivitiesStartingTime, self).create(values)
         return res
 
@@ -524,7 +521,7 @@ class ActivitiesStartingTime(models.Model):
                 raise UserError(_("The value should be 1 or 0."))
 
     faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
-    student_id = fields.Many2one('op.batch', "Students", required=1)
+    student_id = fields.Many2one('op.batch', "Batch", required=1)
     subject_id = fields.Many2one('op.subject', "Subject", required=1)
     activity_tag_id = fields.Many2one(
         'op.activity.tags', "Activity Tag", required=1)
@@ -606,9 +603,12 @@ class ActivitiesTimeSlots(models.Model):
 
     @api.model
     def create(self, values):
+        flag = 0
         if len(values['activities_timeslots_line_ids']) == 0:
-            raise UserError(
-                _("Please configure Timetable Days to create your activity time slots."))
+            raise UserError(_("Please configure Timetable Days to create your activity time slots."))
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        if not starting_obj:
+            raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(ActivitiesTimeSlots, self).create(values)
         return res
 
@@ -657,7 +657,7 @@ class ActivitiesTimeSlots(models.Model):
                 raise UserError(_("The Value should be 1 or 0."))
 
     faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
-    student_id = fields.Many2one('op.batch', "Students", required=1)
+    student_id = fields.Many2one('op.batch', "Batch", required=1)
     subject_id = fields.Many2one('op.subject', "Subject", required=1)
     activity_tag_id = fields.Many2one(
         'op.activity.tags', "Activity Tag", required=1)
