@@ -128,8 +128,8 @@ class fettimetable_data_export(models.TransientModel):
                 activity_group_id.text = "0"
                 active = etree.SubElement(activity, "Active")
                 active.text = "true"
-                comments = etree.SubElement(activity, "Comments")
-                #comments.text = " "
+                # comments = etree.SubElement(activity, "Comments")
+                # comments.text = " "
 
 
     def buildings(self, root):
