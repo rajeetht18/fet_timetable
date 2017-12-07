@@ -23,7 +23,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activity_id"/>
+                <field name="activity_id" options="{'no_create_edit': True}"/>
               </group>
               <group>
                 <field name="weight" readonly='1'/>
@@ -36,11 +36,11 @@
 
     <!--Activity Ends Student Day Action-->
     <record model="ir.actions.act_window" id="action_activity_ends_students_day">
-        <field name="name">Activity Ends Student Day</field>
-        <field name="res_model">op.activity.ends.day</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="activity_ends_day_tree_view" />
+      <field name="name">Activity Ends Student Day</field>
+      <field name="res_model">op.activity.ends.day</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="activity_ends_day_tree_view"/>
     </record>
 
     <!--Activities Ends Student Day tree view-->
@@ -67,13 +67,13 @@
           <sheet>
             <group>
               <group>
-                <field name="faculty_id"/>
-                <field name="subject_id"/>
+                <field name="faculty_id" options="{'no_create_edit': True}"/>
+                <field name="subject_id" options="{'no_create_edit': True}"/>
                 <field name="weight" readonly='1'/>
               </group>
               <group>
-                <field name="student_id"/>
-                <field name="activity_tag_id"/>
+                <field name="student_id" options="{'no_create_edit': True}"/>
+                <field name="activity_tag_id" options="{'no_create_edit': True}"/>
               </group>
             </group>
           </sheet>
@@ -83,11 +83,11 @@
 
     <!--Activities Ends Student Day Action-->
     <record model="ir.actions.act_window" id="action_activities_ends_students_day">
-        <field name="name">Activities Ends Student Day</field>
-        <field name="res_model">op.activities.ends.day</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="activities_ends_day_tree_view" />
+      <field name="name">Activities Ends Student Day</field>
+      <field name="res_model">op.activities.ends.day</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="activities_ends_day_tree_view"/>
     </record>
 
     <!--Activities same starting time tree view-->
@@ -111,7 +111,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget='many2many_tags'/>
+                <field name="activities_ids" widget='many2many_tags' options="{'no_create_edit': True}"/>
               </group>
               <group>
                 <field name="weight"/>
@@ -124,11 +124,11 @@
 
     <!--Activities same starting time Action-->
     <record model="ir.actions.act_window" id="action_activities_same_starting_time">
-        <field name="name">Activities Same Starting Time</field>
-        <field name="res_model">op.activities.same.starting.time</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="activities_same_starting_time_tree_view" />
+      <field name="name">Activities Same Starting Time</field>
+      <field name="res_model">op.activities.same.starting.time</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="activities_same_starting_time_tree_view"/>
     </record>
 
     <!--Activities same starting day tree view-->
@@ -152,7 +152,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget='many2many_tags'/>
+                <field name="activities_ids" widget='many2many_tags' options="{'no_create_edit': True}"/>
               </group>
               <group>
                 <field name="weight"/>
@@ -165,11 +165,11 @@
 
     <!--Activities same starting day Action-->
     <record model="ir.actions.act_window" id="action_activities_same_starting_day">
-        <field name="name">Activities Same Starting Day</field>
-        <field name="res_model">op.activities.same.starting.day</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="activities_same_starting_day_tree_view" />
+      <field name="name">Activities Same Starting Day</field>
+      <field name="res_model">op.activities.same.starting.day</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="activities_same_starting_day_tree_view"/>
     </record>
 
     <!--Activities same starting hour tree view-->
@@ -193,7 +193,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget="many2many_tags"/>
+                <field name="activities_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
               </group>
               <group>
                 <field name="weight"/>
@@ -206,11 +206,11 @@
 
     <!--Activities same starting hour Action-->
     <record model="ir.actions.act_window" id="action_activities_same_starting_hour">
-        <field name="name">Activities Same Starting Hour</field>
-        <field name="res_model">op.activities.same.starting.hour</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="activities_same_starting_hour_tree_view" />
+      <field name="name">Activities Same Starting Hour</field>
+      <field name="res_model">op.activities.same.starting.hour</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="activities_same_starting_hour_tree_view"/>
     </record>
 
     <!--Activities Max Time slots tree view-->
@@ -235,7 +235,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget='many2many_tags'/>
+                <field name="activities_ids" widget='many2many_tags' options="{'no_create_edit': True}"/>
               </group>
               <group>
                 <field name="max_occupied"/>
@@ -250,7 +250,7 @@
               <page string="Time Slots">
                 <field name="activities_max_timeslots_line_ids">
                   <tree string="Activities Max Time Slots" editable="bottom" create="false" delete="false">
-                    <field name="name" />
+                    <field name="name"/>
                     <field name="is_monday" invisible="1"/>
                     <field name="is_tuesday" invisible="1"/>
                     <field name="is_wednesday" invisible="1"/>
@@ -258,18 +258,20 @@
                     <field name="is_friday" invisible="1"/>
                     <field name="is_saturday" invisible="1"/>
                     <field name="is_sunday" invisible="1"/>
-                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
-                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
-                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
-                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
-                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
-                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
-                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}"/>
+                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}"/>
+                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}"/>
+                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}"/>
+                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}"/>
+                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}"/>
+                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}"/>
                   </tree>
                 </field>
                 <footer>
-                  <span> 0 -> Not Allowed,</span>
-                  <span> 1 -> Allowed.</span>
+                  <span>
+                    0 -> Not Allowed,</span>
+                  <span>
+                    1 -> Allowed.</span>
                 </footer>
               </page>
             </notebook>
@@ -280,11 +282,11 @@
 
     <!--Activities Max Time slots Action-->
     <record model="ir.actions.act_window" id="action_activities_max_timeslots">
-        <field name="name">Activity Starting Time</field>
-        <field name="res_model">op.activities.max.time.slots</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="activities_max_timeslots_tree_view" />
+      <field name="name">Activity Starting Time</field>
+      <field name="res_model">op.activities.max.time.slots</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="activities_max_timeslots_tree_view"/>
     </record>
 
     <!--Two Activities Ordered tree view-->
@@ -308,7 +310,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget="many2many_tags"/>
+                <field name="activities_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
               </group>
               <group>
                 <field name="weight"/>
@@ -321,11 +323,11 @@
 
     <!--Two Activities Ordered Action-->
     <record model="ir.actions.act_window" id="action_two_activities_ordered">
-        <field name="name">Two Activities Ordered</field>
-        <field name="res_model">op.two_activities.ordered</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="two_activities_ordered_tree_view" />
+      <field name="name">Two Activities Ordered</field>
+      <field name="res_model">op.two_activities.ordered</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="two_activities_ordered_tree_view"/>
     </record>
 
     <!--Two Activities Consecutive tree view-->
@@ -349,7 +351,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget="many2many_tags"/>
+                <field name="activities_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
               </group>
               <group>
                 <field name="weight"/>
@@ -362,11 +364,11 @@
 
     <!--Two Activities Consecutive Action-->
     <record model="ir.actions.act_window" id="action_two_activities_consecutive">
-        <field name="name">Two Activities Ordered</field>
-        <field name="res_model">op.two_activities.consecutive</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="two_activities_consecutive_tree_view" />
+      <field name="name">Two Activities Ordered</field>
+      <field name="res_model">op.two_activities.consecutive</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="two_activities_consecutive_tree_view"/>
     </record>
 
     <!--Two Activities Grouped tree view-->
@@ -390,7 +392,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget="many2many_tags"/>
+                <field name="activities_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
               </group>
               <group>
                 <field name="weight"/>
@@ -403,11 +405,11 @@
 
     <!--Two Activities Grouped Action-->
     <record model="ir.actions.act_window" id="action_two_activities_grouped">
-        <field name="name">Two Activities Grouped</field>
-        <field name="res_model">op.two_activities.grouped</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="two_activities_grouped_tree_view" />
+      <field name="name">Two Activities Grouped</field>
+      <field name="res_model">op.two_activities.grouped</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="two_activities_grouped_tree_view"/>
     </record>
 
     <!--Three Activities Grouped tree view-->
@@ -431,7 +433,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget="many2many_tags"/>
+                <field name="activities_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
               </group>
               <group>
                 <field name="weight"/>
@@ -444,11 +446,11 @@
 
     <!--Three Activities Grouped Action-->
     <record model="ir.actions.act_window" id="action_three_activities_grouped">
-        <field name="name">Three Activities Grouped</field>
-        <field name="res_model">op.three_activities.grouped</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="three_activities_grouped_tree_view" />
+      <field name="name">Three Activities Grouped</field>
+      <field name="res_model">op.three_activities.grouped</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="three_activities_grouped_tree_view"/>
     </record>
 
     <!--Activities not overlap tree view-->
@@ -472,7 +474,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget="many2many_tags"/>
+                <field name="activities_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
               </group>
               <group>
                 <field name="weight"/>
@@ -485,11 +487,11 @@
 
     <!--Activities not overlap Action-->
     <record model="ir.actions.act_window" id="action_activities_not_overlap">
-        <field name="name">Activities Not Overlap</field>
-        <field name="res_model">op.activities.not_overlap</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="activities_not_overlap_tree_view" />
+      <field name="name">Activities Not Overlap</field>
+      <field name="res_model">op.activities.not_overlap</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="activities_not_overlap_tree_view"/>
     </record>
 
     <!--Activities Max Simultaneous Time slots tree view-->
@@ -514,7 +516,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget='many2many_tags'/>
+                <field name="activities_ids" widget='many2many_tags' options="{'no_create_edit': True}"/>
               </group>
               <group>
                 <field name="max_simultaneous"/>
@@ -529,7 +531,7 @@
               <page string="Time Slots">
                 <field name="activities_max_simultaneous_line_ids">
                   <tree string="Activities Max Simulatneous Time Slots" editable="bottom" create="false" delete="false">
-                    <field name="name" />
+                    <field name="name"/>
                     <field name="is_monday" invisible="1"/>
                     <field name="is_tuesday" invisible="1"/>
                     <field name="is_wednesday" invisible="1"/>
@@ -537,18 +539,20 @@
                     <field name="is_friday" invisible="1"/>
                     <field name="is_saturday" invisible="1"/>
                     <field name="is_sunday" invisible="1"/>
-                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
-                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
-                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
-                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
-                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
-                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
-                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}"/>
+                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}"/>
+                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}"/>
+                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}"/>
+                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}"/>
+                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}"/>
+                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}"/>
                   </tree>
                 </field>
                 <footer>
-                  <span> 0 -> Not Allowed,</span>
-                  <span> 1 -> Allowed.</span>
+                  <span>
+                    0 -> Not Allowed,</span>
+                  <span>
+                    1 -> Allowed.</span>
                 </footer>
               </page>
             </notebook>
@@ -559,11 +563,11 @@
 
     <!--Activities Max Simultaneous Time slots Action-->
     <record model="ir.actions.act_window" id="action_activities_max_simultaneous">
-        <field name="name">Activities Max Simultaneous</field>
-        <field name="res_model">op.activities.max.simultaneous</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="activities_max_simultaneous_tree_view" />
+      <field name="name">Activities Max Simultaneous</field>
+      <field name="res_model">op.activities.max.simultaneous</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="activities_max_simultaneous_tree_view"/>
     </record>
 
     <!--Activities MinGap tree view-->
@@ -588,7 +592,7 @@
           <sheet>
             <group>
               <group>
-                <field name="activities_ids" widget="many2many_tags"/>
+                <field name="activities_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
                 <field name="min_gap"/>
               </group>
               <group>
@@ -602,11 +606,11 @@
 
     <!--Activities MinGap Action-->
     <record model="ir.actions.act_window" id="action_activities_mingap">
-        <field name="name">Activities Min Gap</field>
-        <field name="res_model">op.activities.min_gap</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="activities_mingap_tree_view" />
+      <field name="name">Activities Min Gap</field>
+      <field name="res_model">op.activities.min_gap</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="activities_mingap_tree_view"/>
     </record>
 
   </data>

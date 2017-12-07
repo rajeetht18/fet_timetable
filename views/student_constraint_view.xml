@@ -22,9 +22,9 @@
           <sheet>
             <separator string="Time Constraints"/>
             <group>
-              <field name="name"/>
-              <field name="group_name"/>
-              <field name="subgroup_name"/>
+              <field name="name" options="{'no_create_edit': True}"/>
+              <field name="group_name" options="{'no_create_edit': True}"/>
+              <field name="subgroup_name" options="{'no_create_edit': True}"/>
               <field name="weight_percent"/>
               <field name="max_days_week"/>
               <field name="max_gaps_day"/>
@@ -35,9 +35,9 @@
               <field name="min_hrs_daily"/>
               <field name="max_hr_cont"/>
               <field name="max_hr_cont_act"/>
-              <field name="activity_name"/>
-              <field name="interval_start"/>
-              <field name="interval_end"/>
+              <field name="activity_name" options="{'no_create_edit': True}"/>
+              <field name="interval_start" options="{'no_create_edit': True}"/>
+              <field name="interval_end" options="{'no_create_edit': True}"/>
               <div>
                 <p>
                   <span style="color:red; font-size:20px">**</span>To use this field, Please unlock them in FET(Settings --> Advanced)

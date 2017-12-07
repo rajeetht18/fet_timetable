@@ -80,7 +80,7 @@ class time_data_import(models.TransientModel):
         two_activities_ordered = self.two_activities_ordered(time)
         two_activities_consecutives = self.two_activities_consecutives(time)
         two_activities_grouped = self.two_activities_grouped(time)
-        three_activities_grouped = self.three_activities_grouped(time)
+        three_activities_grouped = self.three_activities_grouped(time) # fix needed: actitivitis not accepting
         activities_not_overlapping = self.activities_not_overlapping(time)
         max_simultaneous_activities = self.max_simultaneous_activities(time)
         activities_min_gap = self.activities_min_gap(time)
@@ -1468,7 +1468,13 @@ class time_data_import(models.TransientModel):
             teacher = etree.SubElement(preferred_times, "Teacher_Name")
             teacher.text = rec.faculty_id.name
             student = etree.SubElement(preferred_times, "Students_Name")
-            student.text = rec.student_id.name
+            batch_name = rec.student_id.name
+            if rec.group_id:
+                batch_name = '%s %s' % (batch_name, rec.group_id.name)
+            if rec.subgroup_id:
+                batch_name = '%s %s' % (batch_name, rec.subgroup_id.name)
+            student.text = batch_name
+            print batch_name,'---------------------------->'
             subject = etree.SubElement(preferred_times, "Subject_Name")
             subject.text = rec.subject_id.name
             tag = etree.SubElement(preferred_times, "Activity_Tag_Name")
@@ -1543,7 +1549,13 @@ class time_data_import(models.TransientModel):
             teacher = etree.SubElement(preferred_times, "Teacher_Name")
             teacher.text = rec.faculty_id.name
             student = etree.SubElement(preferred_times, "Students_Name")
-            student.text = rec.student_id.name
+            batch_name = rec.student_id.name
+            if rec.group_id:
+                batch_name = '%s %s' % (batch_name, rec.group_id.name)
+            if rec.subgroup_id:
+                batch_name = '%s %s' % (batch_name, rec.subgroup_id.name)
+            student.text = batch_name
+            print batch_name,'---------------------------->'
             subject = etree.SubElement(preferred_times, "Subject_Name")
             subject.text = rec.subject_id.name
             tag = etree.SubElement(preferred_times, "Activity_Tag_Name")

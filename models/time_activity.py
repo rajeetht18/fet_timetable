@@ -112,6 +112,8 @@ class SubActivityStartingTime(models.Model):
         'op.activity.tags', "Activity Tag", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
     split_count = fields.Integer("Split Component", default=1)
+    group_id = fields.Many2one('op.batch.group',"Group")
+    subgroup_id = fields.Many2one('op.batch.subgroup',"Subgroup")
     subactivity_starting_line_ids = fields.One2many(
         'op.subactivity.starting.time.line', 'subactivity_starting_time_id', "Subactivity Startimg Time Line", default=default_line)
 
@@ -247,6 +249,8 @@ class SubActivitiesTimeSlots(models.Model):
         'op.activity.tags', "Activity Tag", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
     split_count = fields.Integer("Split Component", default=1)
+    group_id = fields.Many2one('op.batch.group',"Group")
+    subgroup_id = fields.Many2one('op.batch.subgroup',"Subgroup")
     subactivities_timeslots_line_ids = fields.One2many(
         'op.subactivities.timeslots.line', 'subactivities_timeslots_id', "Subactivities Time Slots Line", default=default_line)
 
