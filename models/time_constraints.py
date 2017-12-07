@@ -127,8 +127,8 @@ class BatchConstraints(models.Model):
 
     student_id = fields.Many2one('op.batch', "Batch", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
-    division = fields.Many2one('op.batch.group', "Group", required=1)
-    subdivision = fields.Many2one('op.batch.subgroup', "Subgroup", required=1)
+    division = fields.Many2one('op.batch.group', "Group")
+    subdivision = fields.Many2one('op.batch.subgroup', "Subgroup")
     batch_constraints_line_ids = fields.One2many(
         'op.breaks.constraints.line', 'batch_constraint_id', "Batch Constraints", default=default_line)
 

@@ -132,8 +132,15 @@ class fettimetable_data_export(models.TransientModel):
                 #comments.text = " "
 
 
-    def rooms(self, root):
+    def buildings(self, root):
         buildings = etree.SubElement(root, "Buildings_List")
+        building_obj = self.env['op.buildings'].search([])
+        for b in building_obj:
+            building = etree.SubElement(buildings, "Building")
+            building_name = etree.SubElement(building, "Name")
+            building_name.text = b.name
+
+    def rooms(self, root):
         room_list = etree.SubElement(root, "Rooms_List")
         rooms = self.env['op.classroom'].search([])
         for r in rooms:
@@ -143,6 +150,7 @@ class fettimetable_data_export(models.TransientModel):
             building = etree.SubElement(room, "Building")
             capacity = etree.SubElement(room, "Capacity")
             capacity.text = str(r.capacity)
+
 
     def export_file(self):
         root = etree.Element("fet")
@@ -158,11 +166,12 @@ class fettimetable_data_export(models.TransientModel):
         Students_List = self.export_students(root)
         Teachers_List = self.export_faculties(root)
         Subjects_List = self.export_courses(root)
-        time_compulsory = self.constraint_compulsory(root)
-        space_compulsory = self.spaceconstraint_compulsory(root)
-        self.activity_tag_list(root)
-        self.activities(root)
-        self.rooms(root)
+        Activity_tag = self.activity_tag_list(root)
+        Activities = self.activities(root)
+        Buildings = self.buildings(root)
+        Rooms = self.rooms(root)
+        Time_compulsory = self.constraint_compulsory(root)
+        Space_compulsory = self.spaceconstraint_compulsory(root)
 
         xmlstr = etree.tostring(root, encoding="utf-8", xml_declaration=True)
         file = base64.encodestring(xmlstr)

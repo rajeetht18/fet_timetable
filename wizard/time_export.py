@@ -19,13 +19,13 @@ class time_data_import(models.TransientModel):
     # Faculty Constraints
         availability = self.faculty_notavailable(time)
         max_day = self.faculty_maxday_constraint(time)
-        min_day = self.faculty_minday_constraint(time)
+        min_day = self.faculty_minday_constraint(time) #fix: depends on no.of activities and
         max_gaps = self.faculty_maxgap_day(time)
         max_gaps_week = self.faculty_gapweek_constraint(time)
         maxhr = self.faculty_maxhr_daily_constraint(time)
         minhr_daily = self.faculty_minhr_daily_constraint(time)
         maxhr_cont = self.faculty_maxhr_cont_constraint(time)
-        max_hr_cont_act = self.faculty_maxhr_activity_constraint(time)
+        max_hr_cont_act = self.faculty_maxhr_activity_constraint(time) #need to fix: fet rejecting
         faculty_interval = self.faculty_interval_maxdays_constraint(time)
         faculties_maxday = self.faculties_maxday(time)
         faculties_minday = self.faculties_minday(time)
@@ -38,7 +38,7 @@ class time_data_import(models.TransientModel):
         faculties_interval = self.faculties_hr_activity(time)
 
     # Student Time Constraints
-        student_notavailable = self.student_notavailable(time)
+        student_notavailable = self.student_notavailable(time) #fix: groups and subgroups added
         student_maxday = self.student_maxday_constraint(time)
         student_maxgap_day = self.student_maxgap_day(time)
         student_maxgap_week = self.student_maxgap_week(time)
@@ -61,14 +61,14 @@ class time_data_import(models.TransientModel):
         allstudent_minhr_daily = self.allstudent_minhr_daily(time)
 
     #Time activity constraints
-	break_time = self.break_time(time)
-        activity_preferred_starting_time = self.preferred_starting_time(time)
+        break_time = self.break_time(time)
+        activity_preferred_starting_time = self.preferred_starting_time(time) #need fix: no activities matching in fet
         preferred_starting_times = self.preferred_starting_times(time)
         preferred_timeslots = self.preferred_timeslots(time)
         activities_preferredtimes = self.activities_preferredtimes(time)
         activities_preferred_timeslots = self.activities_preferred_timeslots(time)
-        subactivities_preferredtimes = self.subactivities_preferredtimes(time)
-        subactivities_preferred_timeslots = self.subactivities_preferred_timeslots(time)
+        subactivities_preferredtimes = self.subactivities_preferredtimes(time) #need fix: add subactivity
+        subactivities_preferred_timeslots = self.subactivities_preferred_timeslots(time) #need fix: add subactivity
         min_days_activities = self.min_days_activities(time)
         max_days_activities = self.max_days_activities(time)
         activity_ends_studentsday = self.activity_ends_studentsday(time)
@@ -89,8 +89,7 @@ class time_data_import(models.TransientModel):
     def faculty_notavailable(self, time):
         faculty = self.env['op.faculty.not.available'].search([])
         for w in faculty:
-            week_days = etree.SubElement(
-                time, "ConstraintTeacherNotAvailableTimes")
+            week_days = etree.SubElement(time, "ConstraintTeacherNotAvailableTimes")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = w.weight_percent
             fac_name = w.name.name
@@ -101,10 +100,10 @@ class time_data_import(models.TransientModel):
             weight.text = str(weight_per)
             Name = etree.SubElement(week_days, "Teacher")
             Name.text = fac_name
-            time = self.env['op.faculty.not.available.list'].search(
+            fac_time = self.env['op.faculty.not.available.list'].search(
                 [('faculty_id', '=', w.id)])
             count = 0
-            for t in time:
+            for t in fac_time:
                 if t.monday == 1:
                     not_available = etree.SubElement(
                         week_days, "Not_Available_Time")
@@ -161,35 +160,36 @@ class time_data_import(models.TransientModel):
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
-        Number = etree.SubElement(week_days, "Number_of_Not_Available_Times")
-        Number.text = str(count)
-        active = etree.SubElement(week_days, "Active")
-        active.text = "True"
-        # comment = etree.SubElement(week_days, "Comments")
-        # comment.text = "0"
-
-    def faculty_maxday_constraint(self, time):
-        faculty = self.env['op.faculty'].search([])
-        for w in faculty:
-            week_days = etree.SubElement(
-                time, "ConstraintTeacherMaxDaysPerWeek")
-            weight = etree.SubElement(week_days, "Weight_Percentage")
-            weight_per = w.weight_percent
-            fac_name = w.name
-            if w.middle_name:
-                fac_name = '%s %s' % (fac_name, w.middle_name)
-            if w.last_name:
-                fac_name = '%s %s' % (fac_name, w.last_name)
-            weight.text = str(weight_per)
-            Name = etree.SubElement(week_days, "Teacher_Name")
-            Name.text = fac_name
-            max_day = etree.SubElement(week_days, "Max_Days_Per_Week")
-            max_days = w.max_days
-            max_day.text = str(max_days)
+            Number = etree.SubElement(week_days, "Number_of_Not_Available_Times")
+            Number.text = str(count)
             active = etree.SubElement(week_days, "Active")
             active.text = "True"
             # comment = etree.SubElement(week_days, "Comments")
             # comment.text = "0"
+
+    def faculty_maxday_constraint(self, time):
+        faculty = self.env['op.faculty'].search([])
+        for w in faculty:
+            if w.max_days > 0:
+                week_days = etree.SubElement(
+                    time, "ConstraintTeacherMaxDaysPerWeek")
+                weight = etree.SubElement(week_days, "Weight_Percentage")
+                weight_per = w.weight_percent
+                fac_name = w.name
+                if w.middle_name:
+                    fac_name = '%s %s' % (fac_name, w.middle_name)
+                if w.last_name:
+                    fac_name = '%s %s' % (fac_name, w.last_name)
+                weight.text = str(weight_per)
+                Name = etree.SubElement(week_days, "Teacher_Name")
+                Name.text = fac_name
+                max_day = etree.SubElement(week_days, "Max_Days_Per_Week")
+                max_days = w.max_days
+                max_day.text = str(max_days)
+                active = etree.SubElement(week_days, "Active")
+                active.text = "True"
+                # comment = etree.SubElement(week_days, "Comments")
+                # comment.text = "0"
 
     def faculty_minday_constraint(self, time):
         faculty = self.env['op.faculty'].search([])
@@ -343,7 +343,7 @@ class time_data_import(models.TransientModel):
         for w in faculty:
             if w.max_hr_cont_act > 0:
                 week_days = etree.SubElement(
-                    time, "ConstraintTeacherActivityTagMaxHoursContinuously")
+                    time, "ConstraintTeacherActivityTagMaxHoursDaily")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 fac_name = w.name
@@ -358,7 +358,7 @@ class time_data_import(models.TransientModel):
                 activity = w.activity_name.name or ''
                 activity_tag.text = activity
                 maxhr_cont_act = etree.SubElement(
-                    week_days, "Maximum_Hours_Continuously")
+                    week_days, "Maximum_Hours_Daily")
                 max_hr_act_con = w.max_hr_cont_act
                 maxhr_cont_act.text = str(max_hr_act_con)
                 active = etree.SubElement(week_days, "Active")
@@ -401,7 +401,7 @@ class time_data_import(models.TransientModel):
     def faculties_maxday(self, time):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
-            if f.max_days_per_week > 0:
+            if f.max_days_per_week :
                 week_days = etree.SubElement(
                     time, "ConstraintTeachersMaxDaysPerWeek")
                 weight_percent = etree.SubElement(
@@ -420,7 +420,7 @@ class time_data_import(models.TransientModel):
     def faculties_minday(self, time):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
-            if f.min_days_per_week > 0:
+            if f.min_days_per_week :
                 week_days = etree.SubElement(
                     time, "ConstraintTeachersMinDaysPerWeek")
                 weight_percent = etree.SubElement(
@@ -439,7 +439,7 @@ class time_data_import(models.TransientModel):
     def faculties_maxgap(self, time):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
-            if f.max_gaps_per_day > 0:
+            if f.max_gaps_per_day :
                 week_days = etree.SubElement(
                     time, "ConstraintTeachersMaxGapsPerDay")
                 weight_percent = etree.SubElement(
@@ -577,9 +577,8 @@ class time_data_import(models.TransientModel):
     # Student Time Constraints
     def student_notavailable(self, time):
         batch = self.env['op.batch.constraints'].search([])
+        week_days = etree.SubElement(time, "ConstraintStudentsSetNotAvailableTimes")
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsSetNotAvailableTimes")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight
             batch_name = b.student_id.name
@@ -590,72 +589,64 @@ class time_data_import(models.TransientModel):
             if b.subdivision:
                 batch_name = '%s %s' % (batch_name, b.subdivision.name)
             Name.text = batch_name
-            time = self.env['op.breaks.constraints.line'].search(
-                [('batch_constraint_id', '=', b.id)])
+            stud_time = self.env['op.breaks.constraints.line'].search([('batch_constraint_id', '=', b.id)])
             count = 0
-            for t in time:
+            for t in stud_time:
                 if t.monday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Monday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.tuesday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Tuesday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.wednesday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Wednesday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.thursday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Thursday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.friday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Friday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.saturday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Saturday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.sunday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Sunday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
-        Number = etree.SubElement(week_days, "Number_of_Not_Available_Times")
-        Number.text = str(count)
-        active = etree.SubElement(week_days, "Active")
-        active.text = "True"
-        # comment = etree.SubElement(week_days, "Comments")
-        # comment.text = "0"
+            Number = etree.SubElement(week_days, "Number_of_Not_Available_Times")
+            Number.text = str(count)
+            active = etree.SubElement(week_days, "Active")
+            active.text = "True"
+            # comment = etree.SubElement(week_days, "Comments")
+            # comment.text = "0"
 
     def student_maxday_constraint(self, time):
         batch = self.env['student.time.constraints'].search([])
@@ -1049,7 +1040,7 @@ class time_data_import(models.TransientModel):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
             week_days = etree.SubElement(
-                time, "ConstraintStudentsActivityTagMaxHoursDaily")
+                time, "ConstraintStudentsActivityTagMaxHoursContinuously")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -1457,7 +1448,7 @@ class time_data_import(models.TransientModel):
                     preferred_hour = etree.SubElement(preferred_timeslots, "Preferred_Hour")
                     preferred_hour.text = line.name
                     c += 1
-            number = etree.SubElement(preferred_times, "Number_of_Preferred_Starting_Times")
+            number = etree.SubElement(preferred_times, "Number_of_Preferred_Time_Slots")
             number.text = str(c)
             active = etree.SubElement(preferred_times, "Active")
             active.text = "true"
@@ -2003,34 +1994,34 @@ class time_data_import(models.TransientModel):
         active = etree.SubElement(compulsory, "Active")
         active.text = "True"
 
-    # Faculty Space Constraints
-        homeroom = self.faculty_homeroom(space)
-        set_of_homeroom = self.faculty_setof_homeroom(space)
-        building_change = self.faculty_maxbuild_day(space)
-        max_building_day = self.faculty_maxbuild_day(space)
-        max_building_week = self.faculty_maxbuild_week(space)
-        min_gaps_build = self.faculty_mingap(space)
-        faculties_max_build = self.faculties_maxbuild(space)
-        faculties_build_week = self.faculties_buildweek(space)
-        faculties_mingap = self.faculties_mingaps(space)
-
-    # Student Space Constraints
-        student_homeroom = self.student_homeroom(space)
-        student_set_of_homeroom = self.student_setof_homeroom(space)
-        student_maxbuild_day = self.student_maxbuild_day(space)
-        student_maxbuild_week = self.student_maxbuild_week(space)
-        student_min_gap_build = self.student_min_gap_build(space)
-        allstudents_maxbuild_day = self.allstudents_maxbuild_day(space)
-        allstudents_min_gap_build = self.allstudents_min_gap_build(space)
-
-    #Room,activity,tag_activity Space Constarints
-        not_available_rooms = self.not_available_rooms(space)
-        activity_room = self.activity_room(space)
-        activity_rooms = self.activity_rooms(space)
-        activities_sameroom = self.activities_sameroom(space)
-        activities_diffroom = self.activities_diffroom(space)
-        tag_activity_room = self.tag_activity_room(space)
-        tag_activity_rooms = self.tag_activity_rooms(space)
+    # # Faculty Space Constraints
+    #     homeroom = self.faculty_homeroom(space)
+    #     set_of_homeroom = self.faculty_setof_homeroom(space)
+    #     building_change = self.faculty_maxbuild_day(space)
+    #     max_building_day = self.faculty_maxbuild_day(space)
+    #     max_building_week = self.faculty_maxbuild_week(space)
+    #     min_gaps_build = self.faculty_mingap(space)
+    #     faculties_max_build = self.faculties_maxbuild(space)
+    #     faculties_build_week = self.faculties_buildweek(space)
+    #     faculties_mingap = self.faculties_mingaps(space)
+    #
+    # # Student Space Constraints
+    #     student_homeroom = self.student_homeroom(space)
+    #     student_set_of_homeroom = self.student_setof_homeroom(space)
+    #     student_maxbuild_day = self.student_maxbuild_day(space)
+    #     student_maxbuild_week = self.student_maxbuild_week(space)
+    #     student_min_gap_build = self.student_min_gap_build(space)
+    #     allstudents_maxbuild_day = self.allstudents_maxbuild_day(space)
+    #     allstudents_min_gap_build = self.allstudents_min_gap_build(space)
+    #
+    # #Room,activity,tag_activity Space Constarints
+    #     not_available_rooms = self.not_available_rooms(space)
+    #     activity_room = self.activity_room(space)
+    #     activity_rooms = self.activity_rooms(space)
+    #     activities_sameroom = self.activities_sameroom(space)
+    #     activities_diffroom = self.activities_diffroom(space)
+    #     tag_activity_room = self.tag_activity_room(space)
+    #     tag_activity_rooms = self.tag_activity_rooms(space)
 
     def faculty_homeroom(self, space):
         faculty = self.env['op.faculty'].search([])
