@@ -76,9 +76,16 @@ class FacultyClassList(models.Model):
                 rec.name = str(rec.id) + " - " + str(rec.duration) + " - " + str(rec.list_id.name) + " - " + str(
                     rec.subject_id.name) + " - " + str(rec.activity_tag.name) + " - " + str(rec.batch_id.name)
 
+    @api.model
+    def _get_subject_ids(self):
+        subject_ids = []
+        if 'subject_ids' in self._context and self._context['subject_ids']:
+            subject_ids = self._context['subject_ids'][0][2] or []
+        return [('id', 'in', subject_ids)]
+        
     name = fields.Char("Name", readonly=1, compute='_compute_name')
     list_id = fields.Many2one('op.faculty', 'Faculty Class')
-    subject_id = fields.Many2one('op.subject', 'Subject', required=True)
+    subject_id = fields.Many2one('op.subject', 'Subject', required=True, domain=_get_subject_ids)
     batch_id = fields.Many2one('op.batch', 'Batch Name', required=True)
     split = fields.Integer('Number of Classes Per Week', size=35)
     weight_percent = fields.Float('Weight %', default=100, size=100)

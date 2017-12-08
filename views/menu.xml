@@ -51,8 +51,9 @@
                 
         <!--Faculty Time Constraints-->
         <menuitem id="menu_faculty_view" name="Faculty" parent="menu_time_constraints" sequence="30"/>
-        <menuitem id="menu_facutly_not_available_time" name="Faculty Not Available" parent="menu_faculty_view" action="action_faculty_not_available_time" sequence="10"/>
-        <menuitem id="faculty_constraints_menu" name="All Faculty Constraints"  parent="menu_faculty_view" action="action_faculty_constraints" sequence="20" />
+        <menuitem id="menu_facutly_contraints" name="Faculties" parent="menu_faculty_view" action="act_open_op_timetable_faculty_view" sequence="10"/>
+        <menuitem id="menu_facutly_not_available_time" name="Faculty Not Available" parent="menu_faculty_view" action="action_faculty_not_available_time" sequence="20"/>
+        <menuitem id="faculty_constraints_menu" name="All Faculty Constraints"  parent="menu_faculty_view" action="action_faculty_constraints" sequence="30" />
         <menuitem id="menu_faculty_activity_maxhrs" name="All Faculty Activity"  parent="menu_faculty_view"
         action="action_faculty_activity_maxhr" sequence="40" />
         
