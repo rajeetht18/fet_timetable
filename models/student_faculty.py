@@ -18,18 +18,18 @@ class Faculty(models.Model):
     weight_percent = fields.Float('Weight %', default=100, size=100)
     max_days = fields.Integer(
         'Max days Per Week', default=lambda self: self.env.user.company_id.tt_max_days, size=10)
-    min_days = fields.Integer('Min days Per Week', size=10)
+    min_days = fields.Integer('Min days Per Week', size=10, default=1)
     max_gaps = fields.Integer('Max gaps Per Day', size=10)
     max_gaps_week = fields.Integer('Max gaps per Week', size=10)
-    max_hrs = fields.Float('Max Hours', size=60)
-    max_hrs_act = fields.Float('Max Hours with Activity', size=60)
-    min_hrs = fields.Float('Min Hours Daily', size=18)
+    max_hrs = fields.Integer('Max Hours', size=60)
+    max_hrs_act = fields.Integer('Max Hours with Activity', size=60)
+    min_hrs = fields.Integer('Min Hours Daily', size=18)
     interval_start = fields.Many2one(
         'op.timing', 'Interval Start Hour', size=20)
     interval_end = fields.Many2one('op.timing', 'Interval End Hour', size=25)
-    max_hrs_cont = fields.Float('Max Hours Continuously', size=18)
-    max_hr_cont_act = fields.Float(
-        'Max Hours Continuous with Activity', size=20)
+    max_hrs_cont = fields.Integer('Max Hours Continuously', size=18)
+    max_hr_cont_act = fields.Integer(
+        '**Max Hours Continuous with Activity', size=20)
     max_building = fields.Integer('Max Building Changes Per Day', size=10)
     max_build_week = fields.Integer('Max Building Changes Per Week', size=10)
     min_gap_build = fields.Integer(
@@ -41,6 +41,28 @@ class Faculty(models.Model):
     set_of_room = fields.Many2many('op.classroom', string="Set of Home Rooms")
     set_of_room_weight = fields.Float(
         'Set of Room Weight Percent', default=100, size=100)
+
+
+    @api.multi
+    @api.constrains('min_hrs')
+    def check_min_hrs(self):
+        for t in self:
+            if t.min_hrs == 1 :
+                raise UserError(_("Please set minimum hours daily atleast 2"))
+
+    @api.multi
+    @api.constrains('max_days')
+    def check_max_days(self):
+        for t in self:
+            if t.max_days < 1 or t.max_days > self.env.user.company_id.tt_max_days:
+                raise UserError(_("Please set maximum days for week correctly"))
+
+    @api.multi
+    @api.constrains('min_days')
+    def check_min_days(self):
+        for t in self:
+            if t.min_days < 1 :
+                raise UserError(_("Please set minimum days value greater than zero"))
 
     @api.multi
     @api.constrains('interval_end', 'interval_start')
@@ -70,11 +92,19 @@ class FacultyClassList(models.Model):
 
     @api.multi
     @api.depends('subject_id', 'batch_id', 'activity_tag')
-    def _compute_name(self):
+    def compute_name(self):
+        fac_name = ''
         for rec in self:
+            fac_name = rec.list_id.name
+            if rec.list_id.middle_name:
+                fac_name = '%s %s' % (fac_name, rec.list_id.middle_name)
+            if rec.list_id.middle_name:
+                fac_name = '%s %s' % (fac_name, rec.list_id.last_name)
             if rec.id:
-                rec.name = str(rec.id) + " - " + str(rec.duration) + " - " + str(rec.list_id.name) + " - " + str(
-                    rec.subject_id.name) + " - " + str(rec.activity_tag.name) + " - " + str(rec.batch_id.name)
+                t = ''
+                for tag in rec.activity_tag:
+                    t += str(tag.name)+','
+                rec.name = str(rec.id)+" - "+str(rec.duration)+" - "+str(fac_name)+" - "+str(rec.subject_id.name)+" - "+ str(t)[:-1] +" - "+str(rec.batch_id.name)
 
     @api.model
     def _get_subject_ids(self):

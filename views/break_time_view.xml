@@ -24,6 +24,9 @@
               <group>
                 <field name="name"/>
               </group>
+              <group>
+                <field name="weight"/>
+              </group>
             </group>
             <notebook>
               <page string="Time Slots">

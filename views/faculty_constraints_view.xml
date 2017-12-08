@@ -7,7 +7,7 @@
       <field name="model">op.all.faculty.constraints</field>
       <field name="arch" type="xml">
         <tree>
-        <field name="name" />
+          <field name="name"/>
         </tree>
       </field>
     </record>
@@ -19,33 +19,34 @@
       <field name="arch" type="xml">
         <form string="Faculty Constraints Form">
           <sheet>
-            <separator string ="Time Constraints" />
-              <group>
-                <field name="name"/>
-                <field name="weight_percent"/>
-                <field name="max_days_per_week"/>
-                <field name="min_days_per_week"/>
-                <field name="max_gaps_per_day"/>
-                <field name="max_gaps_per_week"/>
-                <field name="max_hrs_daily"/>
-                <field name="max_hrs_act"/>
-                <field name="min_hrs_daily"/>
-                <field name="max_hrs_cont_tr" />
-                <!-- <field name="max_hrs_cont_tr_act"/> -->
-                <field name="interval_start"/>
-                <field name="interval_end"/>
-                <div name= "Message">
-                  <span>(*) This constraint is related to all the Faculties (*)</span>
-               </div>
-              </group>
-            <separator string ="Space Constraints" />
+            <separator string="Time Constraints"/>
             <group>
-            <field name="max_building_change"/>
-            <field name="max_building_week"/>
-            <field name="min_gap_building"/>
-            <div name ="Message">
-              <span>(*) This constarint is related to Buildings and rooms</span>
-            </div>
+              <field name="name"/>
+              <field name="weight_percent"/>
+              <field name="max_days_per_week"/>
+              <field name="min_days_per_week"/>
+              <field name="max_gaps_per_day"/>
+              <field name="max_gaps_per_week"/>
+              <field name="max_hrs_daily"/>
+              <field name="max_hrs_act"/>
+              <field name="min_hrs_daily"/>
+              <field name="max_hrs_cont_tr"/>
+              <field name="interval_start" options="{'no_create_edit': True}"/>
+              <field name="interval_end" options="{'no_create_edit': True}"/>
+              <div name="Message">
+                <p>
+                  <span style="color:red; font-size:20px">**</span>To use this field, Please unlock them in FET(Settings --> Advanced)
+                </p>
+              </div>
+            </group>
+            <separator string="Space Constraints"/>
+            <group>
+              <field name="max_building_change"/>
+              <field name="max_building_week"/>
+              <field name="min_gap_building"/>
+              <div name="Message">
+                <span>(*) This constarint is related to Buildings and rooms</span>
+              </div>
             </group>
           </sheet>
         </form>
@@ -54,11 +55,11 @@
 
     <!--Batch Constraints Action-->
     <record model="ir.actions.act_window" id="action_faculty_constraints">
-        <field name="name">All Faculty Constraints</field>
-        <field name="res_model">op.all.faculty.constraints</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="faculty_constraints_tree_view" />
+      <field name="name">All Faculty Constraints</field>
+      <field name="res_model">op.all.faculty.constraints</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="faculty_constraints_tree_view"/>
     </record>
 
   </data>

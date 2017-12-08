@@ -27,25 +27,27 @@
           <sheet>
             <group>
               <group>
-                <field name="faculty_id"/>
-                <field name="student_id"/>
+                <field name="faculty_id" options="{'no_create_edit': True}"/>
+                <field name="student_id" options="{'no_create_edit': True}"/>
+                <field name="group_id" options="{'no_create_edit': True}"/>
                 <field name="split_count"/>
               </group>
               <group>
-                <field name="subject_id"/>
-                <field name="activity_tag_id"/>
+                <field name="subject_id" options="{'no_create_edit': True}"/>
+                <field name="activity_tag_id" options="{'no_create_edit': True}"/>
+                <field name="subgroup_id" options="{'no_create_edit': True}"/>
                 <field name="weight"/>
               </group>
-              <group>
-              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+            </group>
+            <group>
+              <button string="Set All Available" type="object" name="set_available" class="oe_highlight"/>
               <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
-              </group>
             </group>
             <notebook>
               <page string="Time Slots">
                 <field name="subactivity_starting_line_ids">
                   <tree string="Subactivity Starting Time" editable="bottom" create="false" delete="false">
-                    <field name="name" />
+                    <field name="name"/>
                     <field name="is_monday" invisible="1"/>
                     <field name="is_tuesday" invisible="1"/>
                     <field name="is_wednesday" invisible="1"/>
@@ -53,18 +55,20 @@
                     <field name="is_friday" invisible="1"/>
                     <field name="is_saturday" invisible="1"/>
                     <field name="is_sunday" invisible="1"/>
-                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
-                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
-                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
-                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
-                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
-                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
-                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}"/>
+                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}"/>
+                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}"/>
+                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}"/>
+                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}"/>
+                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}"/>
+                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}"/>
                   </tree>
                 </field>
                 <footer>
-                  <span> 0 -> Not Allowed,</span>
-                  <span> 1 -> Allowed.</span>
+                  <span>
+                    0 -> Not Allowed,</span>
+                  <span>
+                    1 -> Allowed.</span>
                 </footer>
               </page>
             </notebook>
@@ -75,11 +79,11 @@
 
     <!--Subctivity Starting Time Constraints Action-->
     <record model="ir.actions.act_window" id="action_subactivity_starting_time">
-        <field name="name">Subctivity Starting Time</field>
-        <field name="res_model">op.subactivity.starting.time</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="subactivity_starting_time_tree_view" />
+      <field name="name">Subctivity Starting Time</field>
+      <field name="res_model">op.subactivity.starting.time</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="subactivity_starting_time_tree_view"/>
     </record>
 
     <!--Subactivities Time Slots tree view-->
@@ -107,19 +111,21 @@
           <sheet>
             <group>
               <group>
-                <field name="faculty_id"/>
-                <field name="student_id"/>
+                <field name="faculty_id" options="{'no_create_edit': True}"/>
+                <field name="student_id" options="{'no_create_edit': True}"/>
+                <field name="group_id" options="{'no_create_edit': True}"/>
                 <field name="split_count"/>
               </group>
               <group>
-                <field name="subject_id"/>
-                <field name="activity_tag_id"/>
+                <field name="subject_id" options="{'no_create_edit': True}"/>
+                <field name="activity_tag_id" options="{'no_create_edit': True}"/>
+                <field name="subgroup_id" options="{'no_create_edit': True}"/>
                 <field name="weight"/>
               </group>
-              <group>
-              <button string="Set All Available" type="object" name="set_available"  class="oe_highlight" />
+            </group>
+            <group>
+              <button string="Set All Available" type="object" name="set_available" class="oe_highlight"/>
               <button string="Set All Not Available" type="object" name="set_not_available" class="oe_highlight"/>
-              </group>
             </group>
             <notebook>
               <page string="Time Slots">
@@ -133,18 +139,20 @@
                     <field name="is_friday" invisible="1"/>
                     <field name="is_saturday" invisible="1"/>
                     <field name="is_sunday" invisible="1"/>
-                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}" />
-                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}" />
-                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}" />
-                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}" />
-                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}" />
-                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}" />
-                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}" />
+                    <field name="monday" attrs="{'readonly': [('is_monday', '!=', True)]}"/>
+                    <field name="tuesday" attrs="{'readonly': [('is_tuesday', '!=', True)]}"/>
+                    <field name="wednesday" attrs="{'readonly': [('is_wednesday', '!=', True)]}"/>
+                    <field name="thursday" attrs="{'readonly': [('is_thursday', '!=', True)]}"/>
+                    <field name="friday" attrs="{'readonly': [('is_friday', '!=', True)]}"/>
+                    <field name="saturday" attrs="{'readonly': [('is_saturday', '!=', True)]}"/>
+                    <field name="sunday" attrs="{'readonly': [('is_sunday', '!=', True)]}"/>
                   </tree>
                 </field>
                 <footer>
-                  <span> 0 -> Not Allowed,</span>
-                  <span> 1 -> Allowed.</span>
+                  <span>
+                    0 -> Not Allowed,</span>
+                  <span>
+                    1 -> Allowed.</span>
                 </footer>
               </page>
             </notebook>
@@ -155,11 +163,11 @@
 
     <!--Activities Time Slots Action-->
     <record model="ir.actions.act_window" id="action_subactivities_time_slots">
-        <field name="name">Subactivities Time Slots</field>
-        <field name="res_model">op.subactivities.timeslots</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="subactivities_time_slots_tree_view" />
+      <field name="name">Subactivities Time Slots</field>
+      <field name="res_model">op.subactivities.timeslots</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="subactivities_time_slots_tree_view"/>
     </record>
 
     <!--Min Days between activities tree view-->
@@ -183,22 +191,27 @@
         <form string="Minimum Days">
           <sheet>
             <group>
-              <field name="activities_ids" widget='many2many_tags'/>
-              <field name="min_days"/>
-              <field name="weight"/>
+              <group>
+                <field name="activities_ids" widget='many2many_tags' options="{'no_create_edit': True}"/>
+                <field name="min_days"/>
+              </group>
+              <group>
+                <field name="same_day"/>
+                <field name="weight"/>
+              </group>
             </group>
           </sheet>
-         </form>
+        </form>
       </field>
     </record>
 
     <!--Min Days between activities Action-->
     <record model="ir.actions.act_window" id="action_min_days_activities">
-        <field name="name">Min Days Between Activities</field>
-        <field name="res_model">op.mindays.activities</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="min_days_activities_tree_view" />
+      <field name="name">Min Days Between Activities</field>
+      <field name="res_model">op.mindays.activities</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="min_days_activities_tree_view"/>
     </record>
 
     <!--Max Days between activities tree view-->
@@ -222,7 +235,7 @@
         <form string="Maximum Days Between a set of Activities">
           <sheet>
             <group>
-              <field name="activities_ids" widget='many2many_tags'/>
+              <field name="activities_ids" widget='many2many_tags' options="{'no_create_edit': True}"/>
               <field name="max_days"/>
               <field name="weight"/>
             </group>
@@ -233,11 +246,11 @@
 
     <!--Max Days between activities Action-->
     <record model="ir.actions.act_window" id="action_max_days_activities">
-        <field name="name">Max Days Between Activities</field>
-        <field name="res_model">op.maxdays.activities</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="max_days_activities_tree_view" />
+      <field name="name">Max Days Between Activities</field>
+      <field name="res_model">op.maxdays.activities</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="max_days_activities_tree_view"/>
     </record>
 
   </data>

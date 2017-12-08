@@ -4,6 +4,7 @@ from odoo.exceptions import UserError
 from company import WEEK_DAYS
 import re, uuid
 
+
 class BreaksTime(models.Model):
     _name = 'op.break.time'
     _description = 'Break Times'
@@ -44,8 +45,8 @@ class BreaksTime(models.Model):
                          'There must be another constraint of this type. Please edit that one.')]
 
     name = fields.Char("Name", default="Break Time Constraints", readonly="1")
-    break_line_ids = fields.One2many(
-        'op.break.time.line', 'break_id', "Breaks", default=default_line)
+    weight = fields.Integer("Weight Percentage",default=100,readonly=1)
+    break_line_ids = fields.One2many('op.break.time.line', 'break_id', "Breaks", default=default_line)
 
     @api.multi
     @api.constrains('break_line_ids')

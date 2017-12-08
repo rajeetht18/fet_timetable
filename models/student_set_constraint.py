@@ -18,14 +18,16 @@ class studentconstraints(models.Model):
     group_name = fields.Many2one('op.batch.group', 'Group')
     subgroup_name = fields.Many2one('op.batch.subgroup', 'Subgroup')
     weight_percent = fields.Integer('Weight Percent', default=100, size=10)
-    max_days_week = fields.Integer('Max Days Per Week For Student', default=lambda self: self.env.user.company_id.tt_max_days, size=10)
-    max_gaps_day = fields.Integer('Max Gaps Per Day For Student', size=10)
+    max_days_week = fields.Integer('Max Days Per Week For Student',
+                                   default=lambda self: self.env.user.company_id.tt_max_days, size=10)
+    max_gaps_day = fields.Integer(
+        '**Max Gaps Per Day For Student', size=10)
     max_gaps_week = fields.Integer('Max Gaps Per Week For Student', size=10)
     max_begin_second = fields.Integer(
         'Max Beginnings At Second Hour(Per Week)', size=10)
     max_hrs_daily = fields.Integer('Max Hours daily For Student', size=10)
     max_hrs_daily_act = fields.Integer(
-        'Max Hour daily with an activity', size=10)
+        '**Max Hour daily with an activity', size=10)
     min_hrs_daily = fields.Integer('Min Hours daily for Student', size=10)
     max_hr_cont = fields.Integer('Max Hours Continuously for student', size=10)
     max_hr_cont_act = fields.Integer(
@@ -54,7 +56,7 @@ class studentconstraints(models.Model):
             res = self.search([('name','=',t.name.id),('group_name','=',t.group_name.id or False),('subgroup_name','=',t.subgroup_name.id or False)])
             if len(res) > 1:
                 raise UserError(_("You can't set the same constrains more than once."))
-                
+
     @api.multi
     @api.constrains('interval_end', 'interval_start')
     def check_interval_time(self):

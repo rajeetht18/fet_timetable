@@ -5,11 +5,11 @@ import base64
 import datetime
 import odoo.tools.config as config
 
+
 class fettimetable_data_export(models.TransientModel):
     _name = 'fettimetable.data.export'
 
-    version = fields.Char("FET Version", required=True,
-                          help="Fill the FET version in which you are using currently.")
+    version = fields.Char("FET Version", default='5.28.6',required=True, help="Fill the FET version in which you are using currently.")
     filedata = fields.Binary('File', readonly=True)
 
     def export_days(self, root):
@@ -36,7 +36,6 @@ class fettimetable_data_export(models.TransientModel):
             Name.text = str(hr_name)
 
     def export_students(self, root):
-        # students = len(students)
         batch = self.env['op.batch'].search([])
         current_date = str(datetime.date.today())
         Students_List = etree.SubElement(root, "Students_List")
@@ -52,17 +51,26 @@ class fettimetable_data_export(models.TransientModel):
                 Number_of_Students = etree.SubElement(
                     Year, "Number_of_Students")
                 Number_of_Students.text = str(students)
-        # group_list = etree.SubElement(Year, "Group")
-        # Name.text = "A"
-        # Name = etree.SubElement(group_list, "Name")
-        # Name.text = "G-1"
-        # Number_of_stud = etree.SubElement(group_list, "Number_of_Students")
-        # Number_of_stud.text = "10"
-        # subgroup_list = etree.SubElement(group_list, "Subgroup")
-        # Name = etree.SubElement(subgroup_list, "Name")
-        # Name.text = "A-1"
-        # Number_of_stud = etree.SubElement(subgroup_list, "Number_of_Students")
-        # Number_of_stud.text = "15"
+            for g in rec.group_ids:
+                group = '%s %s' % (rec.name, g.name)
+                group_list = etree.SubElement(Year, "Group")
+                group_name = etree.SubElement(group_list, "Name")
+                group_name.text = group
+                group_of_students = etree.SubElement(
+                    group_list, "Number_of_Students")
+                group_students = self.env['op.student.course'].search_count(
+                    [('batch_id', '=', rec.id), ('group_id', '=', g.id)])
+                group_of_students.text = str(group_students)
+                for s in g.subgroup_ids:
+                    subgroup = '%s %s %s' % (rec.name, g.name, s.name)
+                    subgroup_list = etree.SubElement(group_list, "Subgroup")
+                    subgroup_name = etree.SubElement(subgroup_list, "Name")
+                    subgroup_name.text = subgroup
+                    subgroup_of_students = etree.SubElement(
+                        subgroup_list, "Number_of_Students")
+                    subgroup_students = self.env['op.student.course'].search_count(
+                        [('batch_id', '=', rec.id), ('group_id', '=', g.id), ('subgroup_id', '=', s.id)])
+                    subgroup_of_students.text = str(subgroup_students)
 
     def export_faculties(self, root):
         faculties = self.env['op.faculty'].search([])
@@ -94,9 +102,8 @@ class fettimetable_data_export(models.TransientModel):
     def activities(self, root):
         activities_list = etree.SubElement(root, "Activities_List")
         sessions = self.env['op.faculty'].search([])
-        x = 1
         for s in sessions:
-            for t in s.faculty_subject_ids:
+            for line in s.class_details:
                 activity = etree.SubElement(activities_list, "Activity")
                 teacher = etree.SubElement(activity, "Teacher")
                 fac_name = s.name
@@ -106,28 +113,34 @@ class fettimetable_data_export(models.TransientModel):
                     fac_name = '%s %s' % (fac_name, s.last_name)
                 teacher.text = fac_name
                 subject = etree.SubElement(activity, "Subject")
-                subject.text = t.name
+                subject.text = line.subject_id.name
                 activity_tag = etree.SubElement(activity, "Activity_Tag")
                 activity_tag.text = "Teaching"
-                # students = etree.SubElement(activity,"Students")
-                # students.text = t.batch_id.name
+                students = etree.SubElement(activity,"Students")
+                students.text = line.batch_id.name
                 duration = etree.SubElement(activity, "Duration")
                 duration.text = "1"
                 total_duration = etree.SubElement(activity, "Total_Duration")
                 total_duration.text = "1"
                 id_count = etree.SubElement(activity, "Id")
-                id_count.text = str(x)
-                x += 1
-                activity_group_id = etree.SubElement(
-                    activity, "Activity_Group_Id")
+                id_count.text = str(line.id)
+                activity_group_id = etree.SubElement(activity, "Activity_Group_Id")
                 activity_group_id.text = "0"
                 active = etree.SubElement(activity, "Active")
                 active.text = "true"
                 # comments = etree.SubElement(activity, "Comments")
                 # comments.text = " "
 
-    def rooms(self, root):
+
+    def buildings(self, root):
         buildings = etree.SubElement(root, "Buildings_List")
+        building_obj = self.env['op.buildings'].search([])
+        for b in building_obj:
+            building = etree.SubElement(buildings, "Building")
+            building_name = etree.SubElement(building, "Name")
+            building_name.text = b.name
+
+    def rooms(self, root):
         room_list = etree.SubElement(root, "Rooms_List")
         rooms = self.env['op.classroom'].search([])
         for r in rooms:
@@ -137,6 +150,7 @@ class fettimetable_data_export(models.TransientModel):
             building = etree.SubElement(room, "Building")
             capacity = etree.SubElement(room, "Capacity")
             capacity.text = str(r.capacity)
+
 
     def export_file(self):
         root = etree.Element("fet")
@@ -152,20 +166,23 @@ class fettimetable_data_export(models.TransientModel):
         Students_List = self.export_students(root)
         Teachers_List = self.export_faculties(root)
         Subjects_List = self.export_courses(root)
-        time_compulsory = self.constraint_compulsory(root)
-        space_compulsory = self.spaceconstraint_compulsory(root)
-        self.activity_tag_list(root)
-        self.activities(root)
-        self.rooms(root)
+        Activity_tag = self.activity_tag_list(root)
+        Activities = self.activities(root)
+        Buildings = self.buildings(root)
+        Rooms = self.rooms(root)
+        Time_compulsory = self.constraint_compulsory(root)
+        Space_compulsory = self.spaceconstraint_compulsory(root)
 
         xmlstr = etree.tostring(root, encoding="utf-8", xml_declaration=True)
         file = base64.encodestring(xmlstr)
         self.filedata = file
         # set up your output file url:
         base_url = self.env['ir.config_parameter'].get_param('web.base.url')
-        file_url = base_url+"/web/content?model=fettimetable.data.export&field=filedata&id=%s"%(self.id)
+        file_url = base_url + \
+            "/web/content?model=fettimetable.data.export&field=filedata&id=%s" % (
+                self.id)
         return {
-             'type': 'ir.actions.act_url',
-             'url': file_url,
-             'target': 'current',
+            'type': 'ir.actions.act_url',
+            'url': file_url,
+            'target': 'current',
         }

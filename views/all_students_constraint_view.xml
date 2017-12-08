@@ -31,11 +31,14 @@
               <field name="min_hr_daily"/>
               <field name="max_hr_cont"/>
               <field name="max_hr_cont_act"/>
-              <field name="activity"/>
-              <field name="start_time"/>
-              <field name="end_time"/>
+              <field name="max_hr_daily_act"/>
+              <field name="activity" options="{'no_create_edit': True}"/>
+              <field name="start_time" options="{'no_create_edit': True}"/>
+              <field name="end_time" options="{'no_create_edit': True}"/>
               <div>
-                <span>(*) Only use if all students require this constraints (*)</span>
+                <p>
+                  <span style="color:red; font-size:20px">**</span>To use this field, Please unlock them in FET(Settings --> Advanced)
+                </p>
               </div>
             </group>
             <separator string="Space Constraints"/>
@@ -44,7 +47,7 @@
               <field name="max_build_week"/>
               <field name="min_gaps_build"/>
               <div>
-                <span>(*) Only use if all students require specific building(*)</span>
+                <span>(*) Only use if all students require this constraints (*)</span>
               </div>
             </group>
           </sheet>
