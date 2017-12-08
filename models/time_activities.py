@@ -7,15 +7,7 @@ class ActivityEndsDay(models.Model):
     _name = 'op.activity.ends.day'
     _description = 'An Activity ends a Students day.'
     _rec_name = 'activity_id'
-
-    # @api.multi
-    # @api.constrains('activity_id')
-    # def check_activity(self):
-    #     for rec in self:
-    #         activity_count = self.env['op.activity.ends.day'].search_count([('activity_id','=',rec.activity_id.id)])
-    #         if activity_count > 1:
-    #             raise UserError(_("This activity is already selected. Please select another activity."))
-
+    
     activity_id = fields.Many2one(
         'op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
@@ -132,8 +124,8 @@ class ActivitiesMaxOccupyTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -352,8 +344,8 @@ class ActivitiesMaxSimultaneous(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {

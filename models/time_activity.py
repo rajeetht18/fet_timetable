@@ -65,8 +65,8 @@ class SubActivityStartingTime(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -202,8 +202,8 @@ class SubActivitiesTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -304,27 +304,26 @@ class MinDaysBetweenActivities(models.Model):
     weight = fields.Integer("Weight Percentage",default=100)
 
 
-    class MaxDaysBetweenActivities(models.Model):
-        _name = 'op.maxdays.activities'
-        _description = 'Maximum days between a set of activity.'
-        _rec_name = 'max_days'
+class MaxDaysBetweenActivities(models.Model):
+    _name = 'op.maxdays.activities'
+    _description = 'Maximum days between a set of activities.'
+    _rec_name = 'max_days'
 
 
-        @api.multi
-        @api.constrains('activities_ids')
-        def check_activity_count(self):
-            for rec in self:
-                if len(rec.activities_ids) == 1:
-                    raise UserError(_("Please add more than 1 activity."))
+    @api.multi
+    @api.constrains('activities_ids')
+    def check_activity_count(self):
+        for rec in self:
+            if len(rec.activities_ids) == 1:
+                raise UserError(_("Please add more than 1 activity."))
 
-        @api.multi
-        @api.constrains('max_days')
-        def check_min_days_gap(self):
-            for rec in self:
-                if rec.max_days < 1:
-                    raise UserError(_("The gap should be greater than 0"))
+    @api.multi
+    @api.constrains('max_days')
+    def check_max_days_gap(self):
+        for rec in self:
+            if rec.min_days < 1:
+                raise UserError(_("The gap should be greater than 0"))
 
-        activities_ids = fields.Many2many(
-            'op.faculty.class.list', 'activity_maxdays_rel', 'activity_id', 'maxday_id', "Activities")
-        max_days = fields.Integer("Maximum Days")
-        weight = fields.Integer("Weight Percentage", default=100)
+    activities_ids = fields.Many2many('op.faculty.class.list','activity_mindays_rel','activity_id','minday_id',"Activities")
+    max_days = fields.Integer("Maximum Days",default=1)
+    weight = fields.Integer("Weight Percentage",default=100)

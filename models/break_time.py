@@ -2,7 +2,6 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from company import WEEK_DAYS
-import re, uuid
 
 
 class BreaksTime(models.Model):
@@ -14,8 +13,6 @@ class BreaksTime(models.Model):
         if len(values['break_line_ids']) == 0:
             raise UserError(
                 _("Please configure Timetable Days to create your Break Time Constraint."))
-        print ':'.join(re.findall('..', '%012x' % uuid.getnode()))
-        print 'MAC Address'
         res = super(BreaksTime, self).create(values)
         return res
 
@@ -23,8 +20,8 @@ class BreaksTime(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
 
         for time in self.env['op.timing'].search([]):
             if day_config:

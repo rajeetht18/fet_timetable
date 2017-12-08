@@ -81,8 +81,8 @@ class BatchConstraints(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -120,10 +120,6 @@ class BatchConstraints(models.Model):
                     flag = True
             if flag:
                 raise UserError(_("Break value should be 1 or 0."))
-
-    # _sql_constraints = [
-    #     ('unique_batch',
-    #      'unique(student_id)', 'You cannot create a Batch Constraint again with the same batch!')]
 
     student_id = fields.Many2one('op.batch', "Batch", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
@@ -215,8 +211,8 @@ class ActivityStartingTime(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -344,8 +340,8 @@ class ActivityTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -383,10 +379,6 @@ class ActivityTimeSlots(models.Model):
                     flag = True
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
-
-    # _sql_constraints = [
-    #     ('unique_activity',
-    #      'unique(activity_id)', 'The constraint for the selected activity already exist. Please select another activity!')]
 
     activity_id = fields.Many2one(
         'op.faculty.class.list', "Activity", required=1)
@@ -480,8 +472,8 @@ class ActivitiesStartingTime(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -616,8 +608,8 @@ class ActivitiesTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {

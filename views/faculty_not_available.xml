@@ -21,7 +21,7 @@
         <form string="Facutly Form">
           <sheet>
             <group col="6">
-              <field name="name" options="{'no_create_edit': True}"/>
+              <field name="name" options="{'no_create_edit': True}" />
               <field name="weight_percent"/>
             </group>
             <group>
@@ -31,7 +31,7 @@
             <notebook>
               <page string="Time Slots">
                 <field name="faculty_not_line_ids">
-                  <tree string="facutly_not_available_tree" editable="bottom">
+                  <tree string="facutly_not_available_tree" editable="bottom" create="false" delete="false">
                     <field name="name" required="1"/>
                     <field name="is_monday" invisible="1"/>
                     <field name="is_tuesday" invisible="1"/>

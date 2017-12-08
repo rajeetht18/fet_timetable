@@ -30,7 +30,7 @@ class ActivityTags(models.Model):
 
 class Batch(models.Model):
     _inherit = 'op.batch'
-
+        
     group_ids = fields.Many2many('op.batch.group', string="Group")
 
 
