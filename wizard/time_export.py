@@ -60,15 +60,9 @@ class time_data_import(models.TransientModel):
         allstudent_interval = self.allstudent_set_interval(time)
         allstudent_minhr_daily = self.allstudent_minhr_daily(time)
 
-<<<<<<< HEAD
     #Time activity constraints
         break_time = self.break_time(time)
         activity_preferred_starting_time = self.preferred_starting_time(time) #need fix: no activities matching in fet
-=======
-    # Time activity constraint
-        break_time = self.break_time(time)
-        activity_preferred_starting_time = self.preferred_starting_time(time)
->>>>>>> 8109b82411d0f846235c14196e1c7c0ec4cc1888
         preferred_starting_times = self.preferred_starting_times(time)
         preferred_timeslots = self.preferred_timeslots(time)
         activities_preferredtimes = self.activities_preferredtimes(time)
@@ -167,8 +161,6 @@ class time_data_import(models.TransientModel):
                     hour.text = t.name
             Number = etree.SubElement(week_days, "Number_of_Not_Available_Times")
             Number.text = str(count)
-<<<<<<< HEAD
-=======
             active = etree.SubElement(week_days, "Active")
             active.text = "True"
             # comment = etree.SubElement(week_days, "Comments")
@@ -192,7 +184,6 @@ class time_data_import(models.TransientModel):
             max_day = etree.SubElement(week_days, "Max_Days_Per_Week")
             max_days = w.max_days
             max_day.text = str(max_days)
->>>>>>> 8109b82411d0f846235c14196e1c7c0ec4cc1888
             active = etree.SubElement(week_days, "Active")
             active.text = "True"
             # comment = etree.SubElement(week_days, "Comments")
@@ -620,12 +611,7 @@ class time_data_import(models.TransientModel):
             if b.subdivision:
                 batch_name = '%s %s' % (batch_name, b.subdivision.name)
             Name.text = batch_name
-<<<<<<< HEAD
             stud_time = self.env['op.breaks.constraints.line'].search([('batch_constraint_id', '=', b.id)])
-=======
-            stud_time = self.env['op.breaks.constraints.line'].search(
-                [('batch_constraint_id', '=', b.id)])
->>>>>>> 8109b82411d0f846235c14196e1c7c0ec4cc1888
             count = 0
             for t in stud_time:
                 if t.monday == 1:
@@ -2042,36 +2028,7 @@ class time_data_import(models.TransientModel):
         active = etree.SubElement(compulsory, "Active")
         active.text = "True"
 
-<<<<<<< HEAD
-    # # Faculty Space Constraints
-    #     homeroom = self.faculty_homeroom(space)
-    #     set_of_homeroom = self.faculty_setof_homeroom(space)
-    #     building_change = self.faculty_maxbuild_day(space)
-    #     max_building_day = self.faculty_maxbuild_day(space)
-    #     max_building_week = self.faculty_maxbuild_week(space)
-    #     min_gaps_build = self.faculty_mingap(space)
-    #     faculties_max_build = self.faculties_maxbuild(space)
-    #     faculties_build_week = self.faculties_buildweek(space)
-    #     faculties_mingap = self.faculties_mingaps(space)
-    #
-    # # Student Space Constraints
-    #     student_homeroom = self.student_homeroom(space)
-    #     student_set_of_homeroom = self.student_setof_homeroom(space)
-    #     student_maxbuild_day = self.student_maxbuild_day(space)
-    #     student_maxbuild_week = self.student_maxbuild_week(space)
-    #     student_min_gap_build = self.student_min_gap_build(space)
-    #     allstudents_maxbuild_day = self.allstudents_maxbuild_day(space)
-    #     allstudents_min_gap_build = self.allstudents_min_gap_build(space)
-    #
-    # #Room,activity,tag_activity Space Constarints
-    #     not_available_rooms = self.not_available_rooms(space)
-    #     activity_room = self.activity_room(space)
-    #     activity_rooms = self.activity_rooms(space)
-    #     activities_sameroom = self.activities_sameroom(space)
-    #     activities_diffroom = self.activities_diffroom(space)
-    #     tag_activity_room = self.tag_activity_room(space)
-    #     tag_activity_rooms = self.tag_activity_rooms(space)
-=======
+
     # Faculty Space Constraints
         homeroom = self.faculty_homeroom(space)
         set_of_homeroom = self.faculty_setof_homeroom(space)
@@ -2100,7 +2057,6 @@ class time_data_import(models.TransientModel):
         activities_diffroom = self.activities_diffroom(space)
         tag_activity_room = self.tag_activity_room(space)
         tag_activity_rooms = self.tag_activity_rooms(space)
->>>>>>> 8109b82411d0f846235c14196e1c7c0ec4cc1888
 
     def faculty_homeroom(self, space):
         faculty = self.env['op.faculty'].search([])
