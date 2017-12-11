@@ -12,8 +12,9 @@ class ActivityPreferredStartingTime(models.Model):
         'op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100, required=1)
     lock = fields.Boolean("Permenantly Locked")
-    day = fields.Selection([('Sunday','Sunday'),('Monday','Monday'),('Tuesday','Tuesday'),('Wednesday','Wednesday'),('Thursday','Thursday'),('Friday','Friday'),('Saturday','Saturday')],default='Monday',required=1)
-    hours = fields.Many2one('op.timing',"Hours",required=1)
+    day = fields.Selection([('Sunday', 'Sunday'), ('Monday', 'Monday'), ('Tuesday', 'Tuesday'), ('Wednesday', 'Wednesday'), ('Thursday', 'Thursday'), ('Friday', 'Friday'), ('Saturday', 'Saturday')], default='Monday', required=1)
+    hours = fields.Many2one('op.timing', "Hours", required=1)
+
 
 class BatchConstraints(models.Model):
     _name = 'op.batch.constraints'
@@ -459,10 +460,9 @@ class ActivitiesStartingTime(models.Model):
 
     @api.model
     def create(self, values):
-        flag = 0
         if len(values['activities_starting_time_line_ids']) == 0:
             raise UserError(_("Please configure Timetable Days to create your Activities Time Constraint."))
-        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id', '=', values['faculty_id']), ('batch_id', '=', values['student_id']), ('subject_id', '=', values['subject_id']), ('activity_tag', 'in', values['activity_tag_id'])])
         if not starting_obj:
             raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(ActivitiesStartingTime, self).create(values)
@@ -595,10 +595,9 @@ class ActivitiesTimeSlots(models.Model):
 
     @api.model
     def create(self, values):
-        flag = 0
         if len(values['activities_timeslots_line_ids']) == 0:
             raise UserError(_("Please configure Timetable Days to create your activity time slots."))
-        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id', '=', values['faculty_id']), ('batch_id', '=', values['student_id']), ('subject_id', '=', values['subject_id']), ('activity_tag', 'in', values['activity_tag_id'])])
         if not starting_obj:
             raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(ActivitiesTimeSlots, self).create(values)

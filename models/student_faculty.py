@@ -42,12 +42,11 @@ class Faculty(models.Model):
     set_of_room_weight = fields.Float(
         'Set of Room Weight Percent', default=100, size=100)
 
-
     @api.multi
     @api.constrains('min_hrs')
     def check_min_hrs(self):
         for t in self:
-            if t.min_hrs == 1 :
+            if t.min_hrs == 1:
                 raise UserError(_("Please set minimum hours daily atleast 2"))
 
     @api.multi
@@ -61,7 +60,7 @@ class Faculty(models.Model):
     @api.constrains('min_days')
     def check_min_days(self):
         for t in self:
-            if t.min_days < 1 :
+            if t.min_days < 1:
                 raise UserError(_("Please set minimum days value greater than zero"))
 
     @api.multi
@@ -103,8 +102,8 @@ class FacultyClassList(models.Model):
             if rec.id:
                 t = ''
                 for tag in rec.activity_tag:
-                    t += str(tag.name)+','
-                rec.name = str(rec.id)+" - "+str(rec.duration)+" - "+str(fac_name)+" - "+str(rec.subject_id.name)+" - "+ str(t)[:-1] +" - "+str(rec.batch_id.name)
+                    t += str(tag.name) + ','
+                rec.name = str(rec.id) + " - " + str(rec.duration) + " - " + str(fac_name) + " - " + str(rec.subject_id.name) + " - " + str(t)[:-1] + " - " + str(rec.batch_id.name)
 
     @api.model
     def _get_subject_ids(self):
@@ -112,7 +111,7 @@ class FacultyClassList(models.Model):
         if 'subject_ids' in self._context and self._context['subject_ids']:
             subject_ids = self._context['subject_ids'][0][2] or []
         return [('id', 'in', subject_ids)]
-        
+
     name = fields.Char("Name", readonly=1, compute='_compute_name')
     list_id = fields.Many2one('op.faculty', 'Faculty Class')
     subject_id = fields.Many2one('op.subject', 'Subject', required=True, domain=_get_subject_ids)

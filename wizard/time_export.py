@@ -19,13 +19,13 @@ class time_data_import(models.TransientModel):
     # Faculty Constraints
         availability = self.faculty_notavailable(time)
         max_day = self.faculty_maxday_constraint(time)
-        min_day = self.faculty_minday_constraint(time) #fix: depends on no.of activities and
+        min_day = self.faculty_minday_constraint(time)  # fix: depends on no.of activities and
         max_gaps = self.faculty_maxgap_day(time)
         max_gaps_week = self.faculty_gapweek_constraint(time)
         maxhr = self.faculty_maxhr_daily_constraint(time)
         minhr_daily = self.faculty_minhr_daily_constraint(time)
         maxhr_cont = self.faculty_maxhr_cont_constraint(time)
-        max_hr_cont_act = self.faculty_maxhr_activity_constraint(time) #need to fix: fet rejecting
+        max_hr_cont_act = self.faculty_maxhr_activity_constraint(time)  # need to fix: fet rejecting
         faculty_interval = self.faculty_interval_maxdays_constraint(time)
         faculties_maxday = self.faculties_maxday(time)
         faculties_minday = self.faculties_minday(time)
@@ -38,7 +38,7 @@ class time_data_import(models.TransientModel):
         faculties_interval = self.faculties_hr_activity(time)
 
     # Student Time Constraints
-        student_notavailable = self.student_notavailable(time) #fix: groups and subgroups added
+        student_notavailable = self.student_notavailable(time)  # fix: groups and subgroups added
         student_maxday = self.student_maxday_constraint(time)
         student_maxgap_day = self.student_maxgap_day(time)
         student_maxgap_week = self.student_maxgap_week(time)
@@ -60,15 +60,15 @@ class time_data_import(models.TransientModel):
         allstudent_interval = self.allstudent_set_interval(time)
         allstudent_minhr_daily = self.allstudent_minhr_daily(time)
 
-    #Time activity constraints
+    # Time activity constraints
         break_time = self.break_time(time)
-        activity_preferred_starting_time = self.preferred_starting_time(time) #need fix: no activities matching in fet
+        activity_preferred_starting_time = self.preferred_starting_time(time)  # need fix: no activities matching in fet
         preferred_starting_times = self.preferred_starting_times(time)
         preferred_timeslots = self.preferred_timeslots(time)
         activities_preferredtimes = self.activities_preferredtimes(time)
         activities_preferred_timeslots = self.activities_preferred_timeslots(time)
-        subactivities_preferredtimes = self.subactivities_preferredtimes(time) #need fix: add subactivity
-        subactivities_preferred_timeslots = self.subactivities_preferred_timeslots(time) #need fix: add subactivity
+        subactivities_preferredtimes = self.subactivities_preferredtimes(time)  # need fix: add subactivity
+        subactivities_preferred_timeslots = self.subactivities_preferred_timeslots(time)  # need fix: add subactivity
         min_days_activities = self.min_days_activities(time)
         max_days_activities = self.max_days_activities(time)
         activity_ends_studentsday = self.activity_ends_studentsday(time)
@@ -80,7 +80,7 @@ class time_data_import(models.TransientModel):
         two_activities_ordered = self.two_activities_ordered(time)
         two_activities_consecutives = self.two_activities_consecutives(time)
         two_activities_grouped = self.two_activities_grouped(time)
-        three_activities_grouped = self.three_activities_grouped(time) # fix needed: actitivitis not accepting
+        three_activities_grouped = self.three_activities_grouped(time)  # fix needed: actitivitis not accepting
         activities_not_overlapping = self.activities_not_overlapping(time)
         max_simultaneous_activities = self.max_simultaneous_activities(time)
         activities_min_gap = self.activities_min_gap(time)
@@ -161,29 +161,6 @@ class time_data_import(models.TransientModel):
                     hour.text = t.name
             Number = etree.SubElement(week_days, "Number_of_Not_Available_Times")
             Number.text = str(count)
-            active = etree.SubElement(week_days, "Active")
-            active.text = "True"
-            # comment = etree.SubElement(week_days, "Comments")
-            # comment.text = "0"
-
-    def faculty_maxday_constraint(self, time):
-        faculty = self.env['op.faculty'].search([])
-        for w in faculty:
-            week_days = etree.SubElement(
-                time, "ConstraintTeacherMaxDaysPerWeek")
-            weight = etree.SubElement(week_days, "Weight_Percentage")
-            weight_per = w.weight_percent
-            fac_name = w.name
-            if w.middle_name:
-                fac_name = '%s %s' % (fac_name, w.middle_name)
-            if w.last_name:
-                fac_name = '%s %s' % (fac_name, w.last_name)
-            weight.text = str(weight_per)
-            Name = etree.SubElement(week_days, "Teacher_Name")
-            Name.text = fac_name
-            max_day = etree.SubElement(week_days, "Max_Days_Per_Week")
-            max_days = w.max_days
-            max_day.text = str(max_days)
             active = etree.SubElement(week_days, "Active")
             active.text = "True"
             # comment = etree.SubElement(week_days, "Comments")
@@ -419,11 +396,11 @@ class time_data_import(models.TransientModel):
                 # comment = etree.SubElement(week_days, "Comments")
                 # comment.text = "0"
 
-        # All Faculties Constraints
+    # All Faculties Constraints
     def faculties_maxday(self, time):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
-            if f.max_days_per_week :
+            if f.max_days_per_week:
                 week_days = etree.SubElement(
                     time, "ConstraintTeachersMaxDaysPerWeek")
                 weight_percent = etree.SubElement(
@@ -442,7 +419,7 @@ class time_data_import(models.TransientModel):
     def faculties_minday(self, time):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
-            if f.min_days_per_week :
+            if f.min_days_per_week:
                 week_days = etree.SubElement(
                     time, "ConstraintTeachersMinDaysPerWeek")
                 weight_percent = etree.SubElement(
@@ -461,7 +438,7 @@ class time_data_import(models.TransientModel):
     def faculties_maxgap(self, time):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
-            if f.max_gaps_per_day :
+            if f.max_gaps_per_day:
                 week_days = etree.SubElement(
                     time, "ConstraintTeachersMaxGapsPerDay")
                 weight_percent = etree.SubElement(
@@ -919,7 +896,6 @@ class time_data_import(models.TransientModel):
             # comment.text = "0"
 
     # All Students
-
     def allstudent_maxday_constraint(self, time):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
@@ -1101,9 +1077,8 @@ class time_data_import(models.TransientModel):
             # comment = etree.SubElement(week_days, "Comments")
             # comment.text = "0"
 
-
-    #Break
-    def break_time(self,time):
+# Break
+    def break_time(self, time):
         breaks = self.env['op.break.time'].search([])
         for rec in breaks:
             preferred_times = etree.SubElement(time, "ConstraintBreakTimes")
@@ -1167,11 +1142,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #ActivityPreferredStartingTime
-    def preferred_starting_time(self,time):
+# ActivityPreferredStartingTime
+    def preferred_starting_time(self, time):
         preferred_time_obj = self.env['op.activity.preferred.starting.time'].search([])
-        for rec in preferred_time_obj :
+        for rec in preferred_time_obj:
             preferred_time = etree.SubElement(time, "ConstraintActivityPreferredStartingTime")
             weight = etree.SubElement(preferred_time, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1188,10 +1162,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_time, "Comments")
             comments.text = "Comments"
 
-    #An activity has a set of preferred starting times
-    def preferred_starting_times(self,time):
+# An activity has a set of preferred starting times
+    def preferred_starting_times(self, time):
         starting_time_obj = self.env['op.activity.starting.time'].search([])
-        for rec in starting_time_obj :
+        for rec in starting_time_obj:
             preferred_times = etree.SubElement(time, "ConstraintActivityPreferredStartingTimes")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1257,11 +1231,10 @@ class time_data_import(models.TransientModel):
             comments.text = "Comments"
 
 
-
-    #An activity has a set of preferred timeslots
-    def preferred_timeslots(self,time):
+# An activity has a set of preferred timeslots
+    def preferred_timeslots(self, time):
         timeslot_obj = self.env['op.activity.timeslots'].search([])
-        for rec in timeslot_obj :
+        for rec in timeslot_obj:
             activity_preferred_timeslots = etree.SubElement(time, "ConstraintActivityPreferredTimeSlots")
             weight = etree.SubElement(activity_preferred_timeslots, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1325,12 +1298,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(activity_preferred_timeslots, "Comments")
             comments.text = "Comments"
 
-
-
-    #Set of activities has a set of preferred starting time
-    def activities_preferredtimes(self,time):
+# Set of activities has a set of preferred starting time
+    def activities_preferredtimes(self, time):
         time_obj = self.env['op.activities.starting.time'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintActivitiesPreferredStartingTimes")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1402,10 +1373,10 @@ class time_data_import(models.TransientModel):
             comments.text = "Comments"
 
 
-    #Set of activities has a set of preferred time slots
-    def activities_preferred_timeslots(self,time):
+# Set of activities has a set of preferred time slots
+    def activities_preferred_timeslots(self, time):
         time_obj = self.env['op.activities.timeslots'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintActivitiesPreferredTimeSlots")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1477,11 +1448,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #Set of subactivities has a set of preferred starting time
-    def subactivities_preferredtimes(self,time):
+# Set of subactivities has a set of preferred starting time
+    def subactivities_preferredtimes(self, time):
         time_obj = self.env['op.subactivity.starting.time'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintSubactivitiesPreferredStartingTimes")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1496,7 +1466,6 @@ class time_data_import(models.TransientModel):
             if rec.subgroup_id:
                 batch_name = '%s %s' % (batch_name, rec.subgroup_id.name)
             student.text = batch_name
-            print batch_name,'---------------------------->'
             subject = etree.SubElement(preferred_times, "Subject_Name")
             subject.text = rec.subject_id.name
             tag = etree.SubElement(preferred_times, "Activity_Tag_Name")
@@ -1558,11 +1527,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #Set of subactivity has a set of preferred time slots
-    def subactivities_preferred_timeslots(self,time):
+# Set of subactivity has a set of preferred time slots
+    def subactivities_preferred_timeslots(self, time):
         time_obj = self.env['op.subactivities.timeslots'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintSubactivitiesPreferredTimeSlots")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1577,7 +1545,6 @@ class time_data_import(models.TransientModel):
             if rec.subgroup_id:
                 batch_name = '%s %s' % (batch_name, rec.subgroup_id.name)
             student.text = batch_name
-            print batch_name,'---------------------------->'
             subject = etree.SubElement(preferred_times, "Subject_Name")
             subject.text = rec.subject_id.name
             tag = etree.SubElement(preferred_times, "Activity_Tag_Name")
@@ -1640,11 +1607,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #Min days between a set of activities
-    def min_days_activities(self,time):
+# Min days between a set of activities
+    def min_days_activities(self, time):
         time_obj = self.env['op.mindays.activities'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintMinDaysBetweenActivities")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1662,11 +1628,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #Max days between a set of activities
-    def max_days_activities(self,time):
+# Max days between a set of activities
+    def max_days_activities(self, time):
         time_obj = self.env['op.maxdays.activities'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintMaxDaysBetweenActivities")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1682,10 +1647,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #An Activity ends Students day
-    def activity_ends_studentsday(self,time):
+# An Activity ends Students day
+    def activity_ends_studentsday(self, time):
         time_obj = self.env['op.activity.ends.day'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintActivityEndsStudentsDay")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1696,10 +1661,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #A Set of Activities ends Students day
-    def activities_ends_studentsday(self,time):
+# A Set of Activities ends Students day
+    def activities_ends_studentsday(self, time):
         time_obj = self.env['op.activities.ends.day'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintActivitiesEndStudentsDay")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1716,10 +1681,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #A set of activies have same starting time(day+hr)
-    def activities_same_startingDH(self,time):
+# A set of activies have same starting time(day+hr)
+    def activities_same_startingDH(self, time):
         time_obj = self.env['op.activities.same.starting.time'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintActivitiesSameStartingTime")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1733,11 +1698,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #A set of activies have same starting time(any hr)
-    def activities_same_startingH(self,time):
+# A set of activies have same starting time(any hr)
+    def activities_same_startingH(self, time):
         time_obj = self.env['op.activities.same.starting.day'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintActivitiesSameStartingDay")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1751,10 +1715,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #A set of activies have same starting time(any day)
-    def activities_same_startingD(self,time):
+# A set of activies have same starting time(any day)
+    def activities_same_startingD(self, time):
         time_obj = self.env['op.activities.same.starting.hour'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintActivitiesSameStartingHour")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1768,11 +1732,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #A set of activities takes max timeslots from selection
-    def activities_max_timeslots(self,time):
+# A set of activities takes max timeslots from selection
+    def activities_max_timeslots(self, time):
         time_obj = self.env['op.activities.max.time.slots'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintActivitiesOccupyMaxTimeSlotsFromSelection")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1841,10 +1804,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #2 Activities are ordered
-    def two_activities_ordered(self,time):
+# 2 Activities are ordered
+    def two_activities_ordered(self, time):
         time_obj = self.env['op.two_activities.ordered'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintTwoActivitiesOrdered")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1857,11 +1820,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #2 Activities are consecutives
-    def two_activities_consecutives(self,time):
+# 2 Activities are consecutives
+    def two_activities_consecutives(self, time):
         time_obj = self.env['op.two_activities.consecutive'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintTwoActivitiesConsecutive")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1874,10 +1836,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #2 Activities are grouped
-    def two_activities_grouped(self,time):
+# 2 Activities are grouped
+    def two_activities_grouped(self, time):
         time_obj = self.env['op.two_activities.grouped'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintTwoActivitiesGrouped")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1890,10 +1852,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #3 Activities are grouped
-    def three_activities_grouped(self,time):
+# 3 Activities are grouped
+    def three_activities_grouped(self, time):
         time_obj = self.env['op.three_activities.grouped'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintThreeActivitiesGrouped")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1908,10 +1870,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #A set of Activities are not overlapping
-    def activities_not_overlapping(self,time):
+# A set of Activities are not overlapping
+    def activities_not_overlapping(self, time):
         time_obj = self.env['op.activities.not_overlap'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintActivitiesNotOverlapping")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1925,12 +1887,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-
-    #A Max simultaneous activities from a set in selected timeslots
-    def max_simultaneous_activities(self,time):
+# A Max simultaneous activities from a set in selected timeslots
+    def max_simultaneous_activities(self, time):
         time_obj = self.env['op.activities.max.simultaneous'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintActivitiesMaxSimultaneousInSelectedTimeSlots")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -1999,10 +1959,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #Min gaps between a set of activities
-    def activities_min_gap(self,time):
+    # Min gaps between a set of activities
+    def activities_min_gap(self, time):
         time_obj = self.env['op.activities.min_gap'].search([])
-        for rec in time_obj :
+        for rec in time_obj:
             preferred_times = etree.SubElement(time, "ConstraintMinGapsBetweenActivities")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -2018,7 +1978,6 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
     # Space Constraints
     def spaceconstraint_compulsory(self, root):
         space = etree.SubElement(root, "Space_Constraints_List")
@@ -2027,7 +1986,6 @@ class time_data_import(models.TransientModel):
         weight.text = "100"
         active = etree.SubElement(compulsory, "Active")
         active.text = "True"
-
 
     # Faculty Space Constraints
         homeroom = self.faculty_homeroom(space)
@@ -2405,10 +2363,8 @@ class time_data_import(models.TransientModel):
             # comment = etree.SubElement(week_days, "Comments")
             # comment.text = "0"
 
-
-
-    #A rooms not available
-    def not_available_rooms(self,space):
+    # A rooms not available
+    def not_available_rooms(self, space):
         room_obj = self.env['op.room.not.available'].search([])
         for rec in room_obj:
             not_rooms = etree.SubElement(space, "ConstraintRoomNotAvailableTimes")
@@ -2474,10 +2430,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(not_rooms, "Comments")
             comments.text = "Comments"
 
-    #Subject has preferred Room
-    def subject_room(self,space):
+    # Subject has preferred Room
+    def subject_room(self, space):
         subject_obj = self.env['op.subject.room'].search([])
-        for rec in subject_obj :
+        for rec in subject_obj:
             preferred_times = etree.SubElement(space, "ConstraintSubjectPreferredRoom")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -2490,10 +2446,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #Subject has a set of preferred rooms
-    def subject_rooms(self,space):
+    # Subject has a set of preferred rooms
+    def subject_rooms(self, space):
         subject_obj = self.env['op.subject.rooms'].search([])
-        for rec in subject_obj :
+        for rec in subject_obj:
             preferred_times = etree.SubElement(space, "ConstraintSubjectPreferredRooms")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -2509,11 +2465,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #Tag has preferred Room
-    def tag_room(self,space):
+    # Tag has preferred Room
+    def tag_room(self, space):
         tag_obj = self.env['op.tag.room'].search([])
-        for rec in tag_obj :
+        for rec in tag_obj:
             preferred_times = etree.SubElement(space, "ConstraintActivityTagPreferredRoom")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -2526,10 +2481,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #Tag has a set of preferred rooms
-    def tag_rooms(self,space):
+    # Tag has a set of preferred rooms
+    def tag_rooms(self, space):
         tag_obj = self.env['op.tag.rooms'].search([])
-        for rec in tag_obj :
+        for rec in tag_obj:
             preferred_times = etree.SubElement(space, "ConstraintActivityTagPreferredRooms")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -2545,11 +2500,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #Activity has preferred Room
-    def activity_room(self,space):
+    # Activity has preferred Room
+    def activity_room(self, space):
         activity_obj = self.env['op.activity.room'].search([])
-        for rec in activity_obj :
+        for rec in activity_obj:
             preferred_times = etree.SubElement(space, "ConstraintActivityPreferredRoom")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -2564,10 +2518,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-    #Activity has a set of preferred rooms
-    def activity_rooms(self,space):
+    # Activity has a set of preferred rooms
+    def activity_rooms(self, space):
         activity_obj = self.env['op.activity.rooms'].search([])
-        for rec in activity_obj :
+        for rec in activity_obj:
             preferred_times = etree.SubElement(space, "ConstraintActivityPreferredRooms")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -2583,11 +2537,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #A Set of activities has same room if they are consecutive
-    def activities_sameroom(self,space):
+    # A Set of activities has same room if they are consecutive
+    def activities_sameroom(self, space):
         activity_obj = self.env['op.consecutive.activities.same.room'].search([])
-        for rec in activity_obj :
+        for rec in activity_obj:
             preferred_times = etree.SubElement(space, "ConstraintActivitiesSameRoomIfConsecutive")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -2601,11 +2554,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #A Set of activities have max different room
-    def activities_diffroom(self,space):
+    # A Set of activities have max different room
+    def activities_diffroom(self, space):
         activity_obj = self.env['op.activities.max.different.room'].search([])
-        for rec in activity_obj :
+        for rec in activity_obj:
             preferred_times = etree.SubElement(space, "ConstraintActivitiesOccupyMaxDifferentRooms")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -2621,11 +2573,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #A Tag n Activity have preferred room
-    def tag_activity_room(self,space):
+    # A Tag n Activity have preferred room
+    def tag_activity_room(self, space):
         activity_obj = self.env['op.subject.tag.preferred.room'].search([])
-        for rec in activity_obj :
+        for rec in activity_obj:
             preferred_times = etree.SubElement(space, "ConstraintSubjectActivityTagPreferredRoom")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
@@ -2640,11 +2591,10 @@ class time_data_import(models.TransientModel):
             comments = etree.SubElement(preferred_times, "Comments")
             comments.text = "Comments"
 
-
-    #A Tag n Activity have set of preferred rooms
+    # A Tag n Activity have set of preferred rooms
     def tag_activity_rooms(self, space):
         activity_obj = self.env['op.subject.tag.preferred.rooms'].search([])
-        for rec in activity_obj :
+        for rec in activity_obj:
             preferred_times = etree.SubElement(space, "ConstraintSubjectActivityTagPreferredRooms")
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)

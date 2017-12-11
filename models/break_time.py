@@ -42,14 +42,14 @@ class BreaksTime(models.Model):
                          'There must be another constraint of this type. Please edit that one.')]
 
     name = fields.Char("Name", default="Break Time Constraints", readonly="1")
-    weight = fields.Integer("Weight Percentage",default=100,readonly=1)
+    weight = fields.Integer("Weight Percentage", default=100, readonly=1)
     break_line_ids = fields.One2many('op.break.time.line', 'break_id', "Breaks", default=default_line)
 
     @api.multi
     @api.constrains('break_line_ids')
     def _check_break_line_ids(self):
         for record in self:
-            flag = any([True for line in record.break_line_ids for d in WEEK_DAYS if getattr(line, d)!=0 and getattr(line, d)!=1])
+            flag = any([True for line in record.break_line_ids for d in WEEK_DAYS if getattr(line, d) != 0 and getattr(line, d) != 1])
             if flag:
                 raise UserError(_("Break value should be 1 or 0."))
 

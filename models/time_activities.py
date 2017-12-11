@@ -7,7 +7,7 @@ class ActivityEndsDay(models.Model):
     _name = 'op.activity.ends.day'
     _description = 'An Activity ends a Students day.'
     _rec_name = 'activity_id'
-    
+
     activity_id = fields.Many2one(
         'op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
@@ -18,17 +18,15 @@ class ActivitiesEndsDay(models.Model):
     _description = 'A set of Activities ends a Students day.'
     _rec_name = 'faculty_id'
 
-
-    faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
-    student_id = fields.Many2one('op.batch',"Batch",required=1)
-    subject_id = fields.Many2one('op.subject',"Subject",required=1)
-    activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
-    weight = fields.Integer("Weight Percentage",default=100,required=1)
+    faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
+    student_id = fields.Many2one('op.batch', "Batch", required=1)
+    subject_id = fields.Many2one('op.subject', "Subject", required=1)
+    activity_tag_id = fields.Many2one('op.activity.tags', "Activity Tag", required=1)
+    weight = fields.Integer("Weight Percentage", default=100, required=1)
 
     @api.model
     def create(self, values):
-        flag = 0
-        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id', '=', values['faculty_id']), ('batch_id', '=', values['student_id']), ('subject_id', '=', values['subject_id']), ('activity_tag', 'in', values['activity_tag_id'])])
         if not starting_obj:
             raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(ActivitiesEndsDay, self).create(values)
@@ -406,29 +404,6 @@ class ActivitiesMaxSimultaneous(models.Model):
         "Maximum Simultaneous", default=1, required=1)
     activities_max_simultaneous_line_ids = fields.One2many(
         'op.activities.max.simultaneous.line', 'activities_max_simultaneous_id', "Activities Max Simultaneous Line", default=default_line)
-
-
-class ActivitiesMaxOccupyTimeSlotsLine(models.Model):
-    _name = 'op.activities.max.simultaneous.line'
-    _description = 'Activities Max Simultaneous Slots Line'
-
-    name = fields.Char("Periods", required=1)
-    monday = fields.Integer("Monday", size=1)
-    tuesday = fields.Integer("Tuesday", size=1)
-    wednesday = fields.Integer("Wednesday", size=1)
-    thursday = fields.Integer("Thursday", size=1)
-    friday = fields.Integer("Friday", size=1)
-    saturday = fields.Integer("Saturday", size=1)
-    sunday = fields.Integer("Sunday", size=1)
-    is_monday = fields.Boolean("Monday?")
-    is_tuesday = fields.Boolean("Tuesday?")
-    is_wednesday = fields.Boolean("Wednesday?")
-    is_thursday = fields.Boolean("Thursday?")
-    is_friday = fields.Boolean("Friday?")
-    is_saturday = fields.Boolean("Saturday?")
-    is_sunday = fields.Boolean("Sunday?")
-    activities_max_simultaneous_id = fields.Many2one(
-        'op.activities.max.simultaneous', "Activities Max Simultaneous Time Slots")
 
 
 class ActivitiesMinGap(models.Model):
