@@ -272,7 +272,7 @@
             </field>
           </page>
 
-          <page name="time_constraints" string="Time Constraints">
+          <page name="time_constraints" string="Time Constraints" groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin">
             <separator string="Time Constraints"/>
             <group>
               <field name="max_days"/>
@@ -302,7 +302,7 @@
               </div>
             </group>
           </page>
-          <page name="space_constraints" string="Space Constraints">
+          <page name="space_constraints" string="Space Constraints" groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin">
             <separator string="Space Constraints"/>
             <group>
               <field name="max_building"/>

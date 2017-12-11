@@ -8,6 +8,7 @@ Export master data to generate Timetable in FET tool.
     'version': '1.0',
     'depends': ['web', 'openeducat_erp'],
     'data': [
+        'security/ir.model.access.csv',
         'wizard/data_export_view.xml',
         'views/student_view.xml',
         'views/faculty_view.xml',
