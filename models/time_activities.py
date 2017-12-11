@@ -406,6 +406,29 @@ class ActivitiesMaxSimultaneous(models.Model):
         'op.activities.max.simultaneous.line', 'activities_max_simultaneous_id', "Activities Max Simultaneous Line", default=default_line)
 
 
+class ActivitiesMaxOccupyTimeSlotsLine(models.Model):
+    _name = 'op.activities.max.simultaneous.line'
+    _description = 'Activities Max Simultaneous Slots Line'
+
+    name = fields.Char("Periods", required=1)
+    monday = fields.Integer("Monday", size=1)
+    tuesday = fields.Integer("Tuesday", size=1)
+    wednesday = fields.Integer("Wednesday", size=1)
+    thursday = fields.Integer("Thursday", size=1)
+    friday = fields.Integer("Friday", size=1)
+    saturday = fields.Integer("Saturday", size=1)
+    sunday = fields.Integer("Sunday", size=1)
+    is_monday = fields.Boolean("Monday?")
+    is_tuesday = fields.Boolean("Tuesday?")
+    is_wednesday = fields.Boolean("Wednesday?")
+    is_thursday = fields.Boolean("Thursday?")
+    is_friday = fields.Boolean("Friday?")
+    is_saturday = fields.Boolean("Saturday?")
+    is_sunday = fields.Boolean("Sunday?")
+    activities_max_simultaneous_id = fields.Many2one(
+       'op.activities.max.simultaneous', "Activities Max Simultaneous Time Slots")
+
+
 class ActivitiesMinGap(models.Model):
     _name = 'op.activities.min_gap'
     _description = 'Minimum gap between activities'
