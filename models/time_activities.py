@@ -383,7 +383,7 @@ class ActivitiesMaxSimultaneous(models.Model):
         'op.activities.max.simultaneous.line', 'activities_max_simultaneous_id', "Activities Max Simultaneous Line", default=default_line)
 
 
-class ActivitiesMaxOccupyTimeSlotsLine(models.Model):
+class ActivitiesMaxSimultaneousLine(models.Model):
     _name = 'op.activities.max.simultaneous.line'
     _description = 'Activities Max Simultaneous Slots Line'
 
