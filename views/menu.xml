@@ -14,10 +14,10 @@
         <menuitem id="menu_break_time" name="Constraints Break Times" parent="menu_time_constraints" action="action_break_time" sequence="1" groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
         <!--Student Time Constraints-->
         <menuitem id="menu_student_constraints" name="Students"  parent="menu_time_constraints" sequence="10" groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
-        <menuitem id="menu_batch_constraints" name="Student set not available"  parent="menu_student_constraints"
+        <menuitem id="menu_batch_constraints" name="Students set not available"  parent="menu_student_constraints"
         action="action_batch_constraints" sequence="10" groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
-        <menuitem id="menu_all_student_available" name="All Students Available" parent="menu_student_constraints" action="action_all_student_available" sequence="20" groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
-        <menuitem id="menu_student_set_constraint" name="Student Set" parent="menu_student_constraints" action="action_student_available" sequence="30" groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+        <menuitem id="menu_student_set_constraint" name="Students Set Constraints" parent="menu_student_constraints" action="action_student_available" sequence="20" groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
+        <menuitem id="menu_all_student_available" name="All Students Constraints" parent="menu_student_constraints" action="action_all_student_available" sequence="30" groups="openeducat_core.group_op_back_office,openeducat_core.group_op_back_office_admin"/>
         
         <!--Activity Time Constraints-->
         <menuitem id="menu_activity_constraints" name="Activities"  parent="menu_time_constraints"
