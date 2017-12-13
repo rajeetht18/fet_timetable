@@ -49,6 +49,26 @@ class studentconstraints(models.Model):
     min_gaps_building = fields.Integer(
         'Min gaps between building changes', size=10)
 
+    @api.onchange('name')
+    def onchange_name(self):
+        res = {}
+        if self.name:
+            ids = self.name.group_ids.mapped('id')
+            res['domain'] = {'group_name': [('id', 'in', ids)]}
+            self.group_name = False
+            self.subgroup_name = False
+        return res
+
+    @api.onchange('group_name')
+    def onchange_group(self):
+        res = {}
+        if self.group_name:
+            ids = self.group_name.subgroup_ids.mapped('id')
+            res['domain'] = {'subgroup_name': [('id', 'in', ids)]}
+            self.subgroup_name = False
+        return res
+
+
     @api.multi
     @api.constrains('name', 'group_name', 'subgroup_name')
     def check_batch_groups(self):

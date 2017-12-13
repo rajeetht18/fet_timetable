@@ -121,9 +121,28 @@ class BatchConstraints(models.Model):
             if flag:
                 raise UserError(_("Break value should be 1 or 0."))
 
-    # _sql_constraints = [
-    #     ('unique_batch',
-    #      'unique(student_id)', 'You cannot create a Batch Constraint again with the same batch!')]
+    @api.onchange('student_id')
+    def onchange_batch(self):
+        print 'jjjjj------------------------'
+        res = {}
+        if self.student_id:
+            ids = self.student_id.group_ids.mapped('id')
+            print ids,'-----------ids--------------'
+            res['domain'] = {'division': [('id', 'in', ids)]}
+            self.division = False
+            self.subdivision = False
+        return res
+
+    @api.onchange('division')
+    def onchange_group(self):
+        print 'jjjjj------------------------'
+        res = {}
+        if self.division:
+            ids = self.division.subgroup_ids.mapped('id')
+            print ids,'-----------ids--------------'
+            res['domain'] = {'subdivision': [('id', 'in', ids)]}
+        return res
+
 
     student_id = fields.Many2one('op.batch', "Batch", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
@@ -520,11 +539,52 @@ class ActivitiesStartingTime(models.Model):
             if flag:
                 raise UserError(_("The value should be 1 or 0."))
 
+
+    @api.onchange('faculty_id')
+    def onchange_faculty(self):
+        res = {}
+        if self.faculty_id:
+            sub_list = []
+            batch_list = []
+            tag_list = []
+            obj = self.env['op.faculty.class.list'].search([('list_id','=',self.faculty_id.id)])
+            for fac in obj:
+                sub_list.append(fac.subject_id.id)
+                batch_list.append(fac.batch_id.id)
+                for tag in fac.activity_tag:
+                    tag_list.append(tag.id)
+            res['domain'] = {'subject_id': [('id', 'in', sub_list)],'student_id':[('id','in',batch_list)],'activity_tag_id':[('id','in',tag_list)]}
+            self.subject_id = False
+            self.student_id = False
+            self.activity_tag_id = False
+        return res
+
+    @api.onchange('student_id')
+    def onchange_batch(self):
+        res = {}
+        if self.student_id:
+            ids = self.student_id.group_ids.mapped('id')
+            res['domain'] = {'group_id': [('id', 'in', ids)]}
+            self.group_id = False
+            self.subgroup_id = False
+        return res
+
+    @api.onchange('group_id')
+    def onchange_group(self):
+        res = {}
+        if self.group_id:
+            ids = self.group_id.subgroup_ids.mapped('id')
+            res['domain'] = {'subgroup_id': [('id', 'in', ids)]}
+            self.subgroup_id = False
+        return res
+
     faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
     student_id = fields.Many2one('op.batch', "Batch", required=1)
     subject_id = fields.Many2one('op.subject', "Subject", required=1)
     activity_tag_id = fields.Many2one(
         'op.activity.tags', "Activity Tag", required=1)
+    group_id = fields.Many2one('op.batch.group',"Group")
+    subgroup_id = fields.Many2one('op.batch.subgroup',"Subgroup")
     duration = fields.Integer("Duration", default=1)
     weight = fields.Integer("Weight Percentage", default=100)
     activities_starting_time_line_ids = fields.One2many(
@@ -656,9 +716,50 @@ class ActivitiesTimeSlots(models.Model):
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
+    @api.onchange('faculty_id')
+    def onchange_faculty(self):
+        res = {}
+        if self.faculty_id:
+            sub_list = []
+            batch_list = []
+            tag_list = []
+            obj = self.env['op.faculty.class.list'].search([('list_id','=',self.faculty_id.id)])
+            for fac in obj:
+                sub_list.append(fac.subject_id.id)
+                batch_list.append(fac.batch_id.id)
+                for tag in fac.activity_tag:
+                    tag_list.append(tag.id)
+            res['domain'] = {'subject_id': [('id', 'in', sub_list)],'student_id':[('id','in',batch_list)],'activity_tag_id':[('id','in',tag_list)]}
+            self.subject_id = False
+            self.student_id = False
+            self.activity_tag_id = False
+        return res
+
+    @api.onchange('student_id')
+    def onchange_batch(self):
+        res = {}
+        if self.student_id:
+            ids = self.student_id.group_ids.mapped('id')
+            res['domain'] = {'group_id': [('id', 'in', ids)]}
+            self.group_id = False
+            self.subgroup_id = False
+        return res
+
+    @api.onchange('group_id')
+    def onchange_group(self):
+        res = {}
+        if self.group_id:
+            ids = self.group_id.subgroup_ids.mapped('id')
+            res['domain'] = {'subgroup_id': [('id', 'in', ids)]}
+            self.subgroup_id = False
+        return res
+
+
     faculty_id = fields.Many2one('op.faculty', "Faculty", required=1)
     student_id = fields.Many2one('op.batch', "Batch", required=1)
     subject_id = fields.Many2one('op.subject', "Subject", required=1)
+    group_id = fields.Many2one('op.batch.group',"Group")
+    subgroup_id = fields.Many2one('op.batch.subgroup',"Subgroup")
     activity_tag_id = fields.Many2one(
         'op.activity.tags', "Activity Tag", required=1)
     duration = fields.Integer("Duration", default=1)

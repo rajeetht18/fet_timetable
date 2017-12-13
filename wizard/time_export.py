@@ -62,7 +62,7 @@ class time_data_import(models.TransientModel):
 
     #Time activity constraints
         break_time = self.break_time(time)
-        activity_preferred_starting_time = self.preferred_starting_time(time) #need fix: no activities matching in fet
+        activity_preferred_starting_time = self.preferred_starting_time(time)
         preferred_starting_times = self.preferred_starting_times(time)
         preferred_timeslots = self.preferred_timeslots(time)
         activities_preferredtimes = self.activities_preferredtimes(time)
@@ -166,28 +166,6 @@ class time_data_import(models.TransientModel):
             # comment = etree.SubElement(week_days, "Comments")
             # comment.text = "0"
 
-    def faculty_maxday_constraint(self, time):
-        faculty = self.env['op.faculty'].search([])
-        for w in faculty:
-            week_days = etree.SubElement(
-                time, "ConstraintTeacherMaxDaysPerWeek")
-            weight = etree.SubElement(week_days, "Weight_Percentage")
-            weight_per = w.weight_percent
-            fac_name = w.name
-            if w.middle_name:
-                fac_name = '%s %s' % (fac_name, w.middle_name)
-            if w.last_name:
-                fac_name = '%s %s' % (fac_name, w.last_name)
-            weight.text = str(weight_per)
-            Name = etree.SubElement(week_days, "Teacher_Name")
-            Name.text = fac_name
-            max_day = etree.SubElement(week_days, "Max_Days_Per_Week")
-            max_days = w.max_days
-            max_day.text = str(max_days)
-            active = etree.SubElement(week_days, "Active")
-            active.text = "True"
-            # comment = etree.SubElement(week_days, "Comments")
-            # comment.text = "0"
 
     def faculty_maxday_constraint(self, time):
         faculty = self.env['op.faculty'].search([])
@@ -1335,9 +1313,19 @@ class time_data_import(models.TransientModel):
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
             teacher = etree.SubElement(preferred_times, "Teacher_Name")
-            teacher.text = rec.faculty_id.name
+            fac_name = rec.faculty_id.name
+            if rec.faculty_id.middle_name:
+                fac_name = '%s %s' % (fac_name, rec.faculty_id.middle_name)
+            if rec.faculty_id.last_name:
+                fac_name = '%s %s' % (fac_name, rec.faculty_id.last_name)
+            teacher.text = fac_name
             student = etree.SubElement(preferred_times, "Students_Name")
-            student.text = rec.student_id.name
+            batch_name = rec.student_id.name
+            if rec.group_id:
+                batch_name = '%s %s' % (batch_name, rec.group_id.name)
+            if rec.subgroup_id:
+                batch_name = '%s %s' % (batch_name, rec.subgroup_id.name)
+            student.text = batch_name
             subject = etree.SubElement(preferred_times, "Subject_Name")
             subject.text = rec.subject_id.name
             tag = etree.SubElement(preferred_times, "Activity_Tag_Name")
@@ -1410,9 +1398,19 @@ class time_data_import(models.TransientModel):
             weight = etree.SubElement(preferred_times, "Weight_Percentage")
             weight.text = str(rec.weight)
             teacher = etree.SubElement(preferred_times, "Teacher_Name")
-            teacher.text = rec.faculty_id.name
+            fac_name = rec.faculty_id.name
+            if rec.faculty_id.middle_name:
+                fac_name = '%s %s' % (fac_name, rec.faculty_id.middle_name)
+            if rec.faculty_id.last_name:
+                fac_name = '%s %s' % (fac_name, rec.faculty_id.last_name)
+            teacher.text = fac_name
             student = etree.SubElement(preferred_times, "Students_Name")
-            student.text = rec.student_id.name
+            batch_name = rec.student_id.name
+            if rec.group_id:
+                batch_name = '%s %s' % (batch_name, rec.group_id.name)
+            if rec.subgroup_id:
+                batch_name = '%s %s' % (batch_name, rec.subgroup_id.name)
+            student.text = batch_name
             subject = etree.SubElement(preferred_times, "Subject_Name")
             subject.text = rec.subject_id.name
             tag = etree.SubElement(preferred_times, "Activity_Tag_Name")
@@ -1488,7 +1486,12 @@ class time_data_import(models.TransientModel):
             component = etree.SubElement(preferred_times, "Component_Number")
             component.text = str(rec.split_count)
             teacher = etree.SubElement(preferred_times, "Teacher_Name")
-            teacher.text = rec.faculty_id.name
+            fac_name = rec.faculty_id.name
+            if rec.faculty_id.middle_name:
+                fac_name = '%s %s' % (fac_name, rec.faculty_id.middle_name)
+            if rec.faculty_id.last_name:
+                fac_name = '%s %s' % (fac_name, rec.faculty_id.last_name)
+            teacher.text = fac_name
             student = etree.SubElement(preferred_times, "Students_Name")
             batch_name = rec.student_id.name
             if rec.group_id:
@@ -1496,7 +1499,6 @@ class time_data_import(models.TransientModel):
             if rec.subgroup_id:
                 batch_name = '%s %s' % (batch_name, rec.subgroup_id.name)
             student.text = batch_name
-            print batch_name,'---------------------------->'
             subject = etree.SubElement(preferred_times, "Subject_Name")
             subject.text = rec.subject_id.name
             tag = etree.SubElement(preferred_times, "Activity_Tag_Name")
@@ -1569,7 +1571,12 @@ class time_data_import(models.TransientModel):
             component = etree.SubElement(preferred_times, "Component_Number")
             component.text = str(rec.split_count)
             teacher = etree.SubElement(preferred_times, "Teacher_Name")
-            teacher.text = rec.faculty_id.name
+            fac_name = rec.faculty_id.name
+            if rec.faculty_id.middle_name:
+                fac_name = '%s %s' % (fac_name, rec.faculty_id.middle_name)
+            if rec.faculty_id.last_name:
+                fac_name = '%s %s' % (fac_name, rec.faculty_id.last_name)
+            teacher.text = fac_name
             student = etree.SubElement(preferred_times, "Students_Name")
             batch_name = rec.student_id.name
             if rec.group_id:
@@ -1577,7 +1584,6 @@ class time_data_import(models.TransientModel):
             if rec.subgroup_id:
                 batch_name = '%s %s' % (batch_name, rec.subgroup_id.name)
             student.text = batch_name
-            print batch_name,'---------------------------->'
             subject = etree.SubElement(preferred_times, "Subject_Name")
             subject.text = rec.subject_id.name
             tag = etree.SubElement(preferred_times, "Activity_Tag_Name")
@@ -2029,7 +2035,7 @@ class time_data_import(models.TransientModel):
         active.text = "True"
 
 
-    # Faculty Space Constraints
+    # # Faculty Space Constraints
         homeroom = self.faculty_homeroom(space)
         set_of_homeroom = self.faculty_setof_homeroom(space)
         building_change = self.faculty_maxbuild_day(space)

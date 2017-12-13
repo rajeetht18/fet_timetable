@@ -27,6 +27,25 @@ class ActivitiesEndsDay(models.Model):
     _rec_name = 'faculty_id'
 
 
+    @api.onchange('faculty_id')
+    def onchange_faculty(self):
+        res = {}
+        if self.faculty_id:
+            sub_list = []
+            batch_list = []
+            tag_list = []
+            obj = self.env['op.faculty.class.list'].search([('list_id','=',self.faculty_id.id)])
+            for fac in obj:
+                sub_list.append(fac.subject_id.id)
+                batch_list.append(fac.batch_id.id)
+                for tag in fac.activity_tag:
+                    tag_list.append(tag.id)
+            res['domain'] = {'subject_id': [('id', 'in', sub_list)],'student_id':[('id','in',batch_list)],'activity_tag_id':[('id','in',tag_list)]}
+            self.subject_id = False
+            self.student_id = False
+            self.activity_tag_id = False
+        return res
+
     faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
     student_id = fields.Many2one('op.batch',"Batch",required=1)
     subject_id = fields.Many2one('op.subject',"Subject",required=1)
@@ -42,6 +61,24 @@ class ActivitiesEndsDay(models.Model):
         res = super(ActivitiesEndsDay, self).create(values)
         return res
 
+    @api.onchange('student_id')
+    def onchange_batch(self):
+        res = {}
+        if self.student_id:
+            ids = self.student_id.group_ids.mapped('id')
+            res['domain'] = {'group_id': [('id', 'in', ids)]}
+            self.group_id = False
+            self.subgroup_id = False
+        return res
+
+    @api.onchange('group_id')
+    def onchange_group(self):
+        res = {}
+        if self.group_id:
+            ids = self.group_id.subgroup_ids.mapped('id')
+            res['domain'] = {'subgroup_id': [('id', 'in', ids)]}
+            self.subgroup_id = False
+        return res
 
 class ActivitiesSameStartingTime(models.Model):
     _name = 'op.activities.same.starting.time'
@@ -51,7 +88,6 @@ class ActivitiesSameStartingTime(models.Model):
     activities_ids = fields.Many2many(
         'op.faculty.class.list', 'activity_sametime_rel', 'activity_id', 'sametime_id', "Activities", required=1)
     weight = fields.Integer("Weight Percentage", default=100, required=1)
-
 
 class ActivitiesSameStartingDay(models.Model):
     _name = 'op.activities.same.starting.day'

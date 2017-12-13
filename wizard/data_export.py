@@ -148,6 +148,7 @@ class fettimetable_data_export(models.TransientModel):
             room_name = etree.SubElement(room, "Name")
             room_name.text = r.name
             building = etree.SubElement(room, "Building")
+            building.text = r.building.name
             capacity = etree.SubElement(room, "Capacity")
             capacity.text = str(r.capacity)
 

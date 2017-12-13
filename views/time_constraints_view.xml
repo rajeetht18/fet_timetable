@@ -251,11 +251,13 @@
               <group>
                 <field name="faculty_id" options="{'no_create_edit': True}"/>
                 <field name="student_id" options="{'no_create_edit': True}"/>
+                <field name="group_id" options="{'no_create_edit': True}"/>
                 <field name="duration"/>
               </group>
               <group>
                 <field name="subject_id" options="{'no_create_edit': True}"/>
                 <field name="activity_tag_id" options="{'no_create_edit': True}"/>
+                <field name="subgroup_id" options="{'no_create_edit': True}"/>
                 <field name="weight"/>
               </group>
             </group>
@@ -333,11 +335,13 @@
               <group>
                 <field name="faculty_id" options="{'no_create_edit': True}"/>
                 <field name="student_id" options="{'no_create_edit': True}"/>
+                <field name="group_id" options="{'no_create_edit': True}"/>
                 <field name="duration"/>
               </group>
               <group>
                 <field name="subject_id" options="{'no_create_edit': True}"/>
                 <field name="activity_tag_id" options="{'no_create_edit': True}"/>
+                <field name="subgroup_id" options="{'no_create_edit': True}"/>
                 <field name="weight"/>
               </group>
             </group>
