@@ -8,14 +8,6 @@ class ActivityEndsDay(models.Model):
     _description = 'An Activity ends a Students day.'
     _rec_name = 'activity_id'
 
-    # @api.multi
-    # @api.constrains('activity_id')
-    # def check_activity(self):
-    #     for rec in self:
-    #         activity_count = self.env['op.activity.ends.day'].search_count([('activity_id','=',rec.activity_id.id)])
-    #         if activity_count > 1:
-    #             raise UserError(_("This activity is already selected. Please select another activity."))
-
     activity_id = fields.Many2one(
         'op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
@@ -52,10 +44,10 @@ class ActivitiesEndsDay(models.Model):
     activity_tag_id = fields.Many2one('op.activity.tags',"Activity Tag",required=1)
     weight = fields.Integer("Weight Percentage",default=100,required=1)
 
+
     @api.model
     def create(self, values):
-        flag = 0
-        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id', '=', values['faculty_id']), ('batch_id', '=', values['student_id']), ('subject_id', '=', values['subject_id']), ('activity_tag', 'in', values['activity_tag_id'])])
         if not starting_obj:
             raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(ActivitiesEndsDay, self).create(values)
@@ -168,8 +160,8 @@ class ActivitiesMaxOccupyTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -244,7 +236,7 @@ class ActivitiesMaxOccupyTimeSlotsLine(models.Model):
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
     activities_max_timeslots_id = fields.Many2one(
-        'op.activities.max.time.slots', "Activities Max Time Slots")
+       'op.activities.max.time.slots', "Activities Max Time Slots")
 
 
 class TwoActivitiesOrdered(models.Model):
@@ -388,8 +380,8 @@ class ActivitiesMaxSimultaneous(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -452,7 +444,7 @@ class ActivitiesMaxSimultaneous(models.Model):
         'op.activities.max.simultaneous.line', 'activities_max_simultaneous_id', "Activities Max Simultaneous Line", default=default_line)
 
 
-class ActivitiesMaxOccupyTimeSlotsLine(models.Model):
+class ActivitiesMaxSimultaneousLine(models.Model):
     _name = 'op.activities.max.simultaneous.line'
     _description = 'Activities Max Simultaneous Slots Line'
 
@@ -472,7 +464,7 @@ class ActivitiesMaxOccupyTimeSlotsLine(models.Model):
     is_saturday = fields.Boolean("Saturday?")
     is_sunday = fields.Boolean("Sunday?")
     activities_max_simultaneous_id = fields.Many2one(
-        'op.activities.max.simultaneous', "Activities Max Simultaneous Time Slots")
+       'op.activities.max.simultaneous', "Activities Max Simultaneous Time Slots")
 
 
 class ActivitiesMinGap(models.Model):

@@ -32,7 +32,7 @@
               <page string="Time Slots">
                 <field name="break_line_ids" >
                   <tree string="break_line_tree" editable="bottom" create="false" delete="false">
-                      <field name="name" />
+                      <field name="name" readonly="1"/>
                       <field name="is_monday" invisible="1"/>
                       <field name="is_tuesday" invisible="1"/>
                       <field name="is_wednesday" invisible="1"/>

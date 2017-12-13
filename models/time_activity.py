@@ -52,10 +52,9 @@ class SubActivityStartingTime(models.Model):
 
     @api.model
     def create(self, values):
-        flag = 0
         if len(values['subactivity_starting_line_ids']) == 0:
             raise UserError(_("Please configure Timetable Days to create your Activity Starting Time."))
-        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id', '=', values['faculty_id']), ('batch_id', '=', values['student_id']), ('subject_id', '=', values['subject_id']), ('activity_tag', 'in', values['activity_tag_id'])])
         if not starting_obj:
             raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(SubActivityStartingTime, self).create(values)
@@ -65,8 +64,8 @@ class SubActivityStartingTime(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -150,8 +149,8 @@ class SubActivityStartingTime(models.Model):
         'op.activity.tags', "Activity Tag", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
     split_count = fields.Integer("Split Component", default=1)
-    group_id = fields.Many2one('op.batch.group',"Group")
-    subgroup_id = fields.Many2one('op.batch.subgroup',"Subgroup")
+    group_id = fields.Many2one('op.batch.group', "Group")
+    subgroup_id = fields.Many2one('op.batch.subgroup', "Subgroup")
     subactivity_starting_line_ids = fields.One2many(
         'op.subactivity.starting.time.line', 'subactivity_starting_time_id', "Subactivity Startimg Time Line", default=default_line)
 
@@ -230,7 +229,7 @@ class SubActivitiesTimeSlots(models.Model):
     def create(self, values):
         if len(values['subactivities_timeslots_line_ids']) == 0:
             raise UserError(_("Please configure Timetable Days to create your activity time slots."))
-        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id', '=', values['faculty_id']), ('batch_id', '=', values['student_id']), ('subject_id', '=', values['subject_id']), ('activity_tag', 'in', values['activity_tag_id'])])
         if not starting_obj:
             raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(SubActivitiesTimeSlots, self).create(values)
@@ -240,8 +239,8 @@ class SubActivitiesTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -325,8 +324,8 @@ class SubActivitiesTimeSlots(models.Model):
         'op.activity.tags', "Activity Tag", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
     split_count = fields.Integer("Split Component", default=1)
-    group_id = fields.Many2one('op.batch.group',"Group")
-    subgroup_id = fields.Many2one('op.batch.subgroup',"Subgroup")
+    group_id = fields.Many2one('op.batch.group', "Group")
+    subgroup_id = fields.Many2one('op.batch.subgroup', "Subgroup")
     subactivities_timeslots_line_ids = fields.One2many(
         'op.subactivities.timeslots.line', 'subactivities_timeslots_id', "Subactivities Time Slots Line", default=default_line)
 
@@ -359,7 +358,6 @@ class MinDaysBetweenActivities(models.Model):
     _description = 'Minimum days between a set of activities.'
     _rec_name = 'min_days'
 
-
     @api.multi
     @api.constrains('activities_ids')
     def check_activity_count(self):
@@ -374,17 +372,16 @@ class MinDaysBetweenActivities(models.Model):
             if rec.min_days < 1:
                 raise UserError(_("The gap should be greater than 0"))
 
-    activities_ids = fields.Many2many('op.faculty.class.list','activity_mindays_rel','activity_id','minday_id',"Activities")
-    min_days = fields.Integer("Minimum Days",default=1)
+    activities_ids = fields.Many2many('op.faculty.class.list', 'activity_mindays_rel', 'activity_id', 'minday_id', "Activities")
+    min_days = fields.Integer("Minimum Days", default=1)
     same_day = fields.Boolean("Activities are on the same day")
-    weight = fields.Integer("Weight Percentage",default=100)
+    weight = fields.Integer("Weight Percentage", default=100)
 
 
 class MaxDaysBetweenActivities(models.Model):
     _name = 'op.maxdays.activities'
-    _description = 'Maximum days between a set of activity.'
+    _description = 'Maximum days between a set of activities.'
     _rec_name = 'max_days'
-
 
     @api.multi
     @api.constrains('activities_ids')
@@ -397,10 +394,9 @@ class MaxDaysBetweenActivities(models.Model):
     @api.constrains('max_days')
     def check_max_days_gap(self):
         for rec in self:
-            if rec.max_days < 1:
+            if rec.min_days < 1:
                 raise UserError(_("The gap should be greater than 0"))
 
-    activities_ids = fields.Many2many(
-        'op.faculty.class.list', 'activity_maxdays_rel', 'activity_id', 'maxday_id', "Activities")
-    max_days = fields.Integer("Maximum Days")
+    activities_ids = fields.Many2many('op.faculty.class.list', 'activity_mindays_rel', 'activity_id', 'minday_id', "Activities")
+    max_days = fields.Integer("Maximum Days", default=1)
     weight = fields.Integer("Weight Percentage", default=100)

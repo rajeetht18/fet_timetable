@@ -35,7 +35,7 @@
               <page string="Time Slots">
                 <field name="batch_constraints_line_ids">
                   <tree string="Batch Constraints" editable="bottom" create="false" delete="false">
-                    <field name="name"/>
+                    <field name="name" readonly="1"/>
                     <field name="is_monday" invisible="1"/>
                     <field name="is_tuesday" invisible="1"/>
                     <field name="is_wednesday" invisible="1"/>
@@ -401,7 +401,7 @@
           <field name="activity_id"/>
           <field name="weight"/>
           <field name="day"/>
-          <field name="hours"/>
+          <field name="hours" options="{'no_create_edit': True}"/>
         </tree>
       </field>
     </record>

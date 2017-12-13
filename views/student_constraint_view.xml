@@ -46,8 +46,8 @@
             </group>
             <separator string="Space Constraints"/>
             <group>
-              <field name="student_homeroom"/>
-              <field name="student_set_of_homerooms" widget="many2many_tags"/>
+              <field name="student_homeroom" options="{'no_create_edit': True}"/>
+              <field name="student_set_of_homerooms" widget="many2many_tags" options="{'no_create_edit': True}"/>
               <field name="weight_room"/>
               <field name="max_building_changes"/>
               <field name="max_build_week"/>

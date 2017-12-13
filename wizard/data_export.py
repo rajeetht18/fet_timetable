@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
+from odoo import fields, models
 from lxml import etree
 import base64
 import datetime
-import odoo.tools.config as config
+# import odoo.tools.config as config
 
 
 class fettimetable_data_export(models.TransientModel):
     _name = 'fettimetable.data.export'
 
-    version = fields.Char("FET Version", default='5.28.6',required=True, help="Fill the FET version in which you are using currently.")
+    version = fields.Char("FET Version", default='5.28.6', required=True, help="Fill the FET version in which you are using currently.")
     filedata = fields.Binary('File', readonly=True)
 
     def export_days(self, root):
@@ -95,7 +95,7 @@ class fettimetable_data_export(models.TransientModel):
 
     def activity_tag_list(self, root):
         activity_tag_list = etree.SubElement(root, "Activity_Tags_List")
-        activity_tag = etree.SubElement(activity_tag_list,  "Activity_Tag")
+        activity_tag = etree.SubElement(activity_tag_list, "Activity_Tag")
         name = etree.SubElement(activity_tag, "Name")
         name.text = "Teaching"
 
@@ -116,7 +116,7 @@ class fettimetable_data_export(models.TransientModel):
                 subject.text = line.subject_id.name
                 activity_tag = etree.SubElement(activity, "Activity_Tag")
                 activity_tag.text = "Teaching"
-                students = etree.SubElement(activity,"Students")
+                students = etree.SubElement(activity, "Students")
                 students.text = line.batch_id.name
                 duration = etree.SubElement(activity, "Duration")
                 duration.text = "1"
@@ -130,7 +130,6 @@ class fettimetable_data_export(models.TransientModel):
                 active.text = "true"
                 # comments = etree.SubElement(activity, "Comments")
                 # comments.text = " "
-
 
     def buildings(self, root):
         buildings = etree.SubElement(root, "Buildings_List")
@@ -151,7 +150,6 @@ class fettimetable_data_export(models.TransientModel):
             building.text = r.building.name
             capacity = etree.SubElement(room, "Capacity")
             capacity.text = str(r.capacity)
-
 
     def export_file(self):
         root = etree.Element("fet")

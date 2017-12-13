@@ -13,6 +13,14 @@ class studentconstraints(models.Model):
             if rec.weight_percent != 100:
                 raise UserError(_("Please set the weight percentage to 100."))
 
+    @api.multi
+    @api.constrains('name', 'group_name', 'subgroup_name')
+    def check_batch_groups(self):
+        for t in self:
+            res = self.search([('name', '=', t.name.id), ('group_name', '=', t.group_name.id or False), ('subgroup_name', '=', t.subgroup_name.id or False)])
+            if len(res) > 1:
+                raise UserError(_("You can't set the same constraints more than once."))
+
     # Student Time Constraints
     name = fields.Many2one('op.batch', 'Batch', required=True)
     group_name = fields.Many2one('op.batch.group', 'Group')
@@ -68,14 +76,6 @@ class studentconstraints(models.Model):
             self.subgroup_name = False
         return res
 
-
-    @api.multi
-    @api.constrains('name', 'group_name', 'subgroup_name')
-    def check_batch_groups(self):
-        for t in self:
-            res = self.search([('name','=',t.name.id),('group_name','=',t.group_name.id or False),('subgroup_name','=',t.subgroup_name.id or False)])
-            if len(res) > 1:
-                raise UserError(_("You can't set the same constrains more than once."))
 
     @api.multi
     @api.constrains('interval_end', 'interval_start')

@@ -12,8 +12,9 @@ class ActivityPreferredStartingTime(models.Model):
         'op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100, required=1)
     lock = fields.Boolean("Permenantly Locked")
-    day = fields.Selection([('Sunday','Sunday'),('Monday','Monday'),('Tuesday','Tuesday'),('Wednesday','Wednesday'),('Thursday','Thursday'),('Friday','Friday'),('Saturday','Saturday')],default='Monday',required=1)
-    hours = fields.Many2one('op.timing',"Hours",required=1)
+    day = fields.Selection([('Sunday', 'Sunday'), ('Monday', 'Monday'), ('Tuesday', 'Tuesday'), ('Wednesday', 'Wednesday'), ('Thursday', 'Thursday'), ('Friday', 'Friday'), ('Saturday', 'Saturday')], default='Monday', required=1)
+    hours = fields.Many2one('op.timing', "Hours", required=1)
+
 
 class BatchConstraints(models.Model):
     _name = 'op.batch.constraints'
@@ -81,8 +82,8 @@ class BatchConstraints(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -123,11 +124,9 @@ class BatchConstraints(models.Model):
 
     @api.onchange('student_id')
     def onchange_batch(self):
-        print 'jjjjj------------------------'
         res = {}
         if self.student_id:
             ids = self.student_id.group_ids.mapped('id')
-            print ids,'-----------ids--------------'
             res['domain'] = {'division': [('id', 'in', ids)]}
             self.division = False
             self.subdivision = False
@@ -135,14 +134,11 @@ class BatchConstraints(models.Model):
 
     @api.onchange('division')
     def onchange_group(self):
-        print 'jjjjj------------------------'
         res = {}
         if self.division:
             ids = self.division.subgroup_ids.mapped('id')
-            print ids,'-----------ids--------------'
             res['domain'] = {'subdivision': [('id', 'in', ids)]}
         return res
-
 
     student_id = fields.Many2one('op.batch', "Batch", required=1)
     weight = fields.Integer("Weight Percentage", default=100)
@@ -234,8 +230,8 @@ class ActivityStartingTime(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -363,8 +359,8 @@ class ActivityTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -402,10 +398,6 @@ class ActivityTimeSlots(models.Model):
                     flag = True
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
-
-    # _sql_constraints = [
-    #     ('unique_activity',
-    #      'unique(activity_id)', 'The constraint for the selected activity already exist. Please select another activity!')]
 
     activity_id = fields.Many2one(
         'op.faculty.class.list', "Activity", required=1)
@@ -486,10 +478,9 @@ class ActivitiesStartingTime(models.Model):
 
     @api.model
     def create(self, values):
-        flag = 0
         if len(values['activities_starting_time_line_ids']) == 0:
             raise UserError(_("Please configure Timetable Days to create your Activities Time Constraint."))
-        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id', '=', values['faculty_id']), ('batch_id', '=', values['student_id']), ('subject_id', '=', values['subject_id']), ('activity_tag', 'in', values['activity_tag_id'])])
         if not starting_obj:
             raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(ActivitiesStartingTime, self).create(values)
@@ -499,8 +490,8 @@ class ActivitiesStartingTime(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
@@ -663,10 +654,9 @@ class ActivitiesTimeSlots(models.Model):
 
     @api.model
     def create(self, values):
-        flag = 0
         if len(values['activities_timeslots_line_ids']) == 0:
             raise UserError(_("Please configure Timetable Days to create your activity time slots."))
-        starting_obj = self.env['op.faculty.class.list'].search([('list_id','=',values['faculty_id']),('batch_id','=',values['student_id']),('subject_id','=',values['subject_id']),('activity_tag','in',values['activity_tag_id'])])
+        starting_obj = self.env['op.faculty.class.list'].search([('list_id', '=', values['faculty_id']), ('batch_id', '=', values['student_id']), ('subject_id', '=', values['subject_id']), ('activity_tag', 'in', values['activity_tag_id'])])
         if not starting_obj:
             raise UserError(_("There is no activity for the given details. Please choose another!."))
         res = super(ActivitiesTimeSlots, self).create(values)
@@ -676,8 +666,8 @@ class ActivitiesTimeSlots(models.Model):
     def default_line(self):
         period_list = []
         period_dict = {}
-        day_config = self.env['timetable.days.config'].search(
-            [], order='id desc', limit=1)
+        day_config = self.env['res.company'].search(
+            [('id', '=', self.env.user.company_id.id)])
         for time in self.env['op.timing'].search([]):
             if day_config:
                 period_dict = {
