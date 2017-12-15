@@ -91,7 +91,7 @@ class FacultyClassList(models.Model):
 
     @api.multi
     @api.depends('subject_id', 'batch_id', 'activity_tag')
-    def compute_name(self):
+    def _compute_name(self):
         fac_name = ''
         for rec in self:
             fac_name = rec.list_id.name
@@ -99,11 +99,35 @@ class FacultyClassList(models.Model):
                 fac_name = '%s %s' % (fac_name, rec.list_id.middle_name)
             if rec.list_id.middle_name:
                 fac_name = '%s %s' % (fac_name, rec.list_id.last_name)
+            batch_name = rec.batch_id.name
+            if rec.group_id:
+                batch_name = '%s %s' % (batch_name, rec.group_id.name)
+            if rec.subgroup_id:
+                batch_name = '%s %s' % (batch_name, rec.subgroup_id.name)
             if rec.id:
                 t = ''
                 for tag in rec.activity_tag:
                     t += str(tag.name) + ','
-                rec.name = str(rec.id) + " - " + str(rec.duration) + " - " + str(fac_name) + " - " + str(rec.subject_id.name) + " - " + str(t)[:-1] + " - " + str(rec.batch_id.name)
+                rec.name = str(rec.id) + " - " + str(rec.duration) + " - " + str(fac_name) + " - " + str(rec.subject_id.name) + " - " + str(t)[:-1] + " - " + str(batch_name)
+
+    @api.onchange('batch_id')
+    def onchange_batch(self):
+        res = {}
+        if self.batch_id:
+            ids = self.batch_id.group_ids.mapped('id')
+            res['domain'] = {'group_id': [('id', 'in', ids)]}
+            self.group_id = False
+            self.subgroup_id = False
+        return res
+
+    @api.onchange('group_id')
+    def onchange_group(self):
+        res = {}
+        if self.group_id:
+            ids = self.group_id.subgroup_ids.mapped('id')
+            res['domain'] = {'subgroup_id': [('id', 'in', ids)]}
+            self.subgroup_id = False
+        return res
 
     @api.model
     def _get_subject_ids(self):
@@ -120,3 +144,5 @@ class FacultyClassList(models.Model):
     weight_percent = fields.Float('Weight %', default=100, size=100)
     duration = fields.Integer("Duration", default=1)
     activity_tag = fields.Many2many('op.activity.tags', string="Activity Tag")
+    group_id = fields.Many2one('op.batch.group',"Group")
+    subgroup_id = fields.Many2one('op.batch.subgroup',"Subgroup")

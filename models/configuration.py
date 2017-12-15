@@ -30,7 +30,7 @@ class ActivityTags(models.Model):
 
 class Batch(models.Model):
     _inherit = 'op.batch'
-    group_ids = fields.Many2many('op.batch.group', string="Group")
+    group_ids = fields.Many2many('op.batch.group','batch_group_rel','batch_id','group_id', string="Group")
 
 
 class BatchGroup(models.Model):
@@ -38,7 +38,7 @@ class BatchGroup(models.Model):
 
     name = fields.Char('Name', required=True)
     description = fields.Text("Description")
-    subgroup_ids = fields.Many2many('op.batch.subgroup', string='Subgroups')
+    subgroup_ids = fields.Many2many('op.batch.subgroup','group_subgroup_rel','group_id','subgroup_id', string='Subgroups')
 
 
 class BatchSubgroup(models.Model):

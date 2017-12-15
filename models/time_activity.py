@@ -394,9 +394,9 @@ class MaxDaysBetweenActivities(models.Model):
     @api.constrains('max_days')
     def check_max_days_gap(self):
         for rec in self:
-            if rec.min_days < 1:
+            if rec.max_days < 1:
                 raise UserError(_("The gap should be greater than 0"))
 
-    activities_ids = fields.Many2many('op.faculty.class.list', 'activity_mindays_rel', 'activity_id', 'minday_id', "Activities")
+    activities_ids = fields.Many2many('op.faculty.class.list', 'activity_maxdays_rel', 'activity_id', 'maxday_id', "Activities")
     max_days = fields.Integer("Maximum Days", default=1)
     weight = fields.Integer("Weight Percentage", default=100)
