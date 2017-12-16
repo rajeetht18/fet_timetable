@@ -90,8 +90,6 @@ class RoomNotAvailableTimes(models.Model):
                 raise UserError(_("The Value should be 1 or 0."))
 
     room_id = fields.Many2one('op.classroom', "Room", required=1)
-    activity_id = fields.Many2one(
-        'op.faculty.class.list', "Activity", required=1)
     weight = fields.Integer("Weight Percentage", default=100, required=1)
     room_not_available_line_ids = fields.One2many(
         'op.room.not.available.line', 'room_not_available_id', "Room Not Available", default=default_line)
