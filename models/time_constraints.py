@@ -104,24 +104,10 @@ class BatchConstraints(models.Model):
     @api.constrains('batch_constraints_line_ids')
     def _check_batch_constraints_line(self):
         for record in self:
-            flag = False
-            for line in record.batch_constraints_line_ids:
-                if line.monday != 0 and line.monday != 1:
-                    flag = True
-                if line.tuesday != 0 and line.tuesday != 1:
-                    flag = True
-                if line.wednesday != 0 and line.wednesday != 1:
-                    flag = True
-                if line.thursday != 0 and line.thursday != 1:
-                    flag = True
-                if line.friday != 0 and line.friday != 1:
-                    flag = True
-                if line.saturday != 0 and line.saturday != 1:
-                    flag = True
-                if line.sunday != 0 and line.sunday != 1:
-                    flag = True
+            flag = any([True for line in record.batch_constraints_line_ids for d in WEEK_DAYS if getattr(
+                line, d) != 0 and getattr(line, d) != 1])
             if flag:
-                raise UserError(_("Break value should be 1 or 0."))
+                raise UserError(_("The Value should be 1 or 0."))
 
     @api.onchange('student_id')
     def onchange_batch(self):
