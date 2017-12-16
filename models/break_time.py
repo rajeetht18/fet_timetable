@@ -42,7 +42,7 @@ class BreaksTime(models.Model):
                          'There must be another constraint of this type. Please edit that one.')]
 
     name = fields.Char("Name", default="Break Time Constraints", readonly="1")
-    weight = fields.Integer("Weidomain=check_batch_groupsght Percentage", default=100, readonly=1)
+    weight = fields.Integer("Weight", default=100, readonly=1)
     break_line_ids = fields.One2many('op.break.time.line', 'break_id', "Breaks", default=default_line)
 
     @api.multi

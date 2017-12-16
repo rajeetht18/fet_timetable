@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from company import WEEK_DAYS
 
 
 class ActivityPreferredStartingTime(models.Model):
@@ -247,28 +248,16 @@ class ActivityStartingTime(models.Model):
                 period_list.append((0, 0, period_dict))
         return period_list
 
+
     @api.multi
     @api.constrains('activity_starting_line_ids')
-    def _check_activity_starting_time_line(self):
+    def _check_room_not_available_line(self):
         for record in self:
-            flag = False
-            for line in record.activity_starting_line_ids:
-                if line.monday != 0 and line.monday != 1:
-                    flag = True
-                if line.tuesday != 0 and line.tuesday != 1:
-                    flag = True
-                if line.wednesday != 0 and line.wednesday != 1:
-                    flag = True
-                if line.thursday != 0 and line.thursday != 1:
-                    flag = True
-                if line.friday != 0 and line.friday != 1:
-                    flag = True
-                if line.saturday != 0 and line.saturday != 1:
-                    flag = True
-                if line.sunday != 0 and line.sunday != 1:
-                    flag = True
+            flag = any([True for line in record.activity_starting_line_ids for d in WEEK_DAYS if getattr(
+                line, d) != 0 and getattr(line, d) != 1])
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
+
 
     activity_id = fields.Many2one(
         'op.faculty.class.list', "Activity", required=1)
@@ -378,24 +367,10 @@ class ActivityTimeSlots(models.Model):
 
     @api.multi
     @api.constrains('activity_timeslots_line_ids')
-    def _check_activity_timeslots_line(self):
+    def _check_room_not_available_line(self):
         for record in self:
-            flag = False
-            for line in record.activity_timeslots_line_ids:
-                if line.monday != 0 and line.monday != 1:
-                    flag = True
-                if line.tuesday != 0 and line.tuesday != 1:
-                    flag = True
-                if line.wednesday != 0 and line.wednesday != 1:
-                    flag = True
-                if line.thursday != 0 and line.thursday != 1:
-                    flag = True
-                if line.friday != 0 and line.friday != 1:
-                    flag = True
-                if line.saturday != 0 and line.saturday != 1:
-                    flag = True
-                if line.sunday != 0 and line.sunday != 1:
-                    flag = True
+            flag = any([True for line in record.activity_timeslots_line_ids for d in WEEK_DAYS if getattr(
+                line, d) != 0 and getattr(line, d) != 1])
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 
@@ -509,26 +484,12 @@ class ActivitiesStartingTime(models.Model):
 
     @api.multi
     @api.constrains('activities_starting_time_line_ids')
-    def _check_Activities_starting_time_line(self):
+    def _check_room_not_available_line(self):
         for record in self:
-            flag = False
-            for line in record.activities_starting_time_line_ids:
-                if line.monday != 0 and line.monday != 1:
-                    flag = True
-                if line.tuesday != 0 and line.tuesday != 1:
-                    flag = True
-                if line.wednesday != 0 and line.wednesday != 1:
-                    flag = True
-                if line.thursday != 0 and line.thursday != 1:
-                    flag = True
-                if line.friday != 0 and line.friday != 1:
-                    flag = True
-                if line.saturday != 0 and line.saturday != 1:
-                    flag = True
-                if line.sunday != 0 and line.sunday != 1:
-                    flag = True
+            flag = any([True for line in record.activities_starting_time_line_ids for d in WEEK_DAYS if getattr(
+                line, d) != 0 and getattr(line, d) != 1])
             if flag:
-                raise UserError(_("The value should be 1 or 0."))
+                raise UserError(_("The Value should be 1 or 0."))
 
 
     @api.onchange('faculty_id')
@@ -685,26 +646,13 @@ class ActivitiesTimeSlots(models.Model):
 
     @api.multi
     @api.constrains('activities_timeslots_line_ids')
-    def _check_activities_timeslots_line(self):
+    def _check_room_not_available_line(self):
         for record in self:
-            flag = False
-            for line in record.activities_timeslots_line_ids:
-                if line.monday != 0 and line.monday != 1:
-                    flag = True
-                if line.tuesday != 0 and line.tuesday != 1:
-                    flag = True
-                if line.wednesday != 0 and line.wednesday != 1:
-                    flag = True
-                if line.thursday != 0 and line.thursday != 1:
-                    flag = True
-                if line.friday != 0 and line.friday != 1:
-                    flag = True
-                if line.saturday != 0 and line.saturday != 1:
-                    flag = True
-                if line.sunday != 0 and line.sunday != 1:
-                    flag = True
+            flag = any([True for line in record.activities_timeslots_line_ids for d in WEEK_DAYS if getattr(
+                line, d) != 0 and getattr(line, d) != 1])
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
+
 
     @api.onchange('faculty_id')
     def onchange_faculty(self):

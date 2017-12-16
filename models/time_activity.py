@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from company import WEEK_DAYS
 
 
 class SubActivityStartingTime(models.Model):
@@ -81,28 +82,16 @@ class SubActivityStartingTime(models.Model):
                 period_list.append((0, 0, period_dict))
         return period_list
 
+
     @api.multi
     @api.constrains('subactivity_starting_line_ids')
-    def _check_subactivity_starting_time_line(self):
+    def _check_room_not_available_line(self):
         for record in self:
-            flag = False
-            for line in record.subactivity_starting_line_ids:
-                if line.monday != 0 and line.monday != 1:
-                    flag = True
-                if line.tuesday != 0 and line.tuesday != 1:
-                    flag = True
-                if line.wednesday != 0 and line.wednesday != 1:
-                    flag = True
-                if line.thursday != 0 and line.thursday != 1:
-                    flag = True
-                if line.friday != 0 and line.friday != 1:
-                    flag = True
-                if line.saturday != 0 and line.saturday != 1:
-                    flag = True
-                if line.sunday != 0 and line.sunday != 1:
-                    flag = True
+            flag = any([True for line in record.subactivity_starting_line_ids for d in WEEK_DAYS if getattr(
+                line, d) != 0 and getattr(line, d) != 1])
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
+
 
     @api.onchange('faculty_id')
     def onchange_faculty(self):
@@ -258,24 +247,10 @@ class SubActivitiesTimeSlots(models.Model):
 
     @api.multi
     @api.constrains('subactivities_timeslots_line_ids')
-    def _check_subactivities_timeslots_line(self):
+    def _check_room_not_available_line(self):
         for record in self:
-            flag = False
-            for line in record.subactivities_timeslots_line_ids:
-                if line.monday != 0 and line.monday != 1:
-                    flag = True
-                if line.tuesday != 0 and line.tuesday != 1:
-                    flag = True
-                if line.wednesday != 0 and line.wednesday != 1:
-                    flag = True
-                if line.thursday != 0 and line.thursday != 1:
-                    flag = True
-                if line.friday != 0 and line.friday != 1:
-                    flag = True
-                if line.saturday != 0 and line.saturday != 1:
-                    flag = True
-                if line.sunday != 0 and line.sunday != 1:
-                    flag = True
+            flag = any([True for line in record.subactivities_timeslots_line_ids for d in WEEK_DAYS if getattr(
+                line, d) != 0 and getattr(line, d) != 1])
             if flag:
                 raise UserError(_("The Value should be 1 or 0."))
 

@@ -99,61 +99,53 @@ class time_data_import(models.TransientModel):
             weight.text = str(weight_per)
             Name = etree.SubElement(week_days, "Teacher")
             Name.text = fac_name
-            fac_time = self.env['op.faculty.not.available.list'].search(
-                [('faculty_id', '=', w.id)])
+            fac_time = self.env['op.faculty.not.available.list'].search([('faculty_id', '=', w.id)])
             count = 0
             for t in fac_time:
                 if t.monday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Monday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.tuesday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Tuesday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.wednesday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Wednesday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.thursday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Thursday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.friday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Friday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.saturday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Saturday'
                     count += 1
                     hour = etree.SubElement(not_available, "Hour")
                     hour.text = t.name
                 if t.sunday == 1:
-                    not_available = etree.SubElement(
-                        week_days, "Not_Available_Time")
+                    not_available = etree.SubElement(week_days, "Not_Available_Time")
                     not_available_day = etree.SubElement(not_available, "Day")
                     not_available_day.text = 'Sunday'
                     count += 1
@@ -170,8 +162,7 @@ class time_data_import(models.TransientModel):
         faculty = self.env['op.faculty'].search([])
         for w in faculty:
             if w.max_days > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeacherMaxDaysPerWeek")
+                week_days = etree.SubElement(time, "ConstraintTeacherMaxDaysPerWeek")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 fac_name = w.name
@@ -194,8 +185,7 @@ class time_data_import(models.TransientModel):
         faculty = self.env['op.faculty'].search([])
         for w in faculty:
             if w.min_days > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeacherMinDaysPerWeek")
+                week_days = etree.SubElement(time, "ConstraintTeacherMinDaysPerWeek")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 fac_name = w.name
@@ -218,8 +208,7 @@ class time_data_import(models.TransientModel):
         faculty = self.env['op.faculty'].search([])
         for w in faculty:
             if w.max_gaps > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeacherMaxGapsPerDay")
+                week_days = etree.SubElement(time, "ConstraintTeacherMaxGapsPerDay")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 fac_name = w.name
@@ -242,8 +231,7 @@ class time_data_import(models.TransientModel):
         faculty = self.env['op.faculty'].search([])
         for w in faculty:
             if w.max_gaps_week > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeacherMaxGapsPerWeek")
+                week_days = etree.SubElement(time, "ConstraintTeacherMaxGapsPerWeek")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 fac_name = w.name
@@ -266,8 +254,7 @@ class time_data_import(models.TransientModel):
         faculty = self.env['op.faculty'].search([])
         for w in faculty:
             if w.max_hrs > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeacherMaxHoursDaily")
+                week_days = etree.SubElement(time, "ConstraintTeacherMaxHoursDaily")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 fac_name = w.name
@@ -278,8 +265,7 @@ class time_data_import(models.TransientModel):
                 weight.text = str(weight_per)
                 Name = etree.SubElement(week_days, "Teacher_Name")
                 Name.text = fac_name
-                maxhr_daily = etree.SubElement(
-                    week_days, "Maximum_Hours_Daily")
+                maxhr_daily = etree.SubElement(week_days, "Maximum_Hours_Daily")
                 max_hr = w.max_hrs
                 maxhr_daily.text = str(max_hr)
                 active = etree.SubElement(week_days, "Active")
@@ -291,8 +277,7 @@ class time_data_import(models.TransientModel):
         faculty = self.env['op.faculty'].search([])
         for w in faculty:
             if w.min_hrs > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeacherMinHoursDaily")
+                week_days = etree.SubElement(time, "ConstraintTeacherMinHoursDaily")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 fac_name = w.name
@@ -303,8 +288,7 @@ class time_data_import(models.TransientModel):
                 weight.text = str(weight_per)
                 Name = etree.SubElement(week_days, "Teacher_Name")
                 Name.text = fac_name
-                minhr_daily = etree.SubElement(
-                    week_days, "Minimum_Hours_Daily")
+                minhr_daily = etree.SubElement(week_days, "Minimum_Hours_Daily")
                 min_hr = w.min_hrs
                 minhr_daily.text = str(min_hr)
                 active = etree.SubElement(week_days, "Active")
@@ -316,8 +300,7 @@ class time_data_import(models.TransientModel):
         faculty = self.env['op.faculty'].search([])
         for w in faculty:
             if w.max_hrs_cont > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeacherMaxHoursContinuously")
+                week_days = etree.SubElement(time, "ConstraintTeacherMaxHoursContinuously")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 fac_name = w.name
@@ -328,8 +311,7 @@ class time_data_import(models.TransientModel):
                 weight.text = str(weight_per)
                 Name = etree.SubElement(week_days, "Teacher_Name")
                 Name.text = fac_name
-                maxhr_cont = etree.SubElement(
-                    week_days, "Maximum_Hours_Continuously")
+                maxhr_cont = etree.SubElement(week_days, "Maximum_Hours_Continuously")
                 max_hr_ct = w.max_hrs_cont
                 maxhr_cont.text = str(max_hr_ct)
                 active = etree.SubElement(week_days, "Active")
@@ -341,16 +323,14 @@ class time_data_import(models.TransientModel):
         faculty = self.env['op.faculty.activity.maxhrs'].search([])
         for w in faculty:
             if w.max_hrs_cont_tr_act > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeachersActivityTagMaxHoursDaily")
+                week_days = etree.SubElement(time, "ConstraintTeachersActivityTagMaxHoursDaily")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 weight.text = str(weight_per)
                 activity_tag = etree.SubElement(week_days, "Activity_Tag_Name")
                 activity = w.act_tag_name.name
                 activity_tag.text = activity
-                maxhr_cont_act = etree.SubElement(
-                    week_days, "Maximum_Hours_Daily")
+                maxhr_cont_act = etree.SubElement(week_days, "Maximum_Hours_Daily")
                 max_hr_act_con = w.max_hrs_cont_tr_act
                 maxhr_cont_act.text = str(max_hr_act_con)
                 active = etree.SubElement(week_days, "Active")
@@ -362,8 +342,7 @@ class time_data_import(models.TransientModel):
         faculty = self.env['op.faculty'].search([])
         for w in faculty:
             if w.max_days > 0 and w.interval_start and w.interval_end:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeacherIntervalMaxDaysPerWeek")
+                week_days = etree.SubElement(time, "ConstraintTeacherIntervalMaxDaysPerWeek")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 fac_name = w.name
@@ -394,14 +373,11 @@ class time_data_import(models.TransientModel):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
             if f.max_days_per_week:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeachersMaxDaysPerWeek")
-                weight_percent = etree.SubElement(
-                    week_days, "Weight_Percentage")
+                week_days = etree.SubElement(time, "ConstraintTeachersMaxDaysPerWeek")
+                weight_percent = etree.SubElement(week_days, "Weight_Percentage")
                 weight = f.weight_percent
                 weight_percent.text = str(weight)
-                max_days_per_week = etree.SubElement(
-                    week_days, "Max_Days_Per_Week")
+                max_days_per_week = etree.SubElement(week_days, "Max_Days_Per_Week")
                 max_day = f.max_days_per_week
                 max_days_per_week.text = str(max_day)
                 active = etree.SubElement(week_days, "Active")
@@ -413,14 +389,11 @@ class time_data_import(models.TransientModel):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
             if f.min_days_per_week:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeachersMinDaysPerWeek")
-                weight_percent = etree.SubElement(
-                    week_days, "Weight_Percentage")
+                week_days = etree.SubElement(time, "ConstraintTeachersMinDaysPerWeek")
+                weight_percent = etree.SubElement(week_days, "Weight_Percentage")
                 weight = f.weight_percent
                 weight_percent.text = str(weight)
-                min_days_per_week = etree.SubElement(
-                    week_days, "Min_Days_Per_Week")
+                min_days_per_week = etree.SubElement(week_days, "Min_Days_Per_Week")
                 min_day = f.min_days_per_week
                 min_days_per_week.text = str(min_day)
                 active = etree.SubElement(week_days, "Active")
@@ -432,10 +405,8 @@ class time_data_import(models.TransientModel):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
             if f.max_gaps_per_day:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeachersMaxGapsPerDay")
-                weight_percent = etree.SubElement(
-                    week_days, "Weight_Percentage")
+                week_days = etree.SubElement(time, "ConstraintTeachersMaxGapsPerDay")
+                weight_percent = etree.SubElement(week_days, "Weight_Percentage")
                 weight = f.weight_percent
                 weight_percent.text = str(weight)
                 max_gaps = etree.SubElement(week_days, "Max_Gaps")
@@ -450,10 +421,8 @@ class time_data_import(models.TransientModel):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
             if f.max_gaps_per_week:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeachersMaxGapsPerWeek")
-                weight_percent = etree.SubElement(
-                    week_days, "Weight_Percentage")
+                week_days = etree.SubElement(time, "ConstraintTeachersMaxGapsPerWeek")
+                weight_percent = etree.SubElement(week_days, "Weight_Percentage")
                 weight = f.weight_percent
                 weight_percent.text = str(weight)
                 max_gaps_week = etree.SubElement(week_days, "Max_Gaps")
@@ -468,14 +437,11 @@ class time_data_import(models.TransientModel):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
             if f.max_hrs_daily > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeachersMaxHoursDaily")
-                weight_percent = etree.SubElement(
-                    week_days, "Weight_Percentage")
+                week_days = etree.SubElement(time, "ConstraintTeachersMaxHoursDaily")
+                weight_percent = etree.SubElement(week_days, "Weight_Percentage")
                 weight = f.weight_percent
                 weight_percent.text = str(weight)
-                max_hrs_daily = etree.SubElement(
-                    week_days, "Maximum_Hours_Daily")
+                max_hrs_daily = etree.SubElement(week_days, "Maximum_Hours_Daily")
                 max_hrs = f.max_hrs_daily
                 max_hrs_daily.text = str(max_hrs)
                 active = etree.SubElement(week_days, "Active")
@@ -487,14 +453,11 @@ class time_data_import(models.TransientModel):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
             if f.min_hrs_daily > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeachersMinHoursDaily")
-                weight_percent = etree.SubElement(
-                    week_days, "Weight_Percentage")
+                week_days = etree.SubElement(time, "ConstraintTeachersMinHoursDaily")
+                weight_percent = etree.SubElement(week_days, "Weight_Percentage")
                 weight = f.weight_percent
                 weight_percent.text = str(weight)
-                min_hrs_daily = etree.SubElement(
-                    week_days, "Minimum_Hours_Daily")
+                min_hrs_daily = etree.SubElement(week_days, "Minimum_Hours_Daily")
                 min_hrs = f.min_hrs_daily
                 min_hrs_daily.text = str(min_hrs)
                 active = etree.SubElement(week_days, "Active")
@@ -506,14 +469,11 @@ class time_data_import(models.TransientModel):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for f in faculties:
             if f.max_hrs_cont_tr > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeachersMaxHoursContinuously")
-                weight_percent = etree.SubElement(
-                    week_days, "Weight_Percentage")
+                week_days = etree.SubElement(time, "ConstraintTeachersMaxHoursContinuously")
+                weight_percent = etree.SubElement(week_days, "Weight_Percentage")
                 weight = f.weight_percent
                 weight_percent.text = str(weight)
-                max_hrs_cont = etree.SubElement(
-                    week_days, "Maximum_Hours_Continuously")
+                max_hrs_cont = etree.SubElement(week_days, "Maximum_Hours_Continuously")
                 max_hrs = f.max_hrs_cont_tr
                 max_hrs_cont.text = str(max_hrs)
                 active = etree.SubElement(week_days, "Active")
@@ -525,16 +485,14 @@ class time_data_import(models.TransientModel):
         faculties = self.env['op.faculty.activity.maxhrs'].search([])
         for w in faculties:
             if w.max_hrs_cont_tr_act > 0:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeachersActivityTagMaxHoursContinuously")
+                week_days = etree.SubElement(time, "ConstraintTeachersActivityTagMaxHoursContinuously")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 weight.text = str(weight_per)
                 activity_tag = etree.SubElement(week_days, "Activity_Tag_Name")
                 activity = w.act_tag_name.name or ''
                 activity_tag.text = activity
-                maxhr_cont_act = etree.SubElement(
-                    week_days, "Maximum_Hours_Continuously")
+                maxhr_cont_act = etree.SubElement(week_days, "Maximum_Hours_Continuously")
                 max_hr_act_con = w.max_hrs_cont_tr_act
                 maxhr_cont_act.text = str(max_hr_act_con)
                 active = etree.SubElement(week_days, "Active")
@@ -546,13 +504,11 @@ class time_data_import(models.TransientModel):
         faculties = self.env['op.all.faculty.constraints'].search([])
         for w in faculties:
             if w.max_days_per_week > 0 and w.interval_start and w.interval_end:
-                week_days = etree.SubElement(
-                    time, "ConstraintTeachersIntervalMaxDaysPerWeek")
+                week_days = etree.SubElement(time, "ConstraintTeachersIntervalMaxDaysPerWeek")
                 weight = etree.SubElement(week_days, "Weight_Percentage")
                 weight_per = w.weight_percent
                 weight.text = str(weight_per)
-                interval_st = etree.SubElement(
-                    week_days, "Interval_Start_Hour")
+                interval_st = etree.SubElement(week_days, "Interval_Start_Hour")
                 interval_starts = w.interval_start.name
                 interval_st.text = str(interval_starts)
                 interval_en = etree.SubElement(week_days, "Interval_End_Hour")
@@ -643,8 +599,7 @@ class time_data_import(models.TransientModel):
     def student_maxday_constraint(self, time):
         batch = self.env['student.time.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsSetMaxDaysPerWeek")
+            week_days = etree.SubElement(time, "ConstraintStudentsSetMaxDaysPerWeek")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -666,8 +621,7 @@ class time_data_import(models.TransientModel):
     def student_maxgap_day(self, time):
         batch = self.env['student.time.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsSetMaxGapsPerDay")
+            week_days = etree.SubElement(time, "ConstraintStudentsSetMaxGapsPerDay")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -689,8 +643,7 @@ class time_data_import(models.TransientModel):
     def student_maxgap_week(self, time):
         batch = self.env['student.time.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsSetMaxGapsPerWeek")
+            week_days = etree.SubElement(time, "ConstraintStudentsSetMaxGapsPerWeek")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -712,13 +665,11 @@ class time_data_import(models.TransientModel):
     def student_maxsecond(self, time):
         batch = self.env['student.time.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsSetEarlyMaxBeginningsAtSecondHour")
+            week_days = etree.SubElement(time, "ConstraintStudentsSetEarlyMaxBeginningsAtSecondHour")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
-            maxgap_day = etree.SubElement(
-                week_days, "Max_Beginnings_At_Second_Hour")
+            maxgap_day = etree.SubElement(week_days, "Max_Beginnings_At_Second_Hour")
             max_gap_days = b.max_gaps_day
             maxgap_day.text = str(max_gap_days)
             batch_name = b.name.name
@@ -736,8 +687,7 @@ class time_data_import(models.TransientModel):
     def student_maxhr_daily(self, time):
         batch = self.env['student.time.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsSetMaxHoursDaily")
+            week_days = etree.SubElement(time, "ConstraintStudentsSetMaxHoursDaily")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -759,8 +709,7 @@ class time_data_import(models.TransientModel):
     def student_maxhr_activity(self, time):
         batch = self.env['student.time.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsSetActivityTagMaxHoursDaily")
+            week_days = etree.SubElement(time, "ConstraintStudentsSetActivityTagMaxHoursDaily")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -785,8 +734,7 @@ class time_data_import(models.TransientModel):
     def student_minhr_daily(self, time):
         batch = self.env['student.time.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsSetMinHoursDaily")
+            week_days = etree.SubElement(time, "ConstraintStudentsSetMinHoursDaily")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -810,13 +758,11 @@ class time_data_import(models.TransientModel):
     def student_maxhr_cont(self, time):
         batch = self.env['student.time.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsSetMaxHoursContinuously")
+            week_days = etree.SubElement(time, "ConstraintStudentsSetMaxHoursContinuously")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
-            max_hrs_con = etree.SubElement(
-                week_days, "Maximum_Hours_Continuously")
+            max_hrs_con = etree.SubElement(week_days, "Maximum_Hours_Continuously")
             max_hr_conti = b.max_hr_cont
             max_hrs_con.text = str(max_hr_conti)
             batch_name = b.name.name
@@ -834,13 +780,11 @@ class time_data_import(models.TransientModel):
     def student_maxhr_cont_daily(self, time):
         batch = self.env['student.time.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsSetActivityTagMaxHoursContinuously")
+            week_days = etree.SubElement(time, "ConstraintStudentsSetActivityTagMaxHoursContinuously")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
-            max_hrs_con = etree.SubElement(
-                week_days, "Maximum_Hours_Continuously")
+            max_hrs_con = etree.SubElement(week_days, "Maximum_Hours_Continuously")
             max_hr_conti = b.max_hr_cont
             max_hrs_con.text = str(max_hr_conti)
             batch_name = b.name.name
@@ -861,8 +805,7 @@ class time_data_import(models.TransientModel):
     def student_set_interval(self, time):
         batch = self.env['student.time.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsSetIntervalMaxDaysPerWeek")
+            week_days = etree.SubElement(time, "ConstraintStudentsSetIntervalMaxDaysPerWeek")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -876,8 +819,7 @@ class time_data_import(models.TransientModel):
                 batch_name = '%s %s' % (batch_name, b.subgroup_name.name)
             Name = etree.SubElement(week_days, "Students")
             Name.text = batch_name
-            interval_st = etree.SubElement(
-                week_days, "Interval_Start_Hour")
+            interval_st = etree.SubElement(week_days, "Interval_Start_Hour")
             interval_starts = b.interval_start.name
             interval_st.text = str(interval_starts)
             interval_en = etree.SubElement(week_days, "Interval_End_Hour")
@@ -892,8 +834,7 @@ class time_data_import(models.TransientModel):
     def allstudent_maxday_constraint(self, time):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsMaxDaysPerWeek")
+            week_days = etree.SubElement(time, "ConstraintStudentsMaxDaysPerWeek")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -908,8 +849,7 @@ class time_data_import(models.TransientModel):
     def allstudent_maxgap_day(self, time):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsMaxGapsPerDay")
+            week_days = etree.SubElement(time, "ConstraintStudentsMaxGapsPerDay")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -924,8 +864,7 @@ class time_data_import(models.TransientModel):
     def allstudent_maxgap_week(self, time):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsMaxGapsPerWeek")
+            week_days = etree.SubElement(time, "ConstraintStudentsMaxGapsPerWeek")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -940,13 +879,11 @@ class time_data_import(models.TransientModel):
     def allstudent_maxsecond(self, time):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsEarlyMaxBeginningsAtSecondHour")
+            week_days = etree.SubElement(time, "ConstraintStudentsEarlyMaxBeginningsAtSecondHour")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
-            maxgap_day = etree.SubElement(
-                week_days, "Max_Beginnings_At_Second_Hour")
+            maxgap_day = etree.SubElement(week_days, "Max_Beginnings_At_Second_Hour")
             max_gap_days = b.max_beginnings
             maxgap_day.text = str(max_gap_days)
             active = etree.SubElement(week_days, "Active")
@@ -957,8 +894,7 @@ class time_data_import(models.TransientModel):
     def allstudent_maxhr_daily(self, time):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsMaxHoursDaily")
+            week_days = etree.SubElement(time, "ConstraintStudentsMaxHoursDaily")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -973,8 +909,7 @@ class time_data_import(models.TransientModel):
     def allstudent_maxhr_activity(self, time):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsActivityTagMaxHoursDaily")
+            week_days = etree.SubElement(time, "ConstraintStudentsActivityTagMaxHoursDaily")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -992,8 +927,7 @@ class time_data_import(models.TransientModel):
     def allstudent_minhr_daily(self, time):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsMinHoursDaily")
+            week_days = etree.SubElement(time, "ConstraintStudentsMinHoursDaily")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
@@ -1010,13 +944,11 @@ class time_data_import(models.TransientModel):
     def allstudent_maxhr_cont(self, time):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsActivityTagMaxHoursContinuously")
+            week_days = etree.SubElement(time, "ConstraintStudentsActivityTagMaxHoursContinuously")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
-            max_hrs_con = etree.SubElement(
-                week_days, "Maximum_Hours_Continuously")
+            max_hrs_con = etree.SubElement(week_days, "Maximum_Hours_Continuously")
             max_hr_conti = b.max_hr_cont
             max_hrs_con.text = str(max_hr_conti)
             activity_name = etree.SubElement(week_days, "Activity_Tag")
@@ -1030,13 +962,11 @@ class time_data_import(models.TransientModel):
     def allstudent_maxhr_act_cont(self, time):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsActivityTagMaxHoursContinuously")
+            week_days = etree.SubElement(time, "ConstraintStudentsActivityTagMaxHoursContinuously")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
-            max_hrs_daily = etree.SubElement(
-                week_days, "Maximum_Hours_Continuously")
+            max_hrs_daily = etree.SubElement(week_days, "Maximum_Hours_Continuously")
             max_hr = b.max_hr_daily
             max_hrs_daily.text = str(max_hr)
             activity_name = etree.SubElement(week_days, "Activity_Tag")
@@ -1050,16 +980,14 @@ class time_data_import(models.TransientModel):
     def allstudent_set_interval(self, time):
         batch = self.env['all.student.constraints'].search([])
         for b in batch:
-            week_days = etree.SubElement(
-                time, "ConstraintStudentsIntervalMaxDaysPerWeek")
+            week_days = etree.SubElement(time, "ConstraintStudentsIntervalMaxDaysPerWeek")
             weight = etree.SubElement(week_days, "Weight_Percentage")
             weight_per = b.weight_percent
             weight.text = str(weight_per)
             max_days_week = etree.SubElement(week_days, "Max_Days_Per_Week")
             max_day = b.max_days_week
             max_days_week.text = str(max_day)
-            interval_st = etree.SubElement(
-                week_days, "Interval_Start_Hour")
+            interval_st = etree.SubElement(week_days, "Interval_Start_Hour")
             interval_starts = b.start_time.name
             interval_st.text = str(interval_starts)
             interval_en = etree.SubElement(week_days, "Interval_End_Hour")
@@ -1070,7 +998,7 @@ class time_data_import(models.TransientModel):
             # comment = etree.SubElement(week_days, "Comments")
             # comment.text = "0"
 
-# Break
+    # Break
     def break_time(self, time):
         breaks = self.env['op.break.time'].search([])
         for rec in breaks:
