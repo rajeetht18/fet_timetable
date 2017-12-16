@@ -3,6 +3,7 @@ from odoo import fields, models
 from lxml import etree
 import base64
 import datetime
+from collections import OrderedDict
 # import odoo.tools.config as config
 
 
@@ -14,14 +15,16 @@ class fettimetable_data_export(models.TransientModel):
 
     def export_days(self, root):
         days = self.env['generate.time.table'].search([])
-        days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        days = OrderedDict([('tt_monday', 'Monday'), ('tt_tuesday', 'Tuesday'), ('tt_wednesday', 'Wednesday'), ('tt_thursday', 'Thursday'), ('tt_friday', 'Friday'), ('tt_saturday', 'Saturday'), ('tt_sunday', 'Sunday')])
         Days_List = etree.SubElement(root, "Days_List")
         Number_of_Days = etree.SubElement(Days_List, "Number_of_Days")
-        Number_of_Days.text = "5"
-        for rec in days:
-            Days = etree.SubElement(Days_List, "Day")
-            Name = etree.SubElement(Days, "Name")
-            Name.text = rec
+        Number_of_Days.text = str(self.env.user.company_id.tt_max_days)
+        for key,value in days.items():
+            if getattr(self.env.user.company_id, key):
+                print value,' value'
+                Days = etree.SubElement(Days_List, "Day")
+                Name = etree.SubElement(Days, "Name")
+                Name.text = value
 
     def export_hours(self, root):
         timings = self.env['op.timing'].search([], order='sequence')
@@ -147,7 +150,7 @@ class fettimetable_data_export(models.TransientModel):
             room_name = etree.SubElement(room, "Name")
             room_name.text = r.name
             building = etree.SubElement(room, "Building")
-            building.text = r.building.name
+            building.text = r.building.name or ''
             capacity = etree.SubElement(room, "Capacity")
             capacity.text = str(r.capacity)
 
