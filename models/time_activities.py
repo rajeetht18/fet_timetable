@@ -37,7 +37,7 @@ class ActivitiesEndsDay(models.Model):
             self.student_id = False
             self.activity_tag_id = False
         return res
-
+    
     faculty_id = fields.Many2one('op.faculty',"Faculty",required=1)
     student_id = fields.Many2one('op.batch',"Batch",required=1)
     subject_id = fields.Many2one('op.subject',"Subject",required=1)

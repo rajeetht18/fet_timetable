@@ -121,7 +121,7 @@ class RoomNotAvailableLine(models.Model):
 class ActivityRoom(models.Model):
     _name = 'op.activity.room'
     _description = 'An activity has a preferred room'
-    _rec_name = 'weight'
+    _rec_name = 'activity_id'
 
     activity_id = fields.Many2one(
         'op.faculty.class.list', "Activity", required=1)
@@ -132,8 +132,8 @@ class ActivityRoom(models.Model):
 
 class ActivityRooms(models.Model):
     _name = 'op.activity.rooms'
-    _description = 'An activity has a set of preferred room'
-    _rec_name = 'weight'
+    _description = 'An activity has a set of preferred rooms'
+    _rec_name = 'activity_id'
 
     activity_id = fields.Many2one(
         'op.faculty.class.list', "Activity", required=1)
