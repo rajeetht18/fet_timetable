@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<!-- Group to make menus invisible-->
+	<record id="group_invisible" model="res.groups">
+    <field name="name">Invisible</field>
+  </record>
+
+	<!--Report Pipeline Menu Hide-->
+ <record model="ir.ui.menu" id="crm.crm_opportunity_report_menu">
+	 <field name="groups_id" eval="[(6,0,[ref('group_invisible')])]"/>
+ </record>
+
+<!--Report Activity Menu Hide-->
+ <record model="ir.ui.menu" id="crm.crm_activity_report_menu">
+    <field name="groups_id" eval="[(6,0,[ref('group_invisible')])]"/>
+ </record>
+
+ <!-- Pipeline Menu Hide-->
+  <record model="ir.ui.menu" id="crm.menu_crm_opportunities">
+     <field name="groups_id" eval="[(6,0,[ref('group_invisible')])]"/>
+  </record>
+
+	<!-- Quotation CRM Menu Hide-->
+	 <record model="ir.ui.menu" id="sale_crm.sale_order_menu_quotations_crm">
+			<field name="groups_id" eval="[(6,0,[ref('group_invisible')])]"/>
+	 </record>
+
+	 <!-- Lead Report Menu Hide-->
+ 	 <!-- <record model="ir.ui.menu" id="crm.crm_opportunity_report_menu_lead">
+ 			<field name="groups_id" eval="[(6,0,[ref('group_invisible')])]"/>
+ 	 </record> -->
+
+	 <!-- Menu Pipeline Rename to CRM-->
+	 <menuitem
+	 		id="crm.crm_menu_pipeline"
+	 		name="CRM"
+	 		parent="crm.crm_menu_root"
+	 		sequence="1"/>
+
+			<!-- Menu Timesheet-->
+			<menuitem name="Timesheet" id="menu_service_timesheets"
+				parent="base.menu_service_app" sequence="255" />
+
+			<menuitem id="hr_timesheet.timesheet_menu_activity_all"
+					name="All Timesheets"
+					parent="menu_service_timesheets"
+					action="hr_timesheet.timesheet_action_all"/>
+
+
+</odoo>

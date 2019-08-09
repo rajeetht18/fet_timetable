@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<!--Service Form View-->
+	 <record id="service_agreement_form_view_inherit" model="ir.ui.view">
+		<field name="name">service.agreement.form.view.inherit</field>
+		<field name="model">service.agreement</field>
+		<field name="inherit_id" ref="deltatech_service.view_service_agreement_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//div[@name='button_box']/button[2]" position="attributes">
+				<attribute name="attrs">{'invisible':1}</attribute>
+			</xpath>
+			<xpath expr="//div[@name='button_box']/button[3]" position="attributes">
+				<attribute name="attrs">{'invisible':1}</attribute>
+			</xpath>
+			<xpath expr="//field[@name='cycle_id']" position="attributes">
+				<attribute name="attrs">{'required':0}</attribute>
+			</xpath>
+			<xpath expr="//field[@name='cycle_id']" position="after">
+				<field name="project_id" invisible="1"/>
+			</xpath>
+			<xpath expr="//field[@name='agreement_line']" position="replace">
+				<notebook>
+					<page string="Inward Entry">
+						<field name="inward_ids">
+						 <tree string="Inwards" editable="bottom">
+								 <field name="product_id" context="{'default_type':'service'}" required="1"/>
+								 <field name="reference" required="1"/>
+								 <field name="qty" required="1"/>
+								 <field name="estimated_val" required="1"/>
+						 </tree>
+					 </field>
+					 <group class="oe_subtotal_footer oe_right">
+						  <field name="tot_qty"/>
+					  	<field name="tot_est_val"/>
+          	</group>
+					</page>
+					 <page string="History Card">
+						 <field name="service_task_ids" editable="top" context="{'default_partner_id': partner_id,'default_project_id':project_id}">
+							<tree string="History Lines" >
+									<field name="name" string="Title"/>
+									<field name="group_id"/>
+									<field name="department_id"/>
+									<field name="planned_hours" string="Duration" widget="float_time"/>
+									<field name="date_deadline"/>
+							</tree>
+						</field>
+					 </page>
+				</notebook>
+			</xpath>
+		</field>
+	</record>
+
+	<!--Service Agreement Tree View-->
+	<record id="deltatech_service.view_service_agreement_tree" model="ir.ui.view">
+			<field name="name">Services Agreements</field>
+			<field name="model">service.agreement</field>
+			<field name="arch" type="xml">
+					<tree string="Services Agreements" fonts="bold:message_unread==True"
+								colors="grey:state in ('cancel','closed')" default_order='date_agreement desc'>
+							<field name="name"/>
+							<field name="date_agreement"/>
+							<field name="partner_id"/>
+							<field name="description"/>
+							<field name="state"/>
+							<field name="type_id"/>
+							<field name="group_id" string="Service Group"/>
+							<field name="total_consumption" sum="consumption"/>
+							<field name="total_invoiced" sum="invoiced"/>
+							<field name="message_unread" invisible="1"/>
+					</tree>
+			</field>
+	</record>
+
+	<!--Company tree View-->
+	<record id="view_company_form_inherit_service" model="ir.ui.view">
+			<field name="name">res.company.form.inherit.service</field>
+			<field name="model">res.company</field>
+			<field name="inherit_id" ref="base.view_company_form"/>
+			<field name="arch" type="xml">
+					<xpath expr="//field[@name='report_header']" position="after">
+									<field name="default_warehouse" required="1"/>
+									<field name="default_src_location" required="1"/>
+									<field name="default_dest_location" required="1"/>
+					</xpath>
+			</field>
+	</record>
+
+</odoo>

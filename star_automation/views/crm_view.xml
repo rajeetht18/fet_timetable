@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<!--CRM View-->
+	<record id="crm_case_form_view_leads_inherit" model="ir.ui.view">
+  <field name="name">crm.lead.form.lead.inherit</field>
+  <field name="model">crm.lead</field>
+	<field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+  <field name="arch" type="xml">
+		<xpath expr="//div[@name='button_box']" position="inside">
+	    <button type="object" name="action_view_services" class="oe_stat_button" icon="fa-pencil-square-o">
+	        <field name="service_count" widget="statinfo" string="Services"/>
+	        <field name="service_ids" invisible="1"/>
+	    </button>
+		</xpath>
+
+		<xpath expr="//form/header/button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="attributes">
+			<attribute name="attrs">{'invisible':1}</attribute>
+		</xpath>
+
+		<xpath expr="//form/header/button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="after">
+					<button name="%(crm.action_crm_lead2opportunity_partner)d" string="Convert to Services" type="action"
+									help="Convert to Services" class="oe_highlight" attrs="{'invisible': [('service_count', '>', 0)]}"/>
+		</xpath>
+
+		<xpath expr="//page[@name='extra']" position="attributes">
+			<attribute name="attrs">{'invisible':1}</attribute>
+		</xpath>
+
+		<xpath expr="//field[@name='user_id']" position="attributes">
+			<attribute name="string">Responsible</attribute>
+		</xpath>
+
+	</field>
+</record>
+
+<!--CRM Team Form View-->
+<record id="crm_team_view_form_inherit" model="ir.ui.view">
+<field name="name">crm.team.view.form.inherit</field>
+<field name="model">crm.team</field>
+<field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+<field name="arch" type="xml">
+	<xpath expr="//field[@name='user_id']" position="attributes">
+		<attribute name="string">Responsible</attribute>
+	</xpath>
+</field>
+</record>
+
+<!--CRM Tree View-->
+<record id="crm_case_tree_view_leads_inherit" model="ir.ui.view">
+<field name="name">crm.case.tree.view.leads.inherit</field>
+<field name="model">crm.lead</field>
+<field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+<field name="arch" type="xml">
+	<xpath expr="//field[@name='team_id']" position="after">
+		<field name="user_id" string="Responsible"/>
+	</xpath>
+</field>
+</record>
+
+<!--CRM Search View-->
+<record id="crm_search_view_inherit" model="ir.ui.view">
+<field name="name">crm.crm.search.view.leads.inherit</field>
+<field name="model">crm.lead</field>
+<field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+<field name="arch" type="xml">
+	<xpath expr="//filter[@name='groupby_campaign']" position="attributes">
+		<attribute name="attrs">{'invisible':1}</attribute>
+	</xpath>
+	<xpath expr="//filter[@name='groupby_source']" position="attributes">
+		<attribute name="attrs">{'invisible':1}</attribute>
+	</xpath>
+	<xpath expr="//filter[@name='groupby_channel']" position="attributes">
+		<attribute name="attrs">{'invisible':1}</attribute>
+	</xpath>
+</field>
+</record>
+
+<!-- <record id="crm.view_crm_lead2opportunity_partner" model="ir.ui.view">
+		<field name="name">crm.lead2opportunity.partner.form</field>
+		<field name="model">crm.lead2opportunity.partner</field>
+		<field name="arch" type="xml">
+				<form string="Convert to Service">
+					<group name="name" invisible='1'>
+							<field name="name" widget="radio"/>
+					</group>
+						<group string="Assign this service to">
+								<field name="user_id" domain="[('share', '=', False)]" string='Responsible'/>
+								<field name="team_id" widget="selection"/>
+						</group>
+						<group string="Services" attrs="{'invisible': [('name', '!=', 'merge')]}">
+								<field name="opportunity_ids" nolabel="1">
+										<tree>
+												<field name="create_date"/>
+												<field name="name"/>
+												<field name="type"/>
+												<field name="contact_name"/>
+												<field name="country_id" invisible="context.get('invisible_country', True)"/>
+												<field name="email_from"/>
+												<field name="phone"/>
+												<field name="stage_id"/>
+												<field name="user_id"/>
+												<field name="team_id"/>
+										</tree>
+								</field>
+						</group>
+						<group name="action" attrs="{'invisible': [('name', '!=', 'convert')]}" string="Customers" col="1">
+								<field name="action" nolabel="1" widget="radio"/>
+								<group col="2">
+										<field name="partner_id" domain="[('customer', '=', True)]" context="{'search_default_customer': 1}" attrs="{'required': [('action', '=', 'exist')], 'invisible':[('action','!=','exist')]}"/>
+								</group>
+						</group>
+						<footer>
+								<button name="action_service_agree_view" string="Create Service" type="object" class="btn-primary"/>
+								<button string="Cancel" class="btn-default" special="cancel"/>
+						</footer>
+				</form>
+		</field>
+</record> -->
+
+
+<!--CRM Wizard Form View-->
+<record id="crm_lead_oppo_form_view_inherit" model="ir.ui.view">
+<field name="name">crm.lead.oppo.form.view.inherit</field>
+<field name="model">crm.lead2opportunity.partner</field>
+<field name="inherit_id" ref="crm.view_crm_lead2opportunity_partner"/>
+<field name="arch" type="xml">
+	<xpath expr="//group[@name='name']" position="attributes">
+		<attribute name="attrs">{'invisible':1}</attribute>
+	</xpath>
+	<xpath expr="//group[2]" position="replace">
+		<group string="Assign this service to">
+				<field name="user_id" domain="[('share', '=', False)]" string='Responsible'/>
+		</group>
+	</xpath>
+    <xpath expr="//group[3]" position="attributes">
+		<attribute name="attrs">{'invisible':1}</attribute>
+	</xpath>
+    <xpath expr="//group[4]" position="replace">
+		<group name="action" string="Customers" col="1">
+            <field name="action" nolabel="1" widget="radio"/>
+            <group col="2">
+                <field name="partner_id" domain="[('customer', '=', True)]" context="{'search_default_customer': 1}" attrs="{'required': [('action', '=', 'exist')], 'invisible':[('action','!=','exist')]}"/>
+            </group>
+        </group>
+	</xpath>
+	<xpath expr="//button[1]" position="replace">
+		<button name="action_service_agree_view" string="Create Service" type="object" class="btn-primary"/>
+	</xpath>
+
+</field>
+</record>
+
+<record id="crm.action_crm_lead2opportunity_partner" model="ir.actions.act_window">
+		<field name="name">Convert to Service</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">crm.lead2opportunity.partner</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm.view_crm_lead2opportunity_partner"/>
+		<field name="target">new</field>
+</record>
+
+<!--CRM Wizard Form View-->
+<!-- <record id="service_agreement_form_view_inherit" model="ir.ui.view">
+	<field name="name">service.agreement.form.view.inherit</field>
+	<field name="model">service.agreement</field>
+	<field name="inherit_id" ref="deltatech_service.view_service_agreement_form"/>
+	<field name="arch" type="xml">
+		<xpath expr="//field[@name='cycle_id']" position="attributes">
+			<attribute name="attrs">{'required':0}</attribute>
+		</xpath>
+	</field>
+</record> -->
+
+
+</odoo>

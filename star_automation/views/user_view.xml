@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<!-- view_users_form_inherit -->
+<!-- <record id="view_users_form_inherit" model="ir.ui.view">
+	<field name="name">view_users_form_inherit</field>
+	<field name="model">res.users</field>
+	<field name="inherit_id" ref="base.view_users_form"/>
+	<field name="arch" type="xml">
+		<xpath expr="//sheet/notebook/page[@name='access_rights']" position="attributes">
+          	<attribute name="attrs">{'invisible':1}</attribute>
+		</xpath>
+		<xpath expr="//sheet/notebook/page[@name='access_rights']" position="after">
+			<page name="user_role" string="User Role">
+				<group col="4">
+					<separator string="Application Accesses"/>
+					<newline/>
+					<field name="administrator"/>
+					<newline/>
+					<field name="front_office"/>
+					<newline/>
+					<field name="app_dptmnt"/>
+					<newline/>
+					<field name="hw_dptmnt"/>
+					<newline/>
+					<field name="purchase_dptmnt"/>
+					<newline/>
+					<field name="testing_dptmnt"/>
+					<newline/>
+					<field name="accnt_dptmnt"/>
+					<newline/>
+					<field name="packing_dptmnt"/>
+					</group>
+			</page>
+	</xpath>
+	</field>
+</record> -->
+
+<!-- Front Office Group Category-->
+<record model="ir.module.category" id="module_category_frontoffice_department">
+		<field name="name">Front Office Department</field>
+		<field name="description">Helps you handle your Front Office.</field>
+		<field name="sequence">23</field>
+</record>
+
+<!-- Application Group Category-->
+<record model="ir.module.category" id="module_category_application_department">
+		<field name="name">Application Department</field>
+		<field name="description">Helps you handle your Application.</field>
+		<field name="sequence">24</field>
+</record>
+
+<!-- Hardware Group Category-->
+<record model="ir.module.category" id="module_category_hardware_department">
+		<field name="name">Hardware Department</field>
+		<field name="description">Helps you handle your Hardware.</field>
+		<field name="sequence">25</field>
+</record>
+
+<!-- Purchase Group Category-->
+<record model="ir.module.category" id="module_category_purchase_department">
+		<field name="name">Purchase Department</field>
+		<field name="description">Helps you handle your Purchase.</field>
+		<field name="sequence">26</field>
+</record>
+
+<!-- Testing Group category-->
+<record model="ir.module.category" id="module_category_testing_department">
+		<field name="name">Testing Department</field>
+		<field name="description">Helps you handle your Testing.</field>
+		<field name="sequence">27</field>
+</record>
+
+<!-- Accounting Group category-->
+<record model="ir.module.category" id="module_category_accounting_department">
+		<field name="name">Accounting Department</field>
+		<field name="description">Helps you handle your Accounting.</field>
+		<field name="sequence">28</field>
+</record>
+
+<!-- Packing Group category-->
+<record model="ir.module.category" id="module_category_packing_department">
+		<field name="name">Packing Department</field>
+		<field name="description">Helps you handle your Packing.</field>
+		<field name="sequence">29</field>
+</record>
+
+<!-- Front Office User Group-->
+ <record id="group_frontoffice_department" model="res.groups">
+		<field name="name">User</field>
+		<field name="category_id" ref="module_category_frontoffice_department"/>
+		<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+</record>
+
+<!-- Front Office Manager Group-->
+<record id="group_frontoffice_manager" model="res.groups">
+		<field name="name">Manager</field>
+		<field name="category_id" ref="module_category_frontoffice_department"/>
+		<field name="implied_ids" eval="[(4, ref('group_frontoffice_department'))]"/>
+</record>
+
+<!-- Application User Group-->
+ <record id="group_application_department" model="res.groups">
+		<field name="name">User</field>
+		<field name="category_id" ref="module_category_application_department"/>
+		<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+</record>
+
+<!-- Application Manager Group-->
+<record id="group_application_manager" model="res.groups">
+		<field name="name">Manager</field>
+		<field name="category_id" ref="module_category_application_department"/>
+		<field name="implied_ids" eval="[(4, ref('group_application_department'))]"/>
+</record>
+
+<!-- H/w User Group-->
+<record id="group_hw_department" model="res.groups">
+	 <field name="name">User</field>
+	 <field name="category_id" ref="module_category_hardware_department"/>
+	 <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+</record>
+
+<!-- H/w Manager Group-->
+<record id="group_hw_manager" model="res.groups">
+	 <field name="name">Manager</field>
+	 <field name="category_id" ref="module_category_hardware_department"/>
+	 <field name="implied_ids" eval="[(4, ref('group_hw_department'))]"/>
+</record>
+
+<!-- Purchase User Group-->
+<record id="group_purchase_department" model="res.groups">
+	 <field name="name">User</field>
+	 <field name="category_id" ref="module_category_purchase_department"/>
+	 <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+</record>
+
+<!-- Purchase Manager Group-->
+<record id="group_purchase_manager" model="res.groups">
+	 <field name="name">Manager</field>
+	 <field name="category_id" ref="module_category_purchase_department"/>
+	 <field name="implied_ids" eval="[(4, ref('group_purchase_department'))]"/>
+</record>
+
+<!-- Testing User Group-->
+<record id="group_testing_department" model="res.groups">
+	 <field name="name">User</field>
+	 <field name="category_id" ref="module_category_testing_department"/>
+	 <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+</record>
+
+<!-- Testing Manager Group-->
+<record id="group_testing_manager" model="res.groups">
+	 <field name="name">Manager</field>
+	 <field name="category_id" ref="module_category_testing_department"/>
+	 <field name="implied_ids" eval="[(4, ref('group_testing_department'))]"/>
+</record>
+
+<!-- Accounting User Group-->
+<record id="group_accounting_department" model="res.groups">
+	 <field name="name">User</field>
+	 <field name="category_id" ref="module_category_accounting_department"/>
+	 <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+</record>
+
+<!-- Accounting Manager Group-->
+<record id="group_accounting_manager" model="res.groups">
+	 <field name="name">Manager</field>
+	 <field name="category_id" ref="module_category_accounting_department"/>
+	 <field name="implied_ids" eval="[(4, ref('group_accounting_department'))]"/>
+</record>
+
+<!-- Packing User Group-->
+<record id="group_packing_department" model="res.groups">
+	 <field name="name">User</field>
+	 <field name="category_id" ref="module_category_packing_department"/>
+	 <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+</record>
+
+<!-- Accounting Manager Group-->
+<record id="group_packing_manager" model="res.groups">
+	 <field name="name">Manager</field>
+	 <field name="category_id" ref="module_category_packing_department"/>
+	 <field name="implied_ids" eval="[(4, ref('group_packing_department'))]"/>
+</record>
+
+</odoo>
