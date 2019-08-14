@@ -15,11 +15,13 @@
     'data': [
 
         'views/user_view.xml',
-        'views/menu.xml',
         'views/crm_view.xml',
         'views/service_view.xml',
         'views/project_view.xml',
         'data/crm_data.xml',
+        'data/ir_sequence.xml',
+        'views/menu.xml',
+
     ],
     "auto_install" : False,
     "installable"  : True,

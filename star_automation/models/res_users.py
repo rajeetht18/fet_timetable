@@ -2,6 +2,47 @@
 
 from odoo import models, fields, api, _
 
+class UsersCategory(models.Model):
+    _name = 'users.category'
+
+    name = fields.Char("Name")
+    desc = fields.Char("Description")
+
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    partner_category_id = fields.Many2one('users.category',"Partner Category")
+    partner_reference = fields.Char("Reference",readonly="1")
+
+    @api.multi
+    @api.depends('city','state_id')
+    def name_get(self):
+        res = super(ResPartner, self).name_get()
+        result = []
+        for record in self:
+            name = record.name+'('+ str(record.partner_reference) +'-'+ str(record.city) +'-'+str(record.state_id.name) +')'
+            result.append((record.id,name))
+        print (result)
+        return result
+
+    @api.model
+    def name_search(self, name, args=None, operator='ilike', limit=100):
+        args = args or []
+        recs = self.browse()
+        if name:
+            print (name,'name---------------->>>>')
+            recs = self.search([('city','ilike',name),('state_id.name','ilike',name)] + args, limit=limit)
+            print("=-----------",recs,'\n\n\n')
+        if not recs:
+            recs = self.search([('name', operator, name)] + args, limit=limit)
+        return recs.name_get()
+
+    @api.model
+    def create(self,vals):
+        print ("----------->>>>")
+        vals['partner_reference'] = self.env['ir.sequence'].next_by_code('partner.reference') or _('New')
+        return super(ResPartner, self).create(vals)
+
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
@@ -13,6 +54,8 @@ class ResUsers(models.Model):
     accnt_dptmnt = fields.Selection([('user','User'),('manager','Manager')],'Accounts Department')
     packing_dptmnt = fields.Selection([('user','User'),('manager','Manager')],'Packing Department')
     administrator = fields.Selection([('user','User'),('manager','Manager')],'Administrator')
+
+
 
 
     @api.multi

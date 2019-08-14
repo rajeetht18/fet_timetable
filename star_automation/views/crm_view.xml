@@ -1,27 +1,264 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+<!--Brand Form View-->
+	<record id="lead_brand_form_view" model="ir.ui.view">
+	<field name="name">lead.brand.form.view</field>
+	<field name="model">lead.brand</field>
+	<field name="arch" type="xml">
+		<form string="Brand">
+			<sheet>
+			<group>
+				<group>
+					<field name="name"/>
+					<field name="desc"/>
+				</group>
+			<group>
+				<field name="avail"/>
+			</group>
+		</group>
+	</sheet>
+	</form>
+	</field>
+	</record>
+
+	<!--Brand Tree View-->
+	<record id="lead_brand_tree_view" model="ir.ui.view">
+	<field name="name">lead.brand.tree.view</field>
+	<field name="model">lead.brand</field>
+	<field name="arch" type="xml">
+		<tree string="Brand">
+					<field name="name"/>
+					<field name="desc"/>
+				<field name="avail"/>
+	</tree>
+	</field>
+	</record>
+
+	<!--Brand Action-->
+	<record id="action_crm_lead_brand" model="ir.actions.act_window">
+			<field name="name">Lead Brand</field>
+			<field name="res_model">lead.brand</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="lead_brand_tree_view"/>
+	</record>
+
+
+	<!--Series Form View-->
+		<record id="lead_series_form_view" model="ir.ui.view">
+		<field name="name">lead.series.form.view</field>
+		<field name="model">lead.series</field>
+		<field name="arch" type="xml">
+			<form string="Series">
+				<sheet>
+				<group>
+					<group>
+						<field name="name"/>
+						<field name="desc"/>
+					</group>
+				<group>
+					<field name="avail"/>
+				</group>
+			</group>
+		</sheet>
+		</form>
+		</field>
+		</record>
+
+		<!--Series Tree View-->
+		<record id="lead_series_tree_view" model="ir.ui.view">
+		<field name="name">lead.series.tree.view</field>
+		<field name="model">lead.series</field>
+		<field name="arch" type="xml">
+			<tree string="Brand">
+						<field name="name"/>
+						<field name="desc"/>
+					<field name="avail"/>
+		</tree>
+		</field>
+		</record>
+
+		<!-- Series Action-->
+		<record id="action_crm_lead_series" model="ir.actions.act_window">
+				<field name="name">Lead Series</field>
+				<field name="res_model">lead.series</field>
+				<field name="view_type">form</field>
+				<field name="view_mode">form,tree</field>
+				<field name="view_id" ref="lead_series_tree_view"/>
+		</record>
+
+		<!--Capacity Form View-->
+			<record id="lead_capacity_form_view" model="ir.ui.view">
+			<field name="name">lead.capacity.form.view</field>
+			<field name="model">lead.capacity</field>
+			<field name="arch" type="xml">
+				<form string="Capacity">
+					<sheet>
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="desc"/>
+						</group>
+					<group>
+						<field name="avail"/>
+					</group>
+				</group>
+			</sheet>
+			</form>
+			</field>
+			</record>
+
+			<!--Series Tree View-->
+			<record id="lead_capacity_tree_view" model="ir.ui.view">
+			<field name="name">lead.capacity.tree.view</field>
+			<field name="model">lead.capacity</field>
+			<field name="arch" type="xml">
+				<tree string="capacity">
+							<field name="name"/>
+							<field name="desc"/>
+						<field name="avail"/>
+			</tree>
+			</field>
+			</record>
+
+			<!-- Series Action-->
+			<record id="action_crm_lead_capacity" model="ir.actions.act_window">
+					<field name="name">Lead Capacity</field>
+					<field name="res_model">lead.capacity</field>
+					<field name="view_type">form</field>
+					<field name="view_mode">form,tree</field>
+					<field name="view_id" ref="lead_capacity_tree_view"/>
+			</record>
+
+			<!--Fault Form View-->
+				<record id="lead_fault_form_view" model="ir.ui.view">
+				<field name="name">lead.fault.form.view</field>
+				<field name="model">lead.fault</field>
+				<field name="arch" type="xml">
+					<form string="Fault">
+						<sheet>
+						<group>
+							<group>
+								<field name="name"/>
+								<field name="desc"/>
+							</group>
+						<group>
+							<field name="avail"/>
+						</group>
+					</group>
+				</sheet>
+				</form>
+				</field>
+				</record>
+
+				<!--Fault Tree View-->
+				<record id="lead_fault_tree_view" model="ir.ui.view">
+				<field name="name">lead.fault.tree.view</field>
+				<field name="model">lead.fault</field>
+				<field name="arch" type="xml">
+					<tree string="Fault">
+								<field name="name"/>
+								<field name="desc"/>
+							<field name="avail"/>
+				</tree>
+				</field>
+				</record>
+
+				<!-- Fault Action-->
+				<record id="action_crm_lead_fault" model="ir.actions.act_window">
+						<field name="name">Lead Fault</field>
+						<field name="res_model">lead.fault</field>
+						<field name="view_type">form</field>
+						<field name="view_mode">form,tree</field>
+						<field name="view_id" ref="lead_fault_tree_view"/>
+				</record>
+
+
+				<!--Solution Form View-->
+					<record id="lead_solution_form_view" model="ir.ui.view">
+					<field name="name">lead.solution.form.view</field>
+					<field name="model">lead.solution</field>
+					<field name="arch" type="xml">
+						<form string="Solution">
+							<sheet>
+							<group>
+								<group>
+									<field name="name"/>
+									<field name="desc"/>
+								</group>
+							<group>
+								<field name="avail"/>
+							</group>
+						</group>
+					</sheet>
+					</form>
+					</field>
+					</record>
+
+					<!--Solution Tree View-->
+					<record id="lead_solution_tree_view" model="ir.ui.view">
+					<field name="name">lead.solution.tree.view</field>
+					<field name="model">lead.solution</field>
+					<field name="arch" type="xml">
+						<tree string="Solution">
+									<field name="name"/>
+									<field name="desc"/>
+								<field name="avail"/>
+					</tree>
+					</field>
+					</record>
+
+					<!-- Solution Action-->
+					<record id="action_crm_lead_solution" model="ir.actions.act_window">
+							<field name="name">Lead Solution</field>
+							<field name="res_model">lead.solution</field>
+							<field name="view_type">form</field>
+							<field name="view_mode">form,tree</field>
+							<field name="view_id" ref="lead_solution_tree_view"/>
+					</record>
+
+	<!--CRM Opportunity View-->
+	<record id="crm_case_form_view_oppor_inherit" model="ir.ui.view">
+	<field name="name">crm.lead.form.oppor.inherit</field>
+	<field name="model">crm.lead</field>
+	<field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+	<field name="arch" type="xml">
+		<xpath expr="//form/header/button[@name='%(crm.crm_lead_lost_action)d']" position="after">
+					<button name="action_service_agree_view" string="Convert to Services" type="object"
+									help="Convert to Services" class="oe_highlight" attrs="{'invisible': [('service_count', '>', 0)]}"/>
+		</xpath>
+		<xpath expr="//div[@name='button_box']" position="inside">
+	    <button type="object" name="action_view_services" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('probability', '!=', 100)]}" >
+	        <field name="service_count" widget="statinfo" string="Services"/>
+	        <field name="service_ids" invisible="1"/>
+	    </button>
+		</xpath>
+	</field>
+	</record>
+
 <!--CRM View-->
 	<record id="crm_case_form_view_leads_inherit" model="ir.ui.view">
   <field name="name">crm.lead.form.lead.inherit</field>
   <field name="model">crm.lead</field>
 	<field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
   <field name="arch" type="xml">
-		<xpath expr="//div[@name='button_box']" position="inside">
+
+		<!-- <xpath expr="//div[@name='button_box']" position="inside">
 	    <button type="object" name="action_view_services" class="oe_stat_button" icon="fa-pencil-square-o">
 	        <field name="service_count" widget="statinfo" string="Services"/>
 	        <field name="service_ids" invisible="1"/>
 	    </button>
-		</xpath>
+		</xpath> -->
 
-		<xpath expr="//form/header/button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="attributes">
+		<!-- <xpath expr="//form/header/button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="attributes">
 			<attribute name="attrs">{'invisible':1}</attribute>
-		</xpath>
+		</xpath> -->
 
-		<xpath expr="//form/header/button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="after">
+		<!-- <xpath expr="//form/header/button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="after">
 					<button name="%(crm.action_crm_lead2opportunity_partner)d" string="Convert to Services" type="action"
 									help="Convert to Services" class="oe_highlight" attrs="{'invisible': [('service_count', '>', 0)]}"/>
-		</xpath>
+		</xpath> -->
 
 		<xpath expr="//page[@name='extra']" position="attributes">
 			<attribute name="attrs">{'invisible':1}</attribute>
@@ -29,6 +266,20 @@
 
 		<xpath expr="//field[@name='user_id']" position="attributes">
 			<attribute name="string">Responsible</attribute>
+		</xpath>
+
+		<xpath expr="//field[@name='description']" position="before">
+			<group>
+				<group>
+					<field name="brand"/>
+					<field name="series"/>
+					<field name="capacity"/>
+			</group>
+			<group>
+				<field name="fault"/>
+				<field name="solution"/>
+		</group>
+		</group>
 		</xpath>
 
 	</field>
@@ -120,7 +371,7 @@
 
 
 <!--CRM Wizard Form View-->
-<record id="crm_lead_oppo_form_view_inherit" model="ir.ui.view">
+<!-- <record id="crm_lead_oppo_form_view_inherit" model="ir.ui.view">
 <field name="name">crm.lead.oppo.form.view.inherit</field>
 <field name="model">crm.lead2opportunity.partner</field>
 <field name="inherit_id" ref="crm.view_crm_lead2opportunity_partner"/>
@@ -149,16 +400,16 @@
 	</xpath>
 
 </field>
-</record>
+</record> -->
 
-<record id="crm.action_crm_lead2opportunity_partner" model="ir.actions.act_window">
+<!-- <record id="crm.action_crm_lead2opportunity_partner" model="ir.actions.act_window">
 		<field name="name">Convert to Service</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">crm.lead2opportunity.partner</field>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm.view_crm_lead2opportunity_partner"/>
 		<field name="target">new</field>
-</record>
+</record> -->
 
 <!--CRM Wizard Form View-->
 <!-- <record id="service_agreement_form_view_inherit" model="ir.ui.view">

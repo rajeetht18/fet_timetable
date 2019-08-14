@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+<!-- partner View-->
+	<record id="view_partner_form_inherit" model="ir.ui.view">
+		<field name="name">view_partner_form_inherit</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='category_id']" position="after">
+	          	<field name="partner_category_id"/>
+			</xpath>
+
+			<xpath expr="//field[@name='type']" position="before">
+	          	<field name="partner_reference"/>
+			</xpath>
+		</field>
+	</record>
+
 <!-- view_users_form_inherit -->
-<!-- <record id="view_users_form_inherit" model="ir.ui.view">
+<record id="view_users_form_inherit" model="ir.ui.view">
 	<field name="name">view_users_form_inherit</field>
 	<field name="model">res.users</field>
 	<field name="inherit_id" ref="base.view_users_form"/>
 	<field name="arch" type="xml">
-		<xpath expr="//sheet/notebook/page[@name='access_rights']" position="attributes">
+
+		 <xpath expr="//sheet/notebook/page[@name='access_rights']" position="attributes">
           	<attribute name="attrs">{'invisible':1}</attribute>
 		</xpath>
 		<xpath expr="//sheet/notebook/page[@name='access_rights']" position="after">
@@ -34,7 +51,7 @@
 			</page>
 	</xpath>
 	</field>
-</record> -->
+</record>
 
 <!-- Front Office Group Category-->
 <record model="ir.module.category" id="module_category_frontoffice_department">
