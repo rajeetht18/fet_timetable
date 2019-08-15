@@ -47,12 +47,20 @@
 					parent="menu_service_timesheets"
 					action="hr_timesheet.timesheet_action_all"/>
 
+
+					<!--Equip config-->
+			<menuitem
+					id="menu_crm_equip_config"
+					name= "Equipment Config"
+					parent="crm.crm_menu_config"
+					sequence="1"/>
+
 			<!--Brand Config-->
 			<menuitem
 					id="menu_crm_config_brand"
 					name= "Brand"
 					action="action_crm_lead_brand"
-					parent="crm.crm_menu_config"
+					parent="menu_crm_equip_config"
 					sequence="1"/>
 
 		<!--Series Config-->
@@ -60,7 +68,7 @@
 				id="menu_crm_config_series"
 				name= "Series"
 				action="action_crm_lead_series"
-				parent="crm.crm_menu_config"
+				parent="menu_crm_equip_config"
 				sequence="2"/>
 
 		<!--Capacity Config-->
@@ -68,7 +76,7 @@
 				id="menu_crm_config_capacity"
 				name= "Capacity"
 				action="action_crm_lead_capacity"
-				parent="crm.crm_menu_config"
+				parent="menu_crm_equip_config"
 				sequence="3"/>
 
 		<!--Fault Config-->
@@ -76,7 +84,7 @@
 				id="menu_crm_config_fault"
 				name= "Fault"
 				action="action_crm_lead_fault"
-				parent="crm.crm_menu_config"
+				parent="menu_crm_equip_config"
 				sequence="4"/>
 
 	<!--Solution Config-->
@@ -84,7 +92,7 @@
 			id="menu_crm_config_solution"
 			name= "Solution"
 			action="action_crm_lead_solution"
-			parent="crm.crm_menu_config"
+			parent="menu_crm_equip_config"
 			sequence="5"/>
 
 

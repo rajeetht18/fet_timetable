@@ -5,35 +5,35 @@ from odoo import models, fields, api, _
 class LeadBrand(models.Model):
     _name = 'lead.brand'
 
-    name = fields.Char("Name")
+    name = fields.Char("Name",required="1")
     desc = fields.Char("Description")
     avail = fields.Boolean("Available")
 
 class LeadSeries(models.Model):
     _name = 'lead.series'
 
-    name = fields.Char("Name")
+    name = fields.Char("Name",required="1")
     desc = fields.Char("Description")
     avail = fields.Boolean("Available")
 
 class LeadCapacity(models.Model):
     _name = 'lead.capacity'
 
-    name = fields.Char("Name")
+    name = fields.Char("Name",required="1")
     desc = fields.Char("Description")
     avail = fields.Boolean("Available")
 
 class LeadFault(models.Model):
     _name = 'lead.fault'
 
-    name = fields.Char("Name")
+    name = fields.Char("Name",required="1")
     desc = fields.Char("Description")
     avail = fields.Boolean("Available")
 
 class LeadSolution(models.Model):
     _name = 'lead.solution'
 
-    name = fields.Char("Name")
+    name = fields.Char("Name",required="1")
     desc = fields.Char("Description")
     avail = fields.Boolean("Available")
 
@@ -50,8 +50,18 @@ class Lead(models.Model):
     solution = fields.Many2one('lead.solution',"Solution")
     cust_exist = fields.Boolean("Existing Customer")
     exist_partner_id = fields.Many2one("res.partner","Customer")
-    # partner_id = fields.Many2one('res.partner', string='Customer', track_visibility='always', index=True,
-    #     help="Linked partner (optional). Usually created when converting the lead.")
+
+    @api.multi
+    def redirect_opportunity_view(self):
+        brand_id = self.brand.id or False
+        series_id = self.series.id or False
+        fault_id = self.fault.id or False
+        capacity_id = self.capacity.id or False
+        solution_id = self.solution.id or False
+        context = self._context.copy()
+        context.update({'default_brand':brand_id,'default_series':series_id,'default_fault':fault_id,'default_capacity':capacity_id,'default_solution':solution_id})
+        res = super(Lead,self).redirect_opportunity_view()
+        return res
 
     @api.multi
     def action_service_agree_view(self):

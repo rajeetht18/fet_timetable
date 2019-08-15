@@ -14,8 +14,20 @@ class ResPartner(models.Model):
     partner_category_id = fields.Many2one('users.category',"Partner Category")
     partner_reference = fields.Char("Reference",readonly="1")
 
+    # @api.multi
+    # def name_get(self):
+    #     res = super(ResPartner, self).name_get()
+    #     ret_value = []
+    #     for value in res:
+    #         mobile_rec = self.browse(value[0])
+    #         if mobile_rec.mobile:
+    #            ret_value.append((value[0], "%s [%s]"%(value[1], mobile_rec.mobile)))
+    #         else:
+    #             ret_value.append((value[0], "%s "%(value[1])))
+    #     return ret_value
+
+
     @api.multi
-    @api.depends('city','state_id')
     def name_get(self):
         res = super(ResPartner, self).name_get()
         result = []
@@ -30,16 +42,16 @@ class ResPartner(models.Model):
         args = args or []
         recs = self.browse()
         if name:
-            print (name,'name---------------->>>>')
-            recs = self.search([('city','ilike',name),('state_id.name','ilike',name)] + args, limit=limit)
-            print("=-----------",recs,'\n\n\n')
+            if self.search([('city','ilike',name)] + args, limit=limit):
+                recs = self.search([('city','ilike',name)] + args, limit=limit)
+            elif self.search([('state_id.name','ilike',name)] + args, limit=limit):
+                recs = self.search([('state_id.name','ilike',name)] + args, limit=limit)
         if not recs:
             recs = self.search([('name', operator, name)] + args, limit=limit)
         return recs.name_get()
 
     @api.model
     def create(self,vals):
-        print ("----------->>>>")
         vals['partner_reference'] = self.env['ir.sequence'].next_by_code('partner.reference') or _('New')
         return super(ResPartner, self).create(vals)
 
