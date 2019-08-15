@@ -211,7 +211,7 @@
 
 					<!-- Solution Action-->
 					<record id="action_crm_lead_solution" model="ir.actions.act_window">
-							<field name="name">Lead Solution</field>
+							<field name="name">Solution Needed</field>
 							<field name="res_model">lead.solution</field>
 							<field name="view_type">form</field>
 							<field name="view_mode">form,tree</field>
@@ -237,9 +237,12 @@
 		</group>
 		</group>
 		</xpath>
+		<xpath expr="//field[@name='partner_name']" position="attributes">
+			<attribute name="attrs">{'invisible':1}</attribute>
+		</xpath>
 		<xpath expr="//form/header/button[@name='%(crm.crm_lead_lost_action)d']" position="after">
 					<button name="action_service_agree_view" string="Convert to Services" type="object"
-									help="Convert to Services" class="oe_highlight" attrs="{'invisible': [('service_count', '>', 0)]}"/>
+									help="Convert to Services" class="oe_highlight" attrs="{'invisible': [('service_count', '>', 0),('probability', '!=', 100)]}"/>
 		</xpath>
 		<xpath expr="//div[@name='button_box']" position="inside">
 	    <button type="object" name="action_view_services" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('probability', '!=', 100)]}" >
@@ -275,7 +278,12 @@
 					<button name="%(crm.action_crm_lead2opportunity_partner)d" string="Convert to Services" type="action"
 									help="Convert to Services" class="oe_highlight" attrs="{'invisible': [('service_count', '>', 0)]}"/>
 		</xpath> -->
-
+		<xpath expr="//field[@name='partner_id']" position="replace">
+			<field name="cust_exist"/>
+		</xpath>
+		<xpath expr="//field[@name='cust_exist']" position="after">
+			<field name="partner_id" attrs="{'invisible':[('cust_exist','=',False)]}"/>
+		</xpath>
 		<xpath expr="//page[@name='extra']" position="attributes">
 			<attribute name="attrs">{'invisible':1}</attribute>
 		</xpath>

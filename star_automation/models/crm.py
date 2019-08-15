@@ -47,9 +47,8 @@ class Lead(models.Model):
     series = fields.Many2one('lead.series',"Series")
     capacity = fields.Many2one('lead.capacity',"Capacity")
     fault = fields.Many2one('lead.fault',"Fault")
-    solution = fields.Many2one('lead.solution',"Solution")
+    solution = fields.Many2one('lead.solution',"Solution Needed")
     cust_exist = fields.Boolean("Existing Customer")
-    exist_partner_id = fields.Many2one("res.partner","Customer")
 
     @api.multi
     def redirect_opportunity_view(self):
@@ -65,7 +64,8 @@ class Lead(models.Model):
 
     @api.multi
     def action_service_agree_view(self):
-        lead = self.env['crm.lead'].browse(self._context['active_id'])
+        lead = self.id
+        # lead = self.env['crm.lead'].browse(self._context['active_id'])
         self_def_user = self.with_context(default_user_id=self.user_id.id)
         # partner_id = self_def_user._create_partner(
         #     lead.id, self.action, lead.partner_id.id)

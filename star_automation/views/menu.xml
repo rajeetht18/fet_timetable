@@ -2,9 +2,9 @@
 <odoo>
 
 	<!-- Group to make menus invisible-->
-	<record id="group_invisible" model="res.groups">
+	<!-- <record id="group_invisible" model="res.groups">
     <field name="name">Invisible</field>
-  </record>
+  </record> -->
 
 	<!--Report Pipeline Menu Hide-->
  <!-- <record model="ir.ui.menu" id="crm.crm_opportunity_report_menu">
@@ -90,7 +90,7 @@
 	<!--Solution Config-->
 	<menuitem
 			id="menu_crm_config_solution"
-			name= "Solution"
+			name= "Solution Needed"
 			action="action_crm_lead_solution"
 			parent="menu_crm_equip_config"
 			sequence="5"/>
