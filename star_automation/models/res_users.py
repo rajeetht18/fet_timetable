@@ -72,7 +72,6 @@ class ResUsers(models.Model):
 
     @api.multi
     def _update_user_groups_view(self):
-        print ("kooooooooooooooooooooooooooooooooooooooooiiii")
         """ Modify the view with xmlid ``base.user_groups_view``, which inherits
             the user form view, and introduces the reified group fields.
         """

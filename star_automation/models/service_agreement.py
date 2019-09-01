@@ -18,17 +18,18 @@ class Task(models.Model):
      group_id = fields.Many2one('service.agreement.group','Service')
      department_id = fields.Many2one('hr.department',"Department")
      service_task_id = fields.Many2one('service.agreement','Services')
+     sale_order_id = fields.Many2one('sale.order',"Sale Order")
 
-# class service_history_line(models.Model):
-#     _name = 'service.history.line'
-#
-#     department_id = fields.Many2one('hr.department',"Department")
-#     duration = fields.Char("Duration")
-#     start_date = fields.Date("Start Date")
-#     expected_end_date = fields.Date("Expected End Date")
-#     actual_end_date = fields.Date("End Date")
-#     service_history_id = fields.Many2one('service.agreement','Services')
-#     group_id = fields.Many2one('service.agreement.group','Service')
+class service_history_line(models.Model):
+    _name = 'service.history.line'
+
+    department_id = fields.Many2one('hr.department',"Department")
+    duration = fields.Char("Duration")
+    start_date = fields.Date("Start Date")
+    expected_end_date = fields.Date("Expected End Date")
+    actual_end_date = fields.Date("End Date")
+    service_history_id = fields.Many2one('service.agreement','Services')
+    group_id = fields.Many2one('service.agreement.group','Service')
 
 class service_agreement(models.Model):
     _inherit = 'service.agreement'

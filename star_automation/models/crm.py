@@ -6,36 +6,36 @@ class LeadBrand(models.Model):
     _name = 'lead.brand'
 
     name = fields.Char("Name",required="1")
-    desc = fields.Char("Description")
-    avail = fields.Boolean("Available")
+    desc = fields.Text("Description")
+    active = fields.Boolean("Active")
 
 class LeadSeries(models.Model):
     _name = 'lead.series'
 
     name = fields.Char("Name",required="1")
-    desc = fields.Char("Description")
-    avail = fields.Boolean("Available")
+    desc = fields.Text("Description")
+    active = fields.Boolean("Active")
 
 class LeadCapacity(models.Model):
     _name = 'lead.capacity'
 
     name = fields.Char("Name",required="1")
-    desc = fields.Char("Description")
-    avail = fields.Boolean("Available")
+    desc = fields.Text("Description")
+    active = fields.Boolean("Active")
 
 class LeadFault(models.Model):
     _name = 'lead.fault'
 
     name = fields.Char("Name",required="1")
-    desc = fields.Char("Description")
-    avail = fields.Boolean("Available")
+    desc = fields.Text("Description")
+    active = fields.Boolean("Active")
 
 class LeadSolution(models.Model):
     _name = 'lead.solution'
 
     name = fields.Char("Name",required="1")
-    desc = fields.Char("Description")
-    avail = fields.Boolean("Available")
+    desc = fields.Text("Description")
+    active = fields.Boolean("Active")
 
 
 class Lead(models.Model):

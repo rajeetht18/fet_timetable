@@ -14,7 +14,7 @@
 					<field name="desc"/>
 				</group>
 			<group>
-				<field name="avail"/>
+				<field name="active"/>
 			</group>
 		</group>
 	</sheet>
@@ -30,7 +30,7 @@
 		<tree string="Brand">
 					<field name="name"/>
 					<field name="desc"/>
-				<field name="avail"/>
+				<field name="active"/>
 	</tree>
 	</field>
 	</record>
@@ -58,7 +58,7 @@
 						<field name="desc"/>
 					</group>
 				<group>
-					<field name="avail"/>
+					<field name="active"/>
 				</group>
 			</group>
 		</sheet>
@@ -74,7 +74,7 @@
 			<tree string="Brand">
 						<field name="name"/>
 						<field name="desc"/>
-					<field name="avail"/>
+					<field name="active"/>
 		</tree>
 		</field>
 		</record>
@@ -101,7 +101,7 @@
 							<field name="desc"/>
 						</group>
 					<group>
-						<field name="avail"/>
+						<field name="active"/>
 					</group>
 				</group>
 			</sheet>
@@ -117,7 +117,7 @@
 				<tree string="capacity">
 							<field name="name"/>
 							<field name="desc"/>
-						<field name="avail"/>
+						<field name="active"/>
 			</tree>
 			</field>
 			</record>
@@ -144,7 +144,7 @@
 								<field name="desc"/>
 							</group>
 						<group>
-							<field name="avail"/>
+							<field name="active"/>
 						</group>
 					</group>
 				</sheet>
@@ -160,7 +160,7 @@
 					<tree string="Fault">
 								<field name="name"/>
 								<field name="desc"/>
-							<field name="avail"/>
+							<field name="active"/>
 				</tree>
 				</field>
 				</record>
@@ -188,7 +188,7 @@
 									<field name="desc"/>
 								</group>
 							<group>
-								<field name="avail"/>
+								<field name="active"/>
 							</group>
 						</group>
 					</sheet>
@@ -204,7 +204,7 @@
 						<tree string="Solution">
 									<field name="name"/>
 									<field name="desc"/>
-								<field name="avail"/>
+								<field name="active"/>
 					</tree>
 					</field>
 					</record>
@@ -227,29 +227,35 @@
 		<xpath expr="//field[@name='description']" position="before">
 			<group>
 				<group>
-					<field name="brand" domain="[('avail','=',True)]"/>
-					<field name="series" domain="[('avail','=',True)]"/>
-					<field name="capacity" domain="[('avail','=',True)]"/>
+					<field name="brand" domain="[('active','=',True)]"/>
+					<field name="series" domain="[('active','=',True)]"/>
+					<field name="capacity" domain="[('active','=',True)]"/>
 			</group>
 			<group>
-				<field name="fault" domain="[('avail','=',True)]"/>
-				<field name="solution" domain="[('avail','=',True)]"/>
+				<field name="fault" domain="[('active','=',True)]"/>
+				<field name="solution" domain="[('active','=',True)]"/>
 		</group>
 		</group>
 		</xpath>
 		<xpath expr="//field[@name='partner_name']" position="attributes">
 			<attribute name="attrs">{'invisible':1}</attribute>
 		</xpath>
-		<xpath expr="//form/header/button[@name='%(crm.crm_lead_lost_action)d']" position="after">
+		<!--Hid for the time being..!!!-->
+		<!-- <xpath expr="//form/header/button[@name='%(crm.crm_lead_lost_action)d']" position="after">
 					<button name="action_service_agree_view" string="Convert to Services" type="object"
 									help="Convert to Services" class="oe_highlight" attrs="{'invisible': [('service_count', '>', 0),('probability', '!=', 100)]}"/>
-		</xpath>
-		<xpath expr="//div[@name='button_box']" position="inside">
+		</xpath> -->
+		<!-- <xpath expr="//div[@name='button_box']" position="inside">
 	    <button type="object" name="action_view_services" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible': [('probability', '!=', 100)]}" >
 	        <field name="service_count" widget="statinfo" string="Services"/>
 	        <field name="service_ids" invisible="1"/>
 	    </button>
+		</xpath> -->
+
+		<xpath expr="//div[@name='button_box']/button[2]" position="attributes">
+	   <attribute name="attrs">{'invisible':[('probability','!=',100)]}</attribute>
 		</xpath>
+
 	</field>
 	</record>
 
@@ -295,13 +301,13 @@
 		<xpath expr="//field[@name='description']" position="before">
 			<group>
 				<group>
-					<field name="brand" domain="[('avail','=',True)]"/>
-					<field name="series" domain="[('avail','=',True)]"/>
-					<field name="capacity" domain="[('avail','=',True)]"/>
+					<field name="brand" domain="[('active','=',True)]"/>
+					<field name="series" domain="[('active','=',True)]"/>
+					<field name="capacity" domain="[('active','=',True)]"/>
 			</group>
 			<group>
-				<field name="fault" domain="[('avail','=',True)]"/>
-				<field name="solution" domain="[('avail','=',True)]"/>
+				<field name="fault" domain="[('active','=',True)]"/>
+				<field name="solution" domain="[('active','=',True)]"/>
 		</group>
 		</group>
 		</xpath>
@@ -446,6 +452,18 @@
 		</xpath>
 	</field>
 </record> -->
+
+
+<record id="crm_case_form_view_oppor_salecrm_inherit" model="ir.ui.view">
+		<field name="name">crm.lead.oppor.inherited.crm.starauto</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+		<field name="arch" type="xml">
+				<xpath expr="//button[@name='%(sale_crm.sale_action_quotations_new)d']" position="attributes">
+					<attribute name="attrs">{'invisible':[('probability','!=',100)]}</attribute>
+				</xpath>
+		</field>
+</record>
 
 
 </odoo>

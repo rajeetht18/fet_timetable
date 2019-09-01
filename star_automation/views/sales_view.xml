@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!--Sales Form View-->
+	 <record id="sales_form_view_inherit" model="ir.ui.view">
+		<field name="name">sale.order.form.view.inherit</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="arch" type="xml">
+      <xpath expr="//field[@name='name']" position="after">
+        <field name="project_id" invisible="1"/>
+        <!-- <field name="sale_task_ids.sale_task_id"/> -->
+    </xpath>
+      <xpath expr="//form/header" position="inside">
+         <button name="set_to_progress" string="Set to Progress" type="object" states="sale"/>
+         <button name="set_to_done" string="Set to Done" type="object" states="progress"/>
+      </xpath>
+      <xpath expr="//form/sheet/notebook/page[2]" position="after">
+          <page string="Inward Entry">
+            <field name="inward_ids" attrs="{'readonly': [('state', '!=', 'sale')]}">
+             <tree string="Inwards" editable="bottom">
+                 <field name="product_id" context="{'default_type':'service'}" required="1"/>
+                 <field name="reference" required="1"/>
+                 <field name="qty" required="1"/>
+                 <field name="estimated_val" required="1"/>
+             </tree>
+           </field>
+           <group class="oe_subtotal_footer oe_right">
+              <field name="tot_qty"/>
+              <field name="tot_est_val"/>
+            </group>
+          </page>
+           <page string="History Card">
+             <field name="sale_task_ids" context="{'default_partner_id': partner_id,'default_project_id':project_id}" attrs="{'readonly':[('state', '!=', 'progress')]}" editable="top">
+              <tree string="History Lines" >
+                  <field name="sale_task_id"/>
+                  <field name="name" string="Title"/>
+                  <field name="group_id"/>
+                  <field name="department_id"/>
+                  <field name="planned_hours" string="Duration" widget="float_time"/>
+                  <field name="date_deadline"/>
+              </tree>
+            </field>
+           </page>
+      </xpath>
+    </field>
+  </record>
+
+
+</odoo>
