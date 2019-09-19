@@ -2,9 +2,24 @@
 <odoo>
 
 	<!-- Group to make menus invisible-->
-	<!-- <record id="group_invisible" model="res.groups">
+	<record id="group_invisible" model="res.groups">
     <field name="name">Invisible</field>
-  </record> -->
+  </record>
+
+	<record model="ir.ui.menu" id="deltatech_service.menu_service_agreement">
+			<field name="groups_id" eval="[(6,0,[ref('group_invisible')])]"/>
+	</record>
+
+	<record model="ir.ui.menu" id="deltatech_service.menu_service_invoice">
+			<field name="groups_id" eval="[(6,0,[ref('group_invisible')])]"/>
+	</record>
+
+	<record model="ir.ui.menu" id="deltatech_service.menu_service_consumption">
+			<field name="groups_id" eval="[(6,0,[ref('group_invisible')])]"/>
+	</record>
+
+
+
 
 	<!--Report Pipeline Menu Hide-->
  <!-- <record model="ir.ui.menu" id="crm.crm_opportunity_report_menu">
@@ -95,5 +110,25 @@
 			parent="menu_crm_equip_config"
 			sequence="5"/>
 
+	<menuitem
+ 		id="sale_menu_services"
+ 		name="Services"
+		action="action_quotations"
+ 		parent="base.menu_service_agr"
+ 		sequence="1"/>
+
+	<menuitem
+ 		id="menu_inward_entry"
+ 		name="Inward Entry"
+		action="action_inwards"
+ 		parent="base.menu_service_agr"
+ 		sequence="2"/>
+
+	<menuitem
+ 		id="menu_history_card"
+ 		name="History Card"
+		action="action_history_cards"
+ 		parent="base.menu_service_agr"
+ 		sequence="3"/>
 
 </odoo>

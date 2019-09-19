@@ -1,0 +1,13 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+access_lead_brand_user,access_lead_brand,model_lead_brand,base.group_user,1,1,1,1
+access_lead_series_user,access_lead_series,model_lead_series,base.group_user,1,1,1,1
+access_lead_capacity_user,access_lead_capacity,model_lead_capacity,base.group_user,1,1,1,1
+access_lead_fault_user,access_lead_fault,model_lead_fault,base.group_user,1,1,1,1
+access_lead_solution_user,access_lead_solution,model_lead_solution,base.group_user,1,1,1,1
+
+
+access_users_category_user,access_users_category,model_users_category,base.group_user,1,1,1,1
+
+access_service_inwards_line_user,access_service_inwards_line,model_service_inwards_line,sales_team.group_sale_manager,1,1,1,1
+access_service_history_line_user,access_service_history_line,model_service_history_line,sales_team.group_sale_manager,1,1,1,1

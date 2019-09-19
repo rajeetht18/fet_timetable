@@ -11,7 +11,7 @@
     "website"      : "",
     'category': 'Accounting',
     'version': '1.1',
-    'depends': ['base','crm','deltatech_service','hr','project','sale_crm'],
+    'depends': ['base','crm','deltatech_service','hr','project','sale_crm','account'],
     'data': [
 
         'views/user_view.xml',
@@ -23,6 +23,7 @@
         'data/crm_data.xml',
         'data/ir_sequence.xml',
         'views/menu.xml',
+        'security/ir.model.access.csv'
 
     ],
     "auto_install" : False,

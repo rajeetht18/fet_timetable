@@ -466,4 +466,95 @@
 </record>
 
 
+<!--Inwards Form View-->
+	<record id="inward_entry_form_view" model="ir.ui.view">
+	<field name="name">inward.form.view</field>
+	<field name="model">service.inwards.line</field>
+	<field name="arch" type="xml">
+		<form string="Inward Entry">
+			<sheet>
+			<group>
+				<group>
+					<field name="product_id"/>
+					<field name="reference"/>
+				</group>
+			<group>
+				<field name="qty"/>
+				<field name="estimated_val"/>
+			</group>
+		</group>
+	</sheet>
+	</form>
+	</field>
+	</record>
+
+	<!--Inwards Tree View-->
+	<record id="inward_entry_tree_view" model="ir.ui.view">
+	<field name="name">inward.tree.view</field>
+	<field name="model">service.inwards.line</field>
+	<field name="arch" type="xml">
+		<tree string="Fault">
+					<field name="product_id"/>
+					<field name="reference"/>
+					<field name="qty"/>
+					<field name="estimated_val"/>
+	</tree>
+	</field>
+	</record>
+
+	<!-- Inwards Action-->
+	<record id="action_inwards" model="ir.actions.act_window">
+			<field name="name">Inward Entry</field>
+			<field name="res_model">service.inwards.line</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="inward_entry_tree_view"/>
+	</record>
+
+
+	<!--HC Form View-->
+		<record id="history_card_form_view" model="ir.ui.view">
+		<field name="name">history_card.form.view</field>
+		<field name="model">project.task</field>
+		<field name="arch" type="xml">
+			<form string="History Card">
+				<sheet>
+				<group>
+					<group>
+						<field name="name"/>
+						<field name="group_id"/>
+					</group>
+				<group>
+					<field name="department_id"/>
+					<field name="user_id"/>
+				</group>
+			</group>
+		</sheet>
+		</form>
+		</field>
+		</record>
+
+		<!--HC Tree View-->
+			<record id="history_card_tree_view" model="ir.ui.view">
+			<field name="name">history_card.tree.view</field>
+			<field name="model">project.task</field>
+			<field name="arch" type="xml">
+			<tree string="History Card">
+				<field name="name"/>
+				<field name="group_id"/>
+				<field name="department_id"/>
+				<field name="user_id"/>
+		</tree>
+		</field>
+		</record>
+
+		<!-- Inwards Action-->
+		<record id="action_history_cards" model="ir.actions.act_window">
+				<field name="name">History Cards</field>
+				<field name="res_model">project.task</field>
+				<field name="view_type">form</field>
+				<field name="view_mode">form,tree</field>
+				<field name="view_id" ref="history_card_tree_view"/>
+		</record>
+
 </odoo>
