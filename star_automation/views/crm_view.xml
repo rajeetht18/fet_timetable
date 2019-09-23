@@ -493,14 +493,28 @@
 	<field name="name">inward.tree.view</field>
 	<field name="model">service.inwards.line</field>
 	<field name="arch" type="xml">
-		<tree string="Fault">
+		<tree string="Inward Entry">
 					<field name="product_id"/>
 					<field name="reference"/>
 					<field name="qty"/>
 					<field name="estimated_val"/>
-	</tree>
+		</tree>
 	</field>
 	</record>
+
+	<record id="view_inward_def_filter" model="ir.ui.view">
+            <field name="name">inward.def.filter</field>
+            <field name="model">service.inwards.line</field>
+            <field name="arch" type="xml">
+				<search string="Search">
+					<filter name="move_status_prog_comp" string="Moves in Progress &amp; Completed" domain="['|',('service_status','=','progress'),('service_status','=','completed')]"/>
+					<filter name="move_status_prog" string="Moves in Progress" domain="[('service_status','=','progress')]"/>
+					<group expand="0" string="Group By">
+						<filter name="move_status_grp" string="Move Status" context="{'group_by':'service_status'}"/>
+					</group>
+				</search>
+            </field>
+        </record>
 
 	<!-- Inwards Action-->
 	<record id="action_inwards" model="ir.actions.act_window">
@@ -508,6 +522,8 @@
 			<field name="res_model">service.inwards.line</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
+			<field name="search_view_id" ref="view_inward_def_filter"/>
+			<field name="context">{'search_default_move_status_prog_comp':1}</field>
 			<field name="view_id" ref="inward_entry_tree_view"/>
 	</record>
 
@@ -539,11 +555,15 @@
 			<field name="name">history_card.tree.view</field>
 			<field name="model">project.task</field>
 			<field name="arch" type="xml">
-			<tree string="History Card">
+			<tree string="History Cards" decoration-danger="date_deadline &lt; current_date" decoration-muted="sale_state_done == True" decoration-success="sale_state_complete == True">
 				<field name="name"/>
 				<field name="group_id"/>
 				<field name="department_id"/>
 				<field name="user_id"/>
+				<field name="date_deadline"/>
+				<field name="sale_state_done" invisible="1"/>
+				<field name="sale_state_complete" invisible="1"/>
+
 		</tree>
 		</field>
 		</record>

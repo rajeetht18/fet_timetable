@@ -14,6 +14,8 @@
       <xpath expr="//form/header" position="inside">
          <button name="set_to_progress" string="Set to Progress" type="object" states="sale"/>
          <button name="set_to_done" string="Set to Done" type="object" states="progress"/>
+         <button name="set_to_complete" string="Set to Complete" type="object" states="done"/>
+
       </xpath>
       <xpath expr="//form/sheet/notebook/page[2]" position="after">
           <page string="Inward Entry">
@@ -31,7 +33,7 @@
             </group>
           </page>
            <page string="History Card">
-             <field name="sale_task_ids" context="{'default_partner_id': partner_id,'default_project_id':project_id}" attrs="{'readonly':[('state', '!=', 'progress')]}" editable="top">
+             <field name="sale_task_ids" context="{'default_sale_order_id': context.get('active_id')}" attrs="{'readonly':[('state', '!=', 'progress')]}" editable="top">
               <tree string="History Lines" >
                   <field name="sale_task_id"/>
                   <field name="name" string="Title"/>

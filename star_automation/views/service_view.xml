@@ -86,7 +86,16 @@
 			</field>
 	</record>
 
-
+	<record id="view_move_form_inherit_star_auto" model="ir.ui.view">
+            <field name="name">stock.inherit.star</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+					<field name="inward_id"/>
+                </xpath>
+            </field>
+        </record>
 
 	<!-- <menuitem name="Services Agreements" id="menu_service_agreement"
 						action="action_service_agreement" parent="base.menu_service_agr" sequence="100"/>

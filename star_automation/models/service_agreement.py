@@ -4,6 +4,7 @@ from odoo import models, fields, api, _
 
 class service_inwards(models.Model):
     _name = 'service.inwards.line'
+    _rec_name = 'product_id'
 
     product_id = fields.Many2one('product.product','Product')
     qty = fields.Integer('Quantity')
@@ -11,6 +12,7 @@ class service_inwards(models.Model):
     estimated_val = fields.Float('Estimated Value')
     service_id = fields.Many2one('service.agreement','Services')
     move_id = fields.Many2one('stock.move','Stock Move')
+    service_status = fields.Selection("Service Status",related='move_id.service_status',store=True)
 
 class Task(models.Model):
      _inherit = 'project.task'
@@ -19,6 +21,8 @@ class Task(models.Model):
      department_id = fields.Many2one('hr.department',"Department")
      service_task_id = fields.Many2one('service.agreement','Services')
      sale_order_id = fields.Many2one('sale.order',"Sale Order")
+     sale_state_done = fields.Boolean("Sale Done")
+     sale_state_complete = fields.Boolean("Sale Complete")
 
 class service_history_line(models.Model):
     _name = 'service.history.line'

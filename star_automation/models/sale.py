@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from odoo.exceptions import except_orm, Warning, RedirectWarning
 
 class service_inwards(models.Model):
     _inherit = 'service.inwards.line'
@@ -29,7 +30,9 @@ class SaleOrder(models.Model):
         ('progress','Progress'),
         ('done', 'Locked'),
         ('cancel', 'Cancelled'),
+        ('completed','Completed')
         ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
+
 
     @api.model
     def create(self, vals):
@@ -57,27 +60,70 @@ class SaleOrder(models.Model):
         return super(SaleOrder, self).unlink()
 
     @api.multi
+    def set_to_complete(self):
+        for rec in self:
+            if rec.sale_task_ids:
+                for task in rec.sale_task_ids:
+                    task.sale_state_done = False
+                    task.sale_state_complete = True
+            if rec.inward_ids:
+                if not self.company_id and self.company_id.default_src_location and self.company_id.default_dest_location:
+                    raise Warning("Setup Company Source Location and Destination Location Properly!")
+                else:
+                    for inward in rec.inward_ids:
+                        move = self.env['stock.move'].create({
+                            'name': inward.reference+" /Return",
+                            'location_id': self.company_id.default_dest_location.id,
+                            'location_dest_id': self.company_id.default_src_location.id,
+                            'product_id': inward.product_id.id,
+                            'product_uom': inward.product_id.uom_id.id,
+                            'product_uom_qty': inward.qty,
+                            'origin': self.name
+                        })
+                        move._action_confirm()
+                        move._action_assign()
+                        move.move_line_ids.write({'qty_done': inward.qty})
+                        move._action_done()
+                        move.inward_id = inward.id
+                        move.service_status = 'progress'
+            rec.state = 'completed'
+
+
+
+    @api.multi
     def set_to_done(self):
-        self.state = 'done'
+        for rec in self:
+            if rec.sale_task_ids:
+                for task in rec.sale_task_ids:
+                    task.sale_state_done = True
+            if rec.inward_ids:
+                for inward in rec.inward_ids:
+                    inward.move_id.service_status = 'completed'
+            rec.state = 'done'
 
     @api.multi
     def set_to_progress(self):
-        if self.inward_ids:
-            for inward in self.inward_ids:
-                move = self.env['stock.move'].create({
-                    'name': inward.reference,
-                    'location_id': self.company_id.default_src_location.id,
-                    'location_dest_id': self.company_id.default_dest_location.id,
-                    'product_id': inward.product_id.id,
-                    'product_uom': inward.product_id.uom_id.id,
-                    'product_uom_qty': inward.qty,
-                    'origin':self.name
-                })
-                move._action_confirm()
-                move._action_assign()
-                move.move_line_ids.write({'qty_done': inward.qty})
-                move._action_done()
-                inward.move_id = move.id
+        if not self.company_id and self.company_id.default_src_location and self.company_id.default_dest_location:
+            raise Warning("Setup Company Source Location and Destination Location Properly!")
+        else:
+            if self.inward_ids:
+                for inward in self.inward_ids:
+                    move = self.env['stock.move'].create({
+                        'name': inward.reference,
+                        'location_id': self.company_id.default_src_location.id,
+                        'location_dest_id': self.company_id.default_dest_location.id,
+                        'product_id': inward.product_id.id,
+                        'product_uom': inward.product_id.uom_id.id,
+                        'product_uom_qty': inward.qty,
+                        'origin':self.name
+                    })
+                    move._action_confirm()
+                    move._action_assign()
+                    move.move_line_ids.write({'qty_done': inward.qty})
+                    move._action_done()
+                    move.service_status = 'progress'
+                    move.inward_id = inward.id
+                    inward.move_id = move.id
         self.state = 'progress'
 
     @api.depends('inward_ids.qty')
