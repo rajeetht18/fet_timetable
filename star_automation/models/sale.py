@@ -88,17 +88,31 @@ class SaleOrder(models.Model):
                         move.service_status = 'progress'
             rec.state = 'completed'
 
-
-
     @api.multi
     def set_to_done(self):
         for rec in self:
+            thread_pool = self.pool.get('mail.thread')
             if rec.sale_task_ids:
                 for task in rec.sale_task_ids:
                     task.sale_state_done = True
+                    # Send Notification to partner of the task.
+                    task_notifctn = thread_pool.message_post(task,
+                            type="notification",
+                            subtype="mt_comment",
+                            subject = "TASK Notification",
+                            body = "Task Name:%s Deadline:%s"%(task.name,task.date_deadline),
+                            partner_ids = [(4,task.partner_id.id)])
+
             if rec.inward_ids:
                 for inward in rec.inward_ids:
                     inward.move_id.service_status = 'completed'
+
+            serv_notfctn = thread_pool.message_post(rec,
+                type="notification",
+                subtype="mt_comment",
+                subject = "Service Notification",
+                body = "Service Name:%s"%(rec.name),
+                partner_ids = [(4,self.env.uid)])
             rec.state = 'done'
 
     @api.multi
