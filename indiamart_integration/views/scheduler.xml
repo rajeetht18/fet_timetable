@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <data>
+        <record id="ir_cron_lead_api" model="ir.cron">
+        <field name="name">India Mart Lead Api</field>
+        <field name="active" eval="True"/>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="code">model._call_lead_api()</field>
+        <field name="state">code</field>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall" />
+        <!-- <field name="nextcall" >2017-06-26 21:07:59</field> -->
+        </record>
+
+
+    </data>
+
+</odoo>
