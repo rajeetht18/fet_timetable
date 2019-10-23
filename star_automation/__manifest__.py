@@ -6,12 +6,12 @@
     'summary': """
         ERP Integration""",
     'description': """Star Automation""",
-    "version"      : "0.6",
+    "version"      : "0.5",
     "author"       : "Noble Johney",
     "website"      : "",
     'category': 'Accounting',
     'version': '1.1',
-    'depends': ['base','hr_timesheet','crm','deltatech_service','hr','project','sale_crm','account','stock'],
+    'depends': ['base','hr_timesheet','crm','deltatech_service','hr','project','sale_crm','account','stock','sale'],
     'data': [
 
         'views/user_view.xml',

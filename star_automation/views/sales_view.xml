@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+	
+ <!--Sales Form View-->
+	 <record id="sales_form_view_inherit12" model="ir.ui.view">
+		<field name="name">sale.order.form.view.inherit.star</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+		<field name="arch" type="xml">
+         <xpath expr="//group[@name='sale_shipping']" position="inside">
+                <field name="default_src_location"/>
+                <field name="default_dest_location"/>
+        </xpath>
+    </field>
+    </record>
+
   <!--Sales Form View-->
 	 <record id="sales_form_view_inherit" model="ir.ui.view">
 		<field name="name">sale.order.form.view.inherit</field>
 		<field name="model">sale.order</field>
 		<field name="inherit_id" ref="sale.view_order_form"/>
 		<field name="arch" type="xml">
+      <!-- <xpath expr="//header/button[@name='action_quotation_send']" position="attributes">
+        <attribute name="attrs">{'invisible':1}</attribute>
+      </xpath> -->
+       <!-- <xpath expr="//group[@name='sale_shipping']" position="inside">
+                <field name="default_src_location"/>
+                <field name="default_dest_location"/>
+        </xpath> -->
       <xpath expr="//field[@name='name']" position="after">
         <field name="project_id" invisible="1"/>
         <!-- <field name="sale_task_ids.sale_task_id"/> -->
-    </xpath>
+      </xpath>
       <xpath expr="//form/header" position="inside">
          <button name="set_to_progress" string="Set to Progress" type="object" states="sale"/>
          <button name="set_to_done" string="Set to Done" type="object" states="progress"/>

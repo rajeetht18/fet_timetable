@@ -17,11 +17,33 @@ class Task(models.Model):
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    @api.model
+    def src_loc_default(self):
+        company = self.env['res.company'].search([('name','ilike','star')])[0]
+        if company:
+            return company.default_src_location.id
+        else:
+            return False
+
+    @api.model
+    def dest_loc_default(self):
+        company = self.env['res.company'].search([('name','ilike','star')])[0]
+        if company:
+            return company.default_dest_location.id
+        else:
+            return False
+
+
     sale_task_ids = fields.One2many('project.task','sale_task_id','History Lines')
     inward_ids = fields.One2many('service.inwards.line','sale_inward_id','Inwards')
     tot_qty = fields.Float("Inward Total Qty",compute="total_qty")
     tot_est_val = fields.Float("Total Estimated Value",compute="total_est_val")
     project_id = fields.Many2one('project.project',"Project")
+
+    # default_warehouse = fields.Many2one('stock.warehouse',string='Warehouse')
+    default_src_location = fields.Many2one('stock.location', string='Source Location', default = src_loc_default)
+    default_dest_location = fields.Many2one('stock.location', string='Destination Location',default = dest_loc_default)
+
 
     state = fields.Selection([
         ('draft', 'Quotation'),
@@ -122,6 +144,7 @@ class SaleOrder(models.Model):
         else:
             if self.inward_ids:
                 for inward in self.inward_ids:
+                    print(self.company_id.name,self.company_id.default_src_location.name,self.company_id.default_dest_location.name,"-----------")
                     move = self.env['stock.move'].create({
                         'name': inward.reference,
                         'location_id': self.company_id.default_src_location.id,
