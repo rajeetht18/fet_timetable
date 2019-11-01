@@ -11,9 +11,14 @@
 						<group>
 							<group>
 								<field name="glusr_mobile" required="1"/>
+                                <field name="date1" attrs="{'invisible': [('timestamp_bool', '=', True)]}"/>
+                                <field name="time1" attrs="{'invisible': [('timestamp_bool', '!=', True)]}"/>
 							</group>
 							<group>
 								<field name="glusr_mobile_key" required="1"/>
+                                <field name="timestamp_bool" required="1"/>
+                                <field name="date2" attrs="{'invisible': [('timestamp_bool', '=', True)]}"/>
+                                <field name="time2" attrs="{'invisible': [('timestamp_bool', '!=', True)]}"/>
 							</group>
 						</group>
                     </sheet>
