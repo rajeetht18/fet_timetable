@@ -21,13 +21,8 @@
 		<field name="model">sale.order</field>
 		<field name="inherit_id" ref="sale.view_order_form"/>
 		<field name="arch" type="xml">
-      <!-- <xpath expr="//header/button[@name='action_quotation_send']" position="attributes">
-        <attribute name="attrs">{'invisible':1}</attribute>
-      </xpath> -->
-       <!-- <xpath expr="//group[@name='sale_shipping']" position="inside">
-                <field name="default_src_location"/>
-                <field name="default_dest_location"/>
-        </xpath> -->
+      <xpath expr="//header/button[6]" position="replace">
+      </xpath>
       <xpath expr="//field[@name='name']" position="after">
         <field name="project_id" invisible="1"/>
         <!-- <field name="sale_task_ids.sale_task_id"/> -->

@@ -23,7 +23,8 @@ class SaleOrder(models.Model):
         if company:
             return company.default_src_location.id
         else:
-            return False
+            company = self.env['res.company'].search([])[0]
+            return company.default_src_location.id
 
     @api.model
     def dest_loc_default(self):
@@ -31,7 +32,8 @@ class SaleOrder(models.Model):
         if company:
             return company.default_dest_location.id
         else:
-            return False
+            company = self.env['res.company'].search([])[0]
+            return company.default_dest_location.id
 
 
     sale_task_ids = fields.One2many('project.task','sale_task_id','History Lines')
@@ -89,14 +91,14 @@ class SaleOrder(models.Model):
                     task.sale_state_done = False
                     task.sale_state_complete = True
             if rec.inward_ids:
-                if not self.company_id and self.company_id.default_src_location and self.company_id.default_dest_location:
-                    raise Warning("Setup Company Source Location and Destination Location Properly!")
+                if not self.default_src_location and self.default_dest_location:
+                    raise Warning("Setup Source Location and Destination Location!")
                 else:
                     for inward in rec.inward_ids:
                         move = self.env['stock.move'].create({
                             'name': inward.reference+" /Return",
-                            'location_id': self.company_id.default_dest_location.id,
-                            'location_dest_id': self.company_id.default_src_location.id,
+                            'location_id': self.default_dest_location.id,
+                            'location_dest_id': self.default_src_location.id,
                             'product_id': inward.product_id.id,
                             'product_uom': inward.product_id.uom_id.id,
                             'product_uom_qty': inward.qty,
@@ -139,16 +141,15 @@ class SaleOrder(models.Model):
 
     @api.multi
     def set_to_progress(self):
-        if not self.company_id and self.company_id.default_src_location and self.company_id.default_dest_location:
-            raise Warning("Setup Company Source Location and Destination Location Properly!")
+        if not self.default_src_location and self.default_dest_location:
+            raise Warning("Setup Source Location and Destination Location!")
         else:
             if self.inward_ids:
                 for inward in self.inward_ids:
-                    print(self.company_id.name,self.company_id.default_src_location.name,self.company_id.default_dest_location.name,"-----------")
                     move = self.env['stock.move'].create({
                         'name': inward.reference,
-                        'location_id': self.company_id.default_src_location.id,
-                        'location_dest_id': self.company_id.default_dest_location.id,
+                        'location_id': self.default_src_location.id,
+                        'location_dest_id': self.default_dest_location.id,
                         'product_id': inward.product_id.id,
                         'product_uom': inward.product_id.uom_id.id,
                         'product_uom_qty': inward.qty,
