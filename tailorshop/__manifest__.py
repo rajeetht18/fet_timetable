@@ -11,7 +11,7 @@ This module contains customisation of Tailor shop.
     """,
     'depends': ['sale'],
     'data': [
-#        'views/sales_view.xml',
+        'views/sales_view.xml',
         'wizards/measure_view.xml',
         'security/ir.model.access.csv'
     ],
