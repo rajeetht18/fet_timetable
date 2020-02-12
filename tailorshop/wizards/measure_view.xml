@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_sale_order_line_measure" model="ir.ui.view">
+            <field name="name">Sale Order Line Measure</field>
+            <field name="model">sale.order.line.measure.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Measurements">
+		    <group>
+			<group>
+			    <field name="customer_id" required="1"/>
+			    <field name="fabric_details"/>
+			</group>
+			<group>
+			    <field name="body_measure_ids">
+				<tree string="Measurements" editable="bottom">
+				    <field name="body_part_id" required="1"/>
+				    <field name="measure" required="1"/>
+				</tree>
+			    </field>
+		        </group>
+		    </group>
+
+                    <footer>
+                        <button string="Save" type="object"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_sale_order_line_measure" model="ir.actions.act_window">
+            <field name="name">Measurements</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order.line.measure.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+</odoo>
+
