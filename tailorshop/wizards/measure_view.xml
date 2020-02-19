@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+        <!--Wizard Form View-->
         <record id="view_sale_order_line_measure" model="ir.ui.view">
             <field name="name">Sale Order Line Measure</field>
             <field name="model">sale.order.line.measure.wizard</field>
@@ -8,7 +9,7 @@
 		    <group>
 			<group>
 			    <field name="customer_id" required="1"/>
-			    <field name="fabric_details"/>
+			    <field name="fabric_details" required="1"/>
 			</group>
 			<group>
 			    <field name="body_measure_ids">
