@@ -19,9 +19,8 @@
 			    </field>
 		        </group>
 		    </group>
-
                     <footer>
-                        <button string="Save" type="object"/>
+                        <button name="action_save" string="Save" type="object" class="btn-primary"/>
                         <button string="Cancel" class="btn-secondary" special="cancel"/>
                     </footer>
                 </form>
@@ -37,4 +36,3 @@
         </record>
 
 </odoo>
-

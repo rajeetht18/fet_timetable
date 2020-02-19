@@ -18,4 +18,3 @@ This module contains customisation of Tailor shop.
     'installable': True,
     'auto_install': False
 }
-
