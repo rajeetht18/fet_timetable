@@ -3,3 +3,4 @@ id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 access_body_parts_user,access_body_parts_user,model_body_parts,base.group_user,1,1,1,0
 access_measure_user,access_measure_user,model_sale_order_line_measure_wizard,base.group_user,1,1,1,0
 access_measure_line_user,access_measure_line_user,model_sale_order_line_measure_line,base.group_user,1,1,1,1
+access_product_measure_line_user,access_product_measure_line_user,model_product_line_measure,base.group_user,1,1,1,1

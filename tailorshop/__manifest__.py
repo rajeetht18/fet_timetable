@@ -9,9 +9,12 @@
     'description': """
 This module contains customisation of Tailor shop.
     """,
-    'depends': ['sale'],
+    'depends': ['web','sale','product_custom_options'],
     'data': [
         'views/sales_view.xml',
+        'views/product_view.xml',
+        'reports/reports.xml',
+        'reports/sale_report.xml',
         'wizards/measure_view.xml',
         'security/ir.model.access.csv'
     ],
